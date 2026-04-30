@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Churn, LTV y Revenue at Risk: un marco concreto para ponerle precio a los clientes que se van y los que se quedan.">
+<title>¿Cuánto vale un punto de NPS? Churn, LTV y el desafío de ponerle precio a la experiencia del cliente — Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+:root{
+  --dark:#0B1437;--bg:#fff;--bg-alt:#F5F7FA;--accent:#2563EB;--accent-h:#1D4ED8;
+  --accent-l:#EFF6FF;--text:#374151;--muted:#6B7280;--heading:#0B1437;
+  --border:#E5E7EB;--r:14px;--r-sm:8px;
+  --shadow:0 4px 30px rgba(11,20,55,.08);--shadow-lg:0 20px 60px rgba(11,20,55,.14);
+  --t:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);will-change:opacity,transform}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+.container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.container-narrow{width:100%;max-width:760px;margin-inline:auto;padding-inline:1.5rem}
+.section{padding-block:5rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:20px;background:var(--accent-l);color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.875rem;border-radius:var(--r-sm);font-weight:600;font-size:.9375rem;transition:var(--t);border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.3)}
+.btn-outline{background:transparent;color:var(--heading);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.875rem 0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:var(--text);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--t)}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;padding:8px;width:40px;height:40px;border-radius:var(--r-sm);cursor:pointer;z-index:1002;transition:background .2s}
+.nav-toggle:hover{background:rgba(0,0,0,.06)}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--heading);border-radius:2px;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .25s;transform-origin:center}
+.nav-overlay{position:fixed;inset:0;z-index:999;background:rgba(11,20,55,.55);opacity:0;pointer-events:none;transition:opacity .35s}
+.nav-overlay.visible{opacity:1;pointer-events:auto}
+
+/* ARTICLE HERO */
+.art-hero{padding-block:9rem 5rem;background:var(--dark);position:relative;overflow:hidden}
+.art-hero::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);top:-150px;right:-150px;pointer-events:none}
+.art-hero-inner{position:relative;z-index:1}
+.art-hero .back-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.5);margin-bottom:2rem;transition:color .2s}
+.art-hero .back-link:hover{color:rgba(255,255,255,.8)}
+.art-hero .back-link svg{transition:transform .2s}
+.art-hero .back-link:hover svg{transform:translateX(-3px)}
+.art-hero .eyebrow{color:rgba(255,255,255,.45)}
+.art-hero .eyebrow::before{background:var(--accent)}
+.art-hero h1{font-size:clamp(1.875rem,4vw,3.25rem);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.03em;margin-bottom:1.75rem;max-width:760px}
+.art-hero-meta{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center}
+.art-hero-meta .tag{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
+.art-meta-sep{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.25)}
+.art-date{font-size:.875rem;color:rgba(255,255,255,.4);font-weight:500}
+.art-read{font-size:.875rem;color:rgba(255,255,255,.4);font-weight:500}
+
+/* CONTENT */
+.content-body{font-size:1rem;color:var(--text);line-height:1.75}
+.content-body h2{font-size:1.5rem;font-weight:700;color:var(--heading);margin-top:3rem;margin-bottom:1rem;letter-spacing:-.02em}
+.content-body h3{font-size:1.0625rem;font-weight:700;color:var(--heading);margin-top:2rem;margin-bottom:.625rem}
+.content-body p{margin-bottom:1.25rem}
+.content-body strong{color:var(--heading);font-weight:600}
+.content-body ul{margin-bottom:1.25rem;padding-left:1.25rem}
+.content-body ul li{margin-bottom:.625rem;position:relative}
+.content-body ul li::before{content:'→';position:absolute;left:-1.25rem;color:var(--accent);font-weight:600}
+
+/* PULL QUOTE */
+.pull-quote{border-left:3px solid var(--accent);padding:1.375rem 1.75rem;margin-block:2rem;background:var(--accent-l);border-radius:0 var(--r-sm) var(--r-sm) 0}
+.pull-quote p{font-size:1.0625rem;font-style:italic;line-height:1.65;color:var(--heading);margin:0;font-weight:500}
+
+/* DATA BOX */
+.art-data-box{border:1.5px solid var(--border);border-radius:var(--r);padding:2rem;margin-block:2.25rem;background:var(--bg-alt);position:relative}
+.art-data-box-label{position:absolute;top:-13px;left:1.5rem;background:var(--dark);color:#fff;font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .875rem;border-radius:20px}
+.art-data-box-label.accent{background:var(--accent)}
+.art-data-box-title{font-size:1.0625rem;font-weight:700;color:var(--heading);margin-bottom:.25rem}
+.art-data-box-sub{font-size:.875rem;color:var(--muted);margin-bottom:1.5rem}
+.art-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem}
+.art-stat-item{text-align:center;padding:1.25rem 1rem;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm)}
+.art-stat-num{font-size:2.25rem;font-weight:800;color:var(--accent);line-height:1;margin-bottom:.375rem;letter-spacing:-.03em}
+.art-stat-num.navy{color:var(--heading)}
+.art-stat-num.muted{color:var(--muted)}
+.art-stat-lbl{font-size:.8125rem;color:var(--text);line-height:1.4}
+.art-stat-src{font-size:.6875rem;color:var(--muted);margin-top:.375rem;font-style:italic}
+
+/* FORMULA BOX */
+.formula-box{background:var(--dark);border-radius:var(--r);padding:1.75rem 2rem;margin-block:2rem}
+.formula-label{font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.75rem}
+.formula-text{font-size:1.125rem;font-weight:700;color:#fff;letter-spacing:-.01em;line-height:1.5}
+.formula-text em{font-style:normal;color:var(--accent)}
+.formula-note{font-size:.8125rem;color:rgba(255,255,255,.4);margin-top:.75rem;line-height:1.6}
+
+/* MATRIX TABLE */
+.matrix-wrap{margin-block:2rem;overflow-x:auto}
+.matrix-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.matrix-table th{background:var(--dark);color:#fff;padding:.875rem 1rem;text-align:left;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.matrix-table th:first-child{border-radius:var(--r-sm) 0 0 0}
+.matrix-table th:last-child{border-radius:0 var(--r-sm) 0 0}
+.matrix-table td{padding:.875rem 1rem;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
+.matrix-table tr:last-child td{border-bottom:none}
+.matrix-table tr:nth-child(even) td{background:var(--bg-alt)}
+.seg-badge{display:inline-flex;align-items:center;gap:.375rem;font-weight:600;font-size:.875rem}
+.seg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.seg-dot.green{background:#16a34a}
+.seg-dot.yellow{background:#d97706}
+.seg-dot.red{background:#dc2626}
+.risk-badge{display:inline-block;padding:.25rem .75rem;border-radius:20px;font-size:.8125rem;font-weight:600}
+.risk-low{background:#dcfce7;color:#16a34a}
+.risk-med{background:#fef9c3;color:#a16207}
+.risk-high{background:#fee2e2;color:#dc2626}
+
+/* STEPS LIST */
+.steps-list{margin-block:1.5rem;display:flex;flex-direction:column;gap:1.25rem}
+.step-item{display:flex;gap:1rem;align-items:flex-start}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.875rem;font-weight:700;flex-shrink:0;margin-top:.125rem}
+.step-content h3{font-size:1rem;font-weight:700;color:var(--heading);margin:0 0 .25rem;letter-spacing:0;text-transform:none}
+.step-content p{font-size:.9375rem;color:var(--muted);line-height:1.7;margin:0}
+
+/* DIVIDER */
+.content-divider{width:48px;height:2px;background:var(--accent);margin-block:3rem;opacity:.35}
+
+/* BACK BOTTOM */
+.back-bottom{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:2rem 2.5rem;margin-top:4rem}
+.back-bottom-label{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.375rem}
+.back-bottom-text{font-size:1.0625rem;font-weight:700;color:var(--heading)}
+
+/* FOOTER */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--t)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+@media(max-width:768px){
+  .section{padding-block:4rem}
+  .back-bottom{flex-direction:column;gap:1.25rem}
+  .art-stat-grid{grid-template-columns:repeat(2,1fr)}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(300px,82vw);background:var(--dark);flex-direction:column;justify-content:flex-start;align-items:stretch;gap:0;padding:4.5rem 1.5rem 2rem;z-index:1001;transform:translateX(110%);visibility:hidden;box-shadow:-8px 0 40px rgba(0,0,0,.35);transition:transform .4s cubic-bezier(.4,0,.2,1),visibility 0s .4s}
+  .nav-links.open{transform:translateX(0);visibility:visible;transition:transform .4s cubic-bezier(.4,0,.2,1),visibility 0s}
+  .nav-links li a{font-size:.9375rem!important;color:rgba(255,255,255,.72)!important;padding:.875rem 1rem!important;display:block;border-bottom:1px solid rgba(255,255,255,.07);border-radius:0}
+  .nav-links li:last-child a{border-bottom:none}
+  .nav-links li a:hover{color:#fff!important;background:rgba(255,255,255,.08)!important}
+  .nav-cta{margin-top:.5rem}
+  .nav-cta a{background:var(--accent)!important;color:#fff!important;border-bottom:none!important;border-radius:var(--r-sm)!important;text-align:center;justify-content:center;display:flex!important}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+  .formula-text{font-size:1rem}
+  .matrix-table{font-size:.8125rem}
+  .matrix-table th,.matrix-table td{padding:.625rem .75rem}
+}
+@media(max-width:480px){
+  .art-stat-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="../articulos.html" class="active">Artículos</a></li>
+      <li><a href="../proyectos.html">Proyectos</a></li>
+      <li><a href="../sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="../contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- ARTICLE HERO -->
+<section class="art-hero">
+  <div class="container art-hero-inner">
+    <a href="../articulos.html" class="back-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Todos los artículos
+    </a>
+    <p class="eyebrow">Customer Experience · NPS · Churn</p>
+    <h1>¿Cuánto vale un punto de NPS? Churn, LTV y el desafío de ponerle precio a la experiencia del cliente</h1>
+    <div class="art-hero-meta">
+      <span class="tag">Customer Experience</span>
+      <span class="tag">NPS</span>
+      <span class="tag">Churn</span>
+      <span class="art-meta-sep"></span>
+      <span class="art-date">Abril 2026</span>
+      <span class="art-meta-sep"></span>
+      <span class="art-read">10 min de lectura</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="section">
+  <div class="container-narrow">
+
+    <div class="content-body">
+
+      <p class="reveal">Hay una pregunta que tarde o temprano aparece en toda reunión de CX con liderazgo: <em>"¿Y esto cuánto vale?"</em></p>
+
+      <p class="reveal">El equipo de experiencia del cliente muestra que el NPS subió de 32 a 41. Los directivos asienten. Alguien aplaude. Y después viene el silencio incómodo cuando nadie puede decir qué significa eso en pesos, en clientes retenidos, en revenue.</p>
+
+      <p class="reveal">Yo viví esa situación de cerca. En mi paso por Swiss Medical como Analista de Negocio, mi tarea era justamente esa: cruzar los datos de experiencia del cliente —que vivían en Qualtrics— con toda la data transaccional y financiera de la compañía, centralizada en un data warehouse operado desde MicroStrategy. Dos mundos con lenguajes distintos, identificadores distintos, lógicas distintas. Y una sola pregunta que responder: <strong>¿cuánto dinero está en juego según cómo se siente cada cliente?</strong></p>
+
+      <p class="reveal">No es una tarea fácil. Este artículo es un intento de explicar por qué, y de darte un marco para empezar a pensarlo.</p>
+
+      <!-- DATA BOX 1 -->
+      <div class="art-data-box reveal">
+        <span class="art-data-box-label">El problema en números</span>
+        <p class="art-data-box-title">Lo que la mayoría de las empresas no sabe calcular</p>
+        <p class="art-data-box-sub">El ROI de CX existe — el problema es que casi nadie lo mide</p>
+        <div class="art-stat-grid">
+          <div class="art-stat-item">
+            <div class="art-stat-num navy">62%</div>
+            <div class="art-stat-lbl">de las empresas no puede calcular el ROI de su programa de CX</div>
+            <div class="art-stat-src">CustomerGauge</div>
+          </div>
+          <div class="art-stat-item">
+            <div class="art-stat-num navy">70%</div>
+            <div class="art-stat-lbl">no sabe qué impacto tiene su NPS en el resultado del negocio</div>
+            <div class="art-stat-src">CustomerGauge</div>
+          </div>
+          <div class="art-stat-item">
+            <div class="art-stat-num">54%</div>
+            <div class="art-stat-lbl">de los equipos de CX B2B cita la integración de datos como su mayor obstáculo</div>
+            <div class="art-stat-src">Qualtrics XM Institute, 2024</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="reveal">El problema de fondo: los datos existen, pero están separados</h2>
+
+      <p class="reveal">La mayoría de las empresas que miden NPS tiene dos mundos paralelos que casi nunca se tocan.</p>
+
+      <p class="reveal">Por un lado, los <strong>datos de experiencia</strong> (X-data, en la terminología de Qualtrics): encuestas NPS, CSAT, feedback abierto, scores post-interacción. Por el otro, los <strong>datos operacionales</strong> (O-data): facturación, uso del producto, renovaciones, bajas, transacciones. Un lado dice cómo se siente el cliente. El otro dice cuánto gasta.</p>
+
+      <p class="reveal">El problema no es falta de datos. Es que esos datos viven en sistemas distintos, con identificadores distintos, actualizados en momentos distintos. Cruzarlos requiere decisiones metodológicas que no son triviales, y los resultados tardan en madurar. Por eso el 62% de las empresas no puede calcular el ROI de su programa de CX. No es ignorancia: es un problema de arquitectura, cultura analítica y, muchas veces, de tiempo y equipo.</p>
+
+      <p class="reveal">Pero cuando se logra, el panorama cambia por completo.</p>
+
+      <h2 class="reveal">Churn: el primer número que necesitás</h2>
+
+      <p class="reveal">El churn es la tasa de clientes que se van en un período determinado. Es el punto de partida de cualquier modelo que quiera conectar CX con finanzas.</p>
+
+      <p class="reveal">La relación entre NPS y churn es robusta y bien documentada. Los <strong>detractores</strong> —quienes puntúan entre 0 y 6— tienen una probabilidad de abandono de entre el <strong>40% y el 50% en los primeros 90 días</strong>. Los <strong>pasivos</strong> —7 y 8— rondan el <strong>20% al 30% en 180 días</strong>. Los <strong>promotores</strong> tienen una tasa de attrition que es apenas un tercio de la de los detractores.</p>
+
+      <div class="pull-quote reveal">
+        <p>"Saber cuántos detractores tenés no es solo un dato de CX. Es un indicador adelantado de cuánto revenue va a evaporarse en los próximos meses."</p>
+      </div>
+
+      <p class="reveal">El matiz importante es que el churn no es homogéneo. Un detractor con un contrato anual de $500.000 no es lo mismo que un detractor con un plan básico de $50.000. Por eso el churn por volumen de clientes es solo el primer paso: el segundo es cruzarlo con el valor financiero de cada cuenta.</p>
+
+      <h2 class="reveal">LTV: cuánto vale un cliente mientras se queda</h2>
+
+      <p class="reveal">El <strong>Lifetime Value (LTV)</strong> es el ingreso total que un cliente genera durante toda su relación con la empresa. Hay varias formas de calcularlo, dependiendo del nivel de sofisticación que tenga la organización.</p>
+
+      <div class="formula-box reveal">
+        <p class="formula-label">Fórmula básica</p>
+        <p class="formula-text"><em>LTV</em> = ARPU &times; (1 / Churn Rate)</p>
+        <p class="formula-note">ARPU = ingreso promedio mensual por cliente. Si el ARPU es $10.000 y el churn mensual es 5%, la vida media del cliente es 20 meses → LTV = $200.000.</p>
+      </div>
+
+      <div class="formula-box reveal">
+        <p class="formula-label">Fórmula ajustada por margen</p>
+        <p class="formula-text"><em>LTV</em> = (ARPU &times; Margen Bruto %) / Churn Rate</p>
+        <p class="formula-note">Si el margen bruto es del 70%, ese mismo cliente vale $140.000 en términos de contribución real al negocio — no de ingreso bruto.</p>
+      </div>
+
+      <p class="reveal">El impacto de mejorar la retención sobre el LTV es no lineal. Reducir el churn mensual del 5% al 4% aumenta el LTV un 25%. Reducirlo al 3% lo casi duplica. Eso explica por qué Reichheld y Sasser demostraron en <em>Harvard Business Review</em> que un incremento del 5% en retención puede traducirse en entre un <strong>25% y un 95% más de beneficios</strong>.</p>
+
+      <p class="reveal">En banca, Bain & Company calculó que los promotores tienen un LTV <strong>USD 9.500 mayor</strong> que los detractores, compran un 25% más de productos y tienen un 45% más de saldo depositado. No son solo clientes más felices: son clientes más rentables.</p>
+
+      <!-- DATA BOX 2 -->
+      <div class="art-data-box reveal">
+        <span class="art-data-box-label accent">El valor real de retener</span>
+        <p class="art-data-box-title">Por qué la retención importa más de lo que parece</p>
+        <p class="art-data-box-sub">Los números detrás de la decisión de invertir en CX</p>
+        <div class="art-stat-grid">
+          <div class="art-stat-item">
+            <div class="art-stat-num">5&ndash;25x</div>
+            <div class="art-stat-lbl">más caro adquirir un cliente nuevo que retener uno existente</div>
+            <div class="art-stat-src">Reichheld / Bain &mdash; HBR</div>
+          </div>
+          <div class="art-stat-item">
+            <div class="art-stat-num">+95%</div>
+            <div class="art-stat-lbl">de beneficios con solo un 5% más de retención (escenario máximo)</div>
+            <div class="art-stat-src">Reichheld &amp; Sasser &mdash; HBR 1990</div>
+          </div>
+          <div class="art-stat-item">
+            <div class="art-stat-num">67%</div>
+            <div class="art-stat-lbl">más gastan los clientes que repiten vs. los que llegan por primera vez</div>
+            <div class="art-stat-src">Estudios agregados</div>
+          </div>
+          <div class="art-stat-item">
+            <div class="art-stat-num">2x</div>
+            <div class="art-stat-lbl">más rápido crecen las empresas líderes en CX vs. sus competidores</div>
+            <div class="art-stat-src">McKinsey, 2016&ndash;2021</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="reveal">La matriz: Revenue at Risk</h2>
+
+      <p class="reveal">Acá es donde los conceptos anteriores se convierten en una herramienta de gestión concreta. El <strong>Revenue at Risk</strong> es el ingreso que puede perderse si los detractores y pasivos efectivamente se van. La fórmula base:</p>
+
+      <div class="formula-box reveal">
+        <p class="formula-label">Revenue at Risk</p>
+        <p class="formula-text"><em>Revenue at Risk</em> = &Sigma; (LTV por cliente &times; Probabilidad de churn según segmento NPS)</p>
+        <p class="formula-note">Ejemplo: 50 detractores con LTV promedio de $200.000 y probabilidad de churn del 45% → Revenue at Risk = $4.500.000 en los próximos 90 días.</p>
+      </div>
+
+      <p class="reveal">Una matriz funcional cruza el segmento NPS con el valor financiero de cada cliente:</p>
+
+      <div class="matrix-wrap reveal">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>Segmento</th>
+              <th>Score NPS</th>
+              <th>Churn estimado</th>
+              <th>Ventana</th>
+              <th>Revenue en riesgo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="seg-badge"><span class="seg-dot green"></span> Promotores</span></td>
+              <td>9 &ndash; 10</td>
+              <td>&lt; 10%</td>
+              <td>180 días</td>
+              <td><span class="risk-badge risk-low">Bajo</span></td>
+            </tr>
+            <tr>
+              <td><span class="seg-badge"><span class="seg-dot yellow"></span> Pasivos</span></td>
+              <td>7 &ndash; 8</td>
+              <td>20% &ndash; 30%</td>
+              <td>180 días</td>
+              <td><span class="risk-badge risk-med">Moderado</span></td>
+            </tr>
+            <tr>
+              <td><span class="seg-badge"><span class="seg-dot red"></span> Detractores</span></td>
+              <td>0 &ndash; 6</td>
+              <td>40% &ndash; 50%</td>
+              <td>90 días</td>
+              <td><span class="risk-badge risk-high">Alto</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="reveal">La clave de una buena matriz no es la foto estática, sino que sea <strong>dinámica</strong>: que al cambiar el churn rate, el LTV promedio o la distribución de scores, el Revenue at Risk se recalcule automáticamente. Así, cada punto de mejora en NPS tiene un correlato financiero inmediato y visible para la organización.</p>
+
+      <p class="reveal">La London School of Economics encontró que un incremento de <strong>7 puntos en NPS equivale a aproximadamente un 1% más de ingresos totales</strong>. Dell cuantificó que su 15% de clientes detractores representaba USD 68 millones en ingresos perdidos, y que convertir entre el 2% y el 8% de esos detractores en promotores hubiera sumado USD 167 millones anuales. No son casos de suerte. Son el resultado de cruzar bien los datos.</p>
+
+      <h2 class="reveal">Por qué es tan difícil hacerlo bien</h2>
+
+      <p class="reveal">La teoría es prolija. La práctica, no tanto. Hay cuatro obstáculos que aparecen siempre:</p>
+
+      <div class="steps-list reveal">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>El problema de los identificadores</h3>
+            <p>Los IDs de clientes en una herramienta de encuestas raramente coinciden con los IDs en el ERP o el data warehouse. Reconciliarlos requiere trabajo de ingeniería de datos que muchas veces nadie quiere hacer porque "no es mi área".</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>La latencia temporal</h3>
+            <p>El NPS se mide en momentos puntuales, pero los datos financieros son continuos. Correlacionar ambos obliga a decidir ventanas de tiempo: ¿mido el churn en los 30 días post-encuesta? ¿En los 90? ¿En los 180? Cada decisión introduce supuestos que hay que poder defender.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Los silos organizacionales</h3>
+            <p>El equipo de CX vive en Qualtrics o Medallia. El equipo de finanzas vive en SAP o en el DWH. Sin una plataforma central que hable los dos idiomas, y sin un equipo con formación híbrida, los datos llegan pero nadie sabe qué hacer con ellos.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>El problema de causalidad</h3>
+            <p>La correlación entre bajo NPS y churn es robusta. Pero ¿el cliente se fue porque su NPS era bajo, o su NPS era bajo porque ya había decidido irse? Resolver eso requiere diseño cuasi-experimental que muy pocas organizaciones implementan.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="reveal">Por todo esto, construir una matriz que conecte NPS con revenue no es una tarea de una tarde. Es un proyecto. Requiere tiempo, datos limpios, acuerdos entre áreas y, sí, más de una persona trabajando en ello.</p>
+
+      <div class="pull-quote reveal">
+        <p>"El 70% de las empresas no usa un framework que conecte sus datos de CX con sus ingresos. No es que el ROI no exista: es que nadie lo está calculando."</p>
+      </div>
+
+      <div class="content-divider reveal"></div>
+
+      <h2 class="reveal">Ponerle precio al NPS cambia cómo se toman las decisiones</h2>
+
+      <p class="reveal">La pregunta "¿cuánto vale un punto de NPS?" no tiene una respuesta universal. Depende del ARPU, del churn rate, del margen bruto, de la industria y de la calidad de los datos disponibles.</p>
+
+      <p class="reveal">Pero lo que sí es universal es esto: el costo de no saberlo es real y se acumula silenciosamente. Cada detractor que se va sin que nadie lo note lleva consigo su LTV, sus posibles referencias y — muchas veces — la reputación que construye puertas afuera. El WOM negativo de los detractores representa más del <strong>80% del boca en boca negativo</strong> de una empresa, según Bain. Y un cliente insatisfecho comparte su experiencia con entre 9 y 15 personas en promedio.</p>
+
+      <p class="reveal">Retener a un cliente cuesta entre 5 y 25 veces menos que adquirir uno nuevo. Que el 62% de las empresas no pueda calcular el ROI de su programa de CX no significa que ese ROI no exista. Significa que están operando a ciegas en uno de los frentes que más impacta en su resultado.</p>
+
+      <p class="reveal">Ponerle precio al NPS es complejo. Requiere datos, metodología y tiempo. Pero cuando se logra, la conversación en el directorio cambia: deja de ser "¿y esto cuánto vale?" y pasa a ser "¿cuánto nos está costando no mejorarlo?".</p>
+
+    </div>
+
+    <!-- BACK BOTTOM -->
+    <div class="back-bottom reveal">
+      <div>
+        <p class="back-bottom-label">Seguí leyendo</p>
+        <p class="back-bottom-text">Más artículos sobre CX y datos</p>
+      </div>
+      <a href="../articulos.html" class="btn btn-outline">Ver todos los artículos &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos y CX (experiencia del cliente).</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../articulos.html">Artículos</a></li>
+          <li><a href="../proyectos.html">Proyectos</a></li>
+          <li><a href="../sobre-mi.html">Sobre mí</a></li>
+          <li><a href="../contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;&middot;&nbsp; <a href="../politica-cookies.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Política de cookies</a> &nbsp;&middot;&nbsp; <a href="../mapa-del-sitio.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Mapa del sitio</a></p>
+      <div class="footer-social">
+        <a href="mailto:lucasd-t@hotmail.com" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+const overlay=document.getElementById('navOverlay');
+function openNav(){toggle.classList.add('open');toggle.setAttribute('aria-expanded','true');links.classList.add('open');overlay.classList.add('visible');document.body.style.overflow='hidden'}
+function closeNav(){toggle.classList.remove('open');toggle.setAttribute('aria-expanded','false');links.classList.remove('open');overlay.classList.remove('visible');document.body.style.overflow=''}
+toggle.addEventListener('click',()=>links.classList.contains('open')?closeNav():openNav());
+overlay.addEventListener('click',closeNav);
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeNav));
+
+(()=>{
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target)}})
+  },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>
