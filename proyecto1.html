@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Fintech vs. Banca Tradicional — análisis de experiencia del usuario en Mercado Pago y Santander. Por Lucas Della Torre.">
+<title>Proyecto 01 — Fintech vs. Banca Tradicional · Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+:root{
+  --dark:#0B1437;--bg:#fff;--bg-alt:#F5F7FA;--accent:#2563EB;--accent-h:#1D4ED8;
+  --accent-l:#EFF6FF;--text:#374151;--muted:#6B7280;--heading:#0B1437;
+  --border:#E5E7EB;--r:14px;--r-sm:8px;
+  --shadow:0 4px 30px rgba(11,20,55,.08);--shadow-lg:0 20px 60px rgba(11,20,55,.14);
+  --t:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);will-change:opacity,transform}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+.container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.container-narrow{width:100%;max-width:780px;margin-inline:auto;padding-inline:1.5rem}
+.section{padding-block:5rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:20px;background:var(--accent-l);color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.875rem;border-radius:var(--r-sm);font-weight:600;font-size:.9375rem;transition:var(--t);border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.3)}
+.btn-outline{background:transparent;color:var(--heading);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.btn-ghost-dark{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.15)}
+.btn-ghost-dark:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.875rem 0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:var(--text);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--t)}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:var(--t)}
+
+/* PROJECT HERO */
+.proj-hero{padding-block:9rem 5rem;background:var(--dark);position:relative;overflow:hidden}
+.proj-hero::before{content:'';position:absolute;inset:0;background-image:url('https://d1yei2z3i6k35z.cloudfront.net/1271858/68596052c74e4_Fintech-4.jpg');background-size:cover;background-position:center;opacity:.12}
+.proj-hero-inner{position:relative;z-index:1}
+.proj-hero .back-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.5);margin-bottom:2rem;transition:color .2s}
+.proj-hero .back-link:hover{color:rgba(255,255,255,.8)}
+.proj-hero .back-link svg{transition:transform .2s}
+.proj-hero .back-link:hover svg{transform:translateX(-3px)}
+.proj-hero .eyebrow{color:rgba(255,255,255,.45)}
+.proj-hero .eyebrow::before{background:var(--accent)}
+.proj-hero h1{font-size:clamp(2rem,4.5vw,3.5rem);font-weight:800;color:#fff;line-height:1.12;letter-spacing:-.03em;margin-bottom:1.5rem;max-width:800px}
+.proj-hero-meta{display:flex;flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem}
+.meta-item{display:flex;flex-direction:column;gap:.25rem}
+.meta-label{font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.meta-value{font-size:.9375rem;font-weight:500;color:rgba(255,255,255,.75)}
+.proj-hero-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.proj-hero-tags .tag{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
+
+/* COVER IMAGE */
+.cover-img{width:100%;aspect-ratio:21/9;object-fit:cover;border-radius:var(--r);box-shadow:var(--shadow-lg)}
+
+/* CONTENT */
+.content-body{font-size:1.0625rem;color:var(--text);line-height:1.85}
+.content-body h2{font-size:1.75rem;font-weight:700;color:var(--heading);margin-top:3rem;margin-bottom:1.25rem;letter-spacing:-.02em}
+.content-body h3{font-size:1.25rem;font-weight:700;color:var(--heading);margin-top:2rem;margin-bottom:.875rem}
+.content-body p{margin-bottom:1.25rem}
+.content-body ul{margin-bottom:1.25rem;padding-left:1.25rem}
+.content-body ul li{margin-bottom:.5rem;position:relative}
+.content-body ul li::before{content:'→';position:absolute;left:-1.25rem;color:var(--accent);font-weight:600}
+
+/* METHODOLOGY STEPS */
+.method-steps{display:grid;gap:1.25rem;margin-block:2rem}
+.method-step{display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start;background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem}
+.step-num{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;font-size:.875rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-content h3{font-size:1rem;font-weight:700;color:var(--heading);margin-bottom:.5rem}
+.step-content p{font-size:.9375rem;color:var(--muted);line-height:1.7;margin:0}
+
+/* FINDINGS */
+.findings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-block:2rem}
+.finding-card{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem;border-left:3px solid var(--accent)}
+.finding-num{font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:.625rem}
+.finding-text{font-size:.9375rem;color:var(--text);line-height:1.7}
+
+/* TOOLS */
+.tools-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
+.tool-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border-radius:var(--r-sm);background:var(--bg-alt);border:1px solid var(--border);font-size:.875rem;font-weight:600;color:var(--heading)}
+.tool-badge svg{color:var(--accent)}
+
+/* PROJECT LINKS */
+.project-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.5rem}
+
+/* NEXT PROJECT */
+.next-proj{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:2.5rem;display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap}
+.next-proj-label{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.next-proj-title{font-size:1.25rem;font-weight:700;color:var(--heading)}
+
+/* FOOTER */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--t)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+@media(max-width:768px){
+  .findings-grid{grid-template-columns:1fr}
+  .method-step{grid-template-columns:1fr}
+  .next-proj{flex-direction:column}
+  .nav-links{display:none;position:fixed;inset:0;background:var(--dark);flex-direction:column;justify-content:center;align-items:center;gap:.5rem}
+  .nav-links.open{display:flex}
+  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="articulos.html">Artículos</a></li>
+      <li><a href="proyectos.html" class="active">Proyectos</a></li>
+      <li><a href="sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PROJECT HERO -->
+<section class="proj-hero">
+  <div class="container proj-hero-inner">
+    <a href="proyectos.html" class="back-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Todos los proyectos
+    </a>
+    <p class="eyebrow">Proyecto № 01 &nbsp;·&nbsp; Customer Experience · NLP</p>
+    <h1>Fintech vs. Banca Tradicional: la experiencia del usuario bajo la lupa.</h1>
+    <div class="proj-hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Período</span>
+        <span class="meta-value">Junio 2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Reseñas</span>
+        <span class="meta-value">1.000 registros</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Apps</span>
+        <span class="meta-value">Mercado Pago · Santander</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Fuente</span>
+        <span class="meta-value">Google Play Store</span>
+      </div>
+    </div>
+    <div class="proj-hero-tags">
+      <span class="tag">Python</span>
+      <span class="tag">Pandas</span>
+      <span class="tag">NLP</span>
+      <span class="tag">NLTK</span>
+      <span class="tag">Seaborn</span>
+      <span class="tag">WordCloud</span>
+      <span class="tag">Power BI</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="section">
+  <div class="container-narrow">
+
+    <img class="cover-img reveal"
+      src="https://d1yei2z3i6k35z.cloudfront.net/1271858/68596052c74e4_Fintech-4.jpg"
+      alt="Fintech vs Banca Tradicional" loading="lazy"
+      style="margin-bottom:3.5rem">
+
+    <div class="content-body">
+
+      <h2 class="reveal">Contexto y objetivo</h2>
+      <p class="reveal">Las aplicaciones financieras son hoy el canal principal entre los usuarios y su dinero. Sin embargo, lo que los usuarios piensan de esas plataformas — lo que los frustra, lo que los retiene, lo que los hace irse — rara vez queda registrado en los informes internos de las empresas.</p>
+      <p class="reveal">El objetivo de este proyecto fue tomar el rol de <strong>analista de experiencia del cliente (CX)</strong> y analizar qué está funcionando y qué no en la experiencia digital de dos actores bien distintos: una fintech líder y un banco tradicional.</p>
+
+      <h2 class="reveal">Metodología</h2>
+      <p class="reveal">El proyecto se estructuró en cuatro fases complementarias:</p>
+
+      <div class="method-steps">
+        <div class="method-step reveal">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Recolección de datos</h3>
+            <p>Scraping de reseñas de Google Play Store usando la librería <code>google-play-scraper</code>. Se propuso analizar cinco apps, pero limitaciones técnicas llevaron a focalizarse en Mercado Pago y Santander — 500 reseñas cada una, totalizando 1.000 registros.</p>
+          </div>
+        </div>
+        <div class="method-step reveal d1">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Limpieza y preprocesamiento</h3>
+            <p>Con <strong>Pandas</strong> se seleccionaron columnas clave (contenido, puntuación, fecha, app), se detectó el idioma con <code>langdetect</code> para conservar solo reseñas en español, y se eliminaron registros duplicados e incompletos.</p>
+          </div>
+        </div>
+        <div class="method-step reveal d2">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Análisis exploratorio (EDA)</h3>
+            <p>Con <strong>Matplotlib</strong> y <strong>Seaborn</strong> se analizó la distribución de puntuaciones, el promedio de calificaciones y la evolución temporal. Se detectó un sesgo de volumen (Mercado Pago concentrada en días; Santander distribuida en un año) y se tomó la decisión metodológica de descartar el análisis temporal para mantener una comparativa equilibrada.</p>
+          </div>
+        </div>
+        <div class="method-step reveal d3">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Análisis de lenguaje natural (NLP)</h3>
+            <p>Las reseñas se segmentaron en cuatro grupos (positivas/negativas por app). Usando <strong>NLTK</strong> se eliminaron stopwords y se generaron nubes de palabras (<strong>WordCloud</strong>) para visualizar los términos dominantes en satisfacción y frustración de cada plataforma.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="reveal">Hallazgos principales</h2>
+
+      <div class="findings-grid">
+        <div class="finding-card reveal">
+          <p class="finding-num">Hallazgo 01</p>
+          <p class="finding-text"><strong>Santander supera en satisfacción promedio</strong> a Mercado Pago según las calificaciones brutas de Google Play.</p>
+        </div>
+        <div class="finding-card reveal d1">
+          <p class="finding-num">Hallazgo 02</p>
+          <p class="finding-text"><strong>Las expectativas son radicalmente distintas.</strong> Mercado Pago se evalúa por velocidad y facilidad; Santander, por confiabilidad y seguridad.</p>
+        </div>
+        <div class="finding-card reveal d2">
+          <p class="finding-num">Hallazgo 03</p>
+          <p class="finding-text"><strong>Mercado Pago es polarizada:</strong> los usuarios aman su velocidad, pero la frustración es extrema cuando fallan funciones básicas y el soporte no responde.</p>
+        </div>
+        <div class="finding-card reveal d3">
+          <p class="finding-num">Hallazgo 04</p>
+          <p class="finding-text"><strong>El valor de Santander es simbólico:</strong> la confianza en la marca "banco" sostiene la percepción positiva, pero la inestabilidad técnica es su talón de Aquiles.</p>
+        </div>
+      </div>
+
+      <h2 class="reveal">Recomendación estratégica</h2>
+      <p class="reveal">Antes de sumar funcionalidades, ambas plataformas deberían resolver lo básico: que la app funcione, que el soporte responda, que el usuario no tenga que pelear con la herramienta para usarla. <strong>La estabilidad no es un diferencial: es el piso mínimo.</strong> Y cuando ese piso falla, ninguna nueva feature lo compensa.</p>
+
+      <h2 class="reveal">Herramientas utilizadas</h2>
+      <div class="tools-grid reveal">
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Python
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Pandas
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 16 4-8 4 8"/><path d="m3 12 4-4 4 4"/></svg>
+          Seaborn &amp; Matplotlib
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          NLTK
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          WordCloud
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Power BI
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          Google Play Scraper
+        </span>
+      </div>
+
+      <div class="project-links reveal">
+        <a href="https://github.com/lucasneon92/proyecto1_apps" class="btn btn-primary" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Ver en GitHub
+        </a>
+        <a href="powerbi-proyecto1.html" class="btn btn-outline" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Dashboard Power BI
+        </a>
+        <a href="https://gamma.app/docs/Fintech-vs-Banca-Tradicional--a47pgafs3g35f1k" class="btn btn-outline" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Ver presentación
+        </a>
+      </div>
+
+    </div>
+
+    <!-- NEXT PROJECT -->
+    <div class="next-proj reveal" style="margin-top:4rem">
+      <div>
+        <p class="next-proj-label">Siguiente proyecto</p>
+        <p class="next-proj-title">La voz del socio — Prepagas argentinas en Google Play</p>
+      </div>
+      <a href="proyecto2/index.html" class="btn btn-outline">Ver proyecto &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos, investigación social y experiencia del cliente.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="articulos.html">Artículos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="sobre-mi.html">Sobre mí</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;·&nbsp; <a href="politica-cookies.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Política de cookies</a> &nbsp;·&nbsp; <a href="mapa-del-sitio.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Mapa del sitio</a></p>
+      <div class="footer-social">
+        <a href="mailto:lucasd-t@hotmail.com" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.classList.toggle('open')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.classList.remove('open')}));
+
+(()=>{
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target)}})
+  },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>

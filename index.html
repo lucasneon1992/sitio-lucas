@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lucas Della Torre — Sociólogo especializado en análisis de datos, investigación y Customer Experience.">
+<meta property="og:title" content="Lucas Della Torre — Análisis · Investigación · Datos">
+<meta property="og:description" content="Sociólogo en el cruce entre los números y las personas.">
+<meta property="og:image" content="https://d1yei2z3i6k35z.cloudfront.net/1271858/67f77769e71f8_asdasd.jpg">
+<title>Lucas Della Torre — Análisis · Investigación · Datos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   RESET & BASE
+============================================= */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+/* =============================================
+   CSS VARIABLES
+============================================= */
+:root{
+  --dark:       #0B1437;
+  --dark-2:     #111E4A;
+  --bg:         #FFFFFF;
+  --bg-alt:     #F5F7FA;
+  --accent:     #2563EB;
+  --accent-h:   #1D4ED8;
+  --accent-l:   #EFF6FF;
+  --text:       #374151;
+  --muted:      #6B7280;
+  --light:      #9CA3AF;
+  --heading:    #0B1437;
+  --border:     #E5E7EB;
+  --r:          14px;
+  --r-sm:       8px;
+  --shadow:     0 4px 30px rgba(11,20,55,.08);
+  --shadow-lg:  0 20px 60px rgba(11,20,55,.14);
+  --transition: all .3s cubic-bezier(.4,0,.2,1);
+}
+
+/* =============================================
+   SCROLL REVEAL
+============================================= */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);
+  will-change:opacity,transform;
+}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}
+.reveal.d2{transition-delay:.2s}
+.reveal.d3{transition-delay:.3s}
+.reveal.d4{transition-delay:.4s}
+
+/* =============================================
+   LAYOUT UTILITIES
+============================================= */
+.container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.section{padding-block:6rem}
+.section-alt{background:var(--bg-alt)}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:20px;background:var(--accent-l);color:var(--accent)}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.section-title{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;color:var(--heading);line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em}
+.section-desc{font-size:1.0625rem;color:var(--muted);max-width:560px;line-height:1.75}
+
+/* =============================================
+   BUTTONS
+============================================= */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.875rem;border-radius:var(--r-sm);font-weight:600;font-size:.9375rem;transition:var(--transition);border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.3)}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);border-color:#fff;transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--heading);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* =============================================
+   NAVIGATION
+============================================= */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.375rem 0;transition:background .35s ease,padding .35s ease,box-shadow .35s ease}
+.nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:.875rem 0;box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:#fff;letter-spacing:-.01em;transition:color .35s}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav.scrolled .nav-logo{color:var(--heading)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:rgba(255,255,255,.8);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--transition)}
+.nav-links li a:hover,.nav-links li a.active{color:#fff;background:rgba(255,255,255,.12)}
+.nav.scrolled .nav-links li a{color:var(--text)}
+.nav.scrolled .nav-links li a:hover,.nav.scrolled .nav-links li a.active{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important;transform:translateY(-1px)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
+.nav-toggle span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:var(--transition)}
+.nav.scrolled .nav-toggle span{background:var(--heading)}
+
+/* =============================================
+   HERO
+============================================= */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-image:url('https://d1yei2z3i6k35z.cloudfront.net/1271858/67f77769e71f8_asdasd.jpg');background-size:cover;background-position:center;z-index:0}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(130deg,rgba(11,20,55,.92) 0%,rgba(11,20,55,.78) 60%,rgba(11,20,55,.68) 100%);z-index:1}
+.hero-content{position:relative;z-index:2;color:#fff;padding-block:9rem 5rem;width:100%}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:1.375rem}
+.hero-eyebrow::before{content:'';display:inline-block;width:28px;height:1.5px;background:var(--accent)}
+.hero-name{font-size:clamp(2.75rem,6.5vw,5.25rem);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:.5rem}
+.hero-name em{font-style:normal;color:var(--accent)}
+.hero-tagline{font-size:clamp(1rem,2vw,1.1875rem);font-weight:400;color:rgba(255,255,255,.6);letter-spacing:.01em;line-height:1.65;max-width:620px;margin-bottom:2.75rem}
+.hero-tagline span{color:rgba(255,255,255,.35);margin-inline:.625rem}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;color:rgba(255,255,255,.35);font-size:.6875rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;animation:bounce 2.4s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* =============================================
+   STATS STRIP
+============================================= */
+.stats-strip{background:var(--dark);padding-block:2.75rem}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
+.stat-item{background:var(--dark);padding:2rem;text-align:center}
+.stat-num{font-size:2.5rem;font-weight:800;color:#fff;line-height:1;margin-bottom:.375rem;letter-spacing:-.03em}
+.stat-num em{font-style:normal;color:var(--accent)}
+.stat-lbl{font-size:.8125rem;color:rgba(255,255,255,.4);font-weight:500;letter-spacing:.02em}
+
+/* =============================================
+   ABOUT TEASER
+============================================= */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-img-wrap{position:relative;max-width:50%}
+.about-img-wrap::after{content:'';position:absolute;top:1.75rem;left:1.75rem;right:-1.75rem;bottom:-1.75rem;background:var(--accent-l);border-radius:var(--r);z-index:0;border:1px solid var(--accent);opacity:.5}
+.about-img{position:relative;z-index:1;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top}
+.about-text .section-title{margin-bottom:1.5rem}
+.about-body{font-size:1rem;color:var(--text);line-height:1.85;margin-bottom:2rem}
+
+/* =============================================
+   PROJECTS PREVIEW
+============================================= */
+.projects-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;gap:1rem;flex-wrap:wrap}
+.project-card{display:grid;grid-template-columns:1fr 1fr;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);background:var(--bg);transition:var(--transition);color:inherit}
+.project-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.project-img-wrap{overflow:hidden}
+.project-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.project-card:hover .project-img-wrap img{transform:scale(1.05)}
+.project-body{padding:2.75rem;display:flex;flex-direction:column;justify-content:center}
+.project-num{font-size:.75rem;font-weight:700;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:.875rem}
+.project-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
+.project-title{font-size:1.5rem;font-weight:700;color:var(--heading);line-height:1.3;margin-bottom:.875rem;letter-spacing:-.01em}
+.project-desc{font-size:.9375rem;color:var(--muted);line-height:1.75;margin-bottom:1.875rem;flex-grow:1}
+.project-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:600;color:var(--accent);transition:gap .2s ease}
+.project-link:hover{gap:.875rem}
+
+/* =============================================
+   PILLARS
+============================================= */
+.pillars-intro{text-align:center;max-width:540px;margin:0 auto}
+.pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3.5rem}
+.pillar-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:2rem 1.5rem;text-align:center;transition:var(--transition)}
+.pillar-card:hover{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-l),var(--shadow);transform:translateY(-5px)}
+.pillar-icon{width:56px;height:56px;margin:0 auto 1.25rem;object-fit:contain}
+.pillar-title{font-size:1rem;font-weight:700;color:var(--heading);margin-bottom:.625rem}
+.pillar-desc{font-size:.875rem;color:var(--muted);line-height:1.7}
+
+/* =============================================
+   CTA BANNER
+============================================= */
+.cta-band{background:var(--bg-alt);padding-block:6rem;text-align:center;position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(37,99,235,.06) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.cta-band-inner{position:relative;z-index:1}
+.cta-band h2{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--heading);line-height:1.15;margin-bottom:1rem;letter-spacing:-.025em}
+.cta-band p{color:var(--muted);font-size:1.0625rem;max-width:480px;margin-inline:auto;margin-bottom:2.5rem;line-height:1.75}
+
+/* =============================================
+   FOOTER
+============================================= */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem;letter-spacing:-.01em}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--transition)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+/* =============================================
+   RESPONSIVE
+============================================= */
+@media(max-width:1024px){
+  .pillars-grid{grid-template-columns:repeat(2,1fr)}
+  .project-card{grid-template-columns:1fr}
+  .project-img-wrap{aspect-ratio:16/9}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .footer-brand{grid-column:1/-1}
+}
+@media(max-width:768px){
+  .section{padding-block:4rem}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .about-img-wrap::after{display:none}
+  .stats-grid{grid-template-columns:1fr}
+  .nav-links{
+    display:none;position:fixed;inset:0;background:var(--dark);
+    flex-direction:column;justify-content:center;align-items:center;gap:.5rem
+  }
+  .nav-links.open{display:flex}
+  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
+  .nav-links li a:hover{color:#fff!important;background:rgba(255,255,255,.08)!important}
+  .nav-cta a{background:var(--accent)!important}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+  .projects-header{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:480px){
+  .pillars-grid{grid-template-columns:1fr}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{justify-content:center}
+}
+
+/* =============================================
+   RECURSOS
+============================================= */
+.recursos-section{background:var(--dark);padding-block:6rem}
+.recursos-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.recursos-copy .eyebrow{color:rgba(255,255,255,.45)}
+.recursos-copy .eyebrow::before{background:var(--accent)}
+.recursos-copy h2{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em}
+.recursos-copy p{font-size:1rem;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:0}
+.recursos-includes{margin-top:1.75rem;display:flex;flex-direction:column;gap:.625rem}
+.recursos-includes li{display:flex;align-items:center;gap:.625rem;font-size:.9375rem;color:rgba(255,255,255,.7)}
+.recursos-includes li::before{content:'';width:18px;height:18px;border-radius:50%;background:var(--accent);flex-shrink:0;display:flex;align-items:center;justify-content:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+.recursos-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:2.5rem}
+.recursos-card-title{font-size:1.125rem;font-weight:700;color:#fff;margin-bottom:.375rem}
+.recursos-card-sub{font-size:.875rem;color:rgba(255,255,255,.4);margin-bottom:1.75rem}
+.recursos-form{display:flex;flex-direction:column;gap:.875rem}
+.recursos-input{width:100%;padding:.875rem 1.125rem;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:inherit;font-size:.9375rem;transition:border-color .2s,background .2s}
+.recursos-input::placeholder{color:rgba(255,255,255,.3)}
+.recursos-input:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,.08)}
+.recursos-btn{width:100%;padding:.9rem;border-radius:var(--r-sm);background:var(--accent);color:#fff;font-weight:700;font-size:.9375rem;font-family:inherit;border:none;cursor:pointer;transition:background .2s,transform .2s}
+.recursos-btn:hover{background:var(--accent-h);transform:translateY(-1px)}
+.recursos-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.recursos-success{display:none;text-align:center;padding:1rem 0}
+.recursos-success-icon{width:48px;height:48px;border-radius:50%;background:rgba(37,99,235,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.recursos-success h3{font-size:1.0625rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.recursos-success p{font-size:.875rem;color:rgba(255,255,255,.5);margin-bottom:1.5rem}
+.recursos-download-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;border-radius:var(--r-sm);background:var(--accent);color:#fff;font-weight:700;font-size:.9375rem;transition:background .2s,transform .2s}
+.recursos-download-btn:hover{background:var(--accent-h);transform:translateY(-2px)}
+.recursos-note{font-size:.75rem;color:rgba(255,255,255,.25);text-align:center;margin-top:.75rem}
+@media(max-width:900px){.recursos-inner{grid-template-columns:1fr;gap:3rem}}
+
+/* =============================================
+   PROJECTS CAROUSEL
+============================================= */
+.proj-carousel-wrap{overflow:hidden;margin-top:2.5rem;padding-bottom:.75rem}
+.proj-carousel-track{display:flex;gap:1.5rem;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+.pmc-card{flex:0 0 min(840px,calc(75vw - 1rem));display:grid;grid-template-columns:2fr 3fr;overflow:hidden;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);color:inherit;box-shadow:var(--shadow);min-height:300px;transition:box-shadow .3s}
+.pmc-card:hover{box-shadow:var(--shadow-lg)}
+.pmc-thumb{background-size:cover;background-position:center}
+.pmc-thumb-dark{background:var(--dark);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.pmc-thumb-dark::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(37,99,235,.18) 0%,transparent 70%)}
+.pmc-num-bg{font-size:9rem;font-weight:800;color:rgba(255,255,255,.05);line-height:1;letter-spacing:-.05em;user-select:none;position:relative;z-index:1}
+.pmc-body{padding:2.5rem;display:flex;flex-direction:column;justify-content:center;gap:.875rem}
+.pmc-label{font-size:.6875rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.pmc-tags{display:flex;flex-wrap:wrap;gap:.375rem}
+.pmc-title{font-size:1.1875rem;font-weight:700;color:var(--heading);line-height:1.35}
+.pmc-desc{font-size:.9375rem;color:var(--muted);line-height:1.7}
+.pmc-link{font-size:.875rem;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:.375rem;margin-top:.375rem;transition:gap .2s}
+.pmc-card:hover .pmc-link{gap:.625rem}
+.proj-carousel-controls{display:flex;align-items:center;gap:.625rem;justify-content:flex-end;margin-top:1.25rem}
+.proj-carousel-btn{width:44px;height:44px;border-radius:50%;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--heading);transition:var(--transition);flex-shrink:0}
+.proj-carousel-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 6px 20px rgba(37,99,235,.25)}
+.proj-carousel-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
+@media(max-width:768px){
+  .pmc-card{flex:0 0 min(480px,calc(88vw));grid-template-columns:1fr}
+  .pmc-thumb{min-height:160px}
+  .pmc-body{padding:1.5rem;gap:.625rem}
+  .pmc-title{font-size:1rem}
+  .pmc-desc{font-size:.875rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="articulos.html">Artículos</a></li>
+      <li><a href="proyectos.html">Proyectos</a></li>
+      <li><a href="sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="container">
+      <p class="hero-eyebrow">Consultoría · Customer Experience</p>
+      <h1 class="hero-name">Lucas Della Torre<em>.</em></h1>
+      <p class="hero-tagline">
+        Análisis de datos y estrategia de CX para empresas que quieren entender qué piensan, qué sienten y qué hacen sus clientes.
+      </p>
+      <div class="hero-actions">
+        <a href="proyectos.html" class="btn btn-primary">Ver proyectos</a>
+        <a href="sobre-mi.html" class="btn btn-ghost">Sobre mí</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ===== STATS STRIP ===== -->
+<section class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="3">3</div>
+        <div class="stat-lbl">Proyectos publicados</div>
+      </div>
+      <div class="stat-item reveal d1">
+        <div class="stat-num" data-counter="2">2</div>
+        <div class="stat-lbl">Artículos publicados</div>
+      </div>
+      <div class="stat-item reveal d2">
+        <div class="stat-num" data-counter="5200">5.200</div>
+        <div class="stat-lbl">Reseñas analizadas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT TEASER ===== -->
+<section class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img class="about-img"
+          src="https://d1yei2z3i6k35z.cloudfront.net/1271858/67f779a69987b_475966629_10235682357141006_9124654328046914705_n.jpg"
+          alt="Lucas Della Torre"
+          loading="lazy">
+      </div>
+      <div class="about-text">
+        <p class="eyebrow reveal">Sobre mí</p>
+        <h2 class="section-title reveal">El punto donde los números<br>y las personas se cruzan.</h2>
+        <p class="about-body reveal">
+          ¡Hola! Soy Lucas Della Torre, sociólogo y analista de datos especializado en CX. Me considero una persona muy curiosa y de mente inquieta. Mi pasión por entender el comportamiento humano me llevó a explorar el mundo de los datos. Hoy trabajo en ese cruce entre las personas y los números, desarrollando proyectos que van desde la investigación social hasta la ciencia de datos aplicada a la experiencia del cliente.
+        </p>
+        <div class="reveal d1">
+          <a href="sobre-mi.html" class="btn btn-outline">Conocerme mejor &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS PREVIEW ===== -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="projects-header">
+      <div>
+        <p class="eyebrow reveal">Proyectos</p>
+        <h2 class="section-title reveal">Trabajo destacado.</h2>
+      </div>
+      <a href="proyectos.html" class="btn btn-outline reveal">Ver todos &rarr;</a>
+    </div>
+
+    <div class="proj-carousel-wrap" id="projCarouselWrap">
+      <div class="proj-carousel-track" id="projCarouselTrack">
+
+        <a href="proyecto1.html" class="pmc-card">
+          <div class="pmc-thumb" style="background-image:url('https://d1yei2z3i6k35z.cloudfront.net/1271858/68596052c74e4_Fintech-4.jpg')"></div>
+          <div class="pmc-body">
+            <p class="pmc-label">Proyecto № 01 &nbsp;·&nbsp; CX · NLP</p>
+            <div class="pmc-tags">
+              <span class="tag">Python</span><span class="tag">NLP</span><span class="tag">Power BI</span>
+            </div>
+            <h3 class="pmc-title">Fintech vs. Banca Tradicional: la experiencia del usuario bajo la lupa.</h3>
+            <p class="pmc-desc">Análisis de 1.000 reseñas reales de Mercado Pago y Santander para entender qué funciona y qué no en la experiencia digital de una fintech y un banco tradicional.</p>
+            <span class="pmc-link">Ver proyecto <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <a href="proyecto2/index.html" class="pmc-card">
+          <div class="pmc-thumb pmc-thumb-dark">
+            <span class="pmc-num-bg">02</span>
+          </div>
+          <div class="pmc-body">
+            <p class="pmc-label">Proyecto № 02 &nbsp;·&nbsp; CX · NLP</p>
+            <div class="pmc-tags">
+              <span class="tag">Python</span><span class="tag">NLP</span><span class="tag">Pandas</span>
+            </div>
+            <h3 class="pmc-title">La voz del socio: lo que revelan 4.200 reseñas sobre prepagas argentinas.</h3>
+            <p class="pmc-desc">Análisis comparativo de 7 prepagas en Google Play durante el período de mayores aumentos del sector (2024–2026).</p>
+            <span class="pmc-link">Ver proyecto <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <a href="proyecto3/index.html" class="pmc-card">
+          <div class="pmc-thumb pmc-thumb-dark">
+            <span class="pmc-num-bg">03</span>
+          </div>
+          <div class="pmc-body">
+            <p class="pmc-label">Proyecto № 03 &nbsp;·&nbsp; CX · CJM</p>
+            <div class="pmc-tags">
+              <span class="tag">CJM</span><span class="tag">CX Research</span><span class="tag">Investigación secundaria</span>
+            </div>
+            <h3 class="pmc-title">Tradicional vs. Low Cost: la experiencia del pasajero en la aviación argentina.</h3>
+            <p class="pmc-desc">Customer Journey Map comparativo de Aerolíneas Argentinas, Flybondi y JetSmart: 6 etapas, 3 modelos de negocio, datos reales de pasajeros.</p>
+            <span class="pmc-link">Ver proyecto <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="proj-carousel-controls">
+      <button class="proj-carousel-btn" id="projPrev" aria-label="Proyecto anterior">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <button class="proj-carousel-btn" id="projNext" aria-label="Proyecto siguiente">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== PILLARS ===== -->
+<section class="section">
+  <div class="container">
+    <div class="pillars-intro">
+      <p class="eyebrow reveal">Valores</p>
+      <h2 class="section-title reveal">Cómo trabajo.</h2>
+      <p class="section-desc reveal">Cuatro principios que guían cada proyecto, análisis e investigación que emprendo.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card reveal d1">
+        <img class="pillar-icon" src="https://d1yei2z3i6k35z.cloudfront.net/1271858/67f897e6f39e6_curiosi.png" alt="Curiosidad" loading="lazy">
+        <h3 class="pillar-title">Curiosidad</h3>
+        <p class="pillar-desc">Busco ir más allá de la superficie, conectando conceptos de distintas disciplinas para encontrar respuestas profundas.</p>
+      </div>
+      <div class="pillar-card reveal d2">
+        <img class="pillar-icon" src="https://d1yei2z3i6k35z.cloudfront.net/1271858/67f897fa7a555_responsab.png" alt="Responsabilidad" loading="lazy">
+        <h3 class="pillar-title">Responsabilidad</h3>
+        <p class="pillar-desc">Asumo cada proyecto con seriedad y compromiso. La calidad del trabajo no es negociable: si lo hago, lo hago bien.</p>
+      </div>
+      <div class="pillar-card reveal d3">
+        <img class="pillar-icon" src="https://d1yei2z3i6k35z.cloudfront.net/1271858/67f8983a56008_detalle.png" alt="Detalle" loading="lazy">
+        <h3 class="pillar-title">Detalle</h3>
+        <p class="pillar-desc">Los matices importan. Me enfoco en los detalles que otros pasan por alto, porque ahí suele estar la diferencia real.</p>
+      </div>
+      <div class="pillar-card reveal d4">
+        <img class="pillar-icon" src="https://d1yei2z3i6k35z.cloudfront.net/1271858/67f8984702e1a_adaptabil.png" alt="Adaptabilidad" loading="lazy">
+        <h3 class="pillar-title">Adaptabilidad</h3>
+        <p class="pillar-desc">Me ajusto a nuevos desafíos, herramientas y enfoques sin perder el norte. Los contextos cambian y yo también.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SABÍAS QUE ===== -->
+<section class="sabiasque-section">
+  <div class="container">
+    <div class="sabiasque-header reveal">
+      <p class="eyebrow" style="color:rgba(255,255,255,.45)">Datos que importan</p>
+      <h2 class="sabiasque-title">¿Sabías que<em>...</em>?</h2>
+    </div>
+    <div class="sabiasque-track-wrap reveal d1">
+      <div class="sabiasque-track" id="sqTrack">
+        <!-- Cards insertadas por JS -->
+      </div>
+      <div class="sabiasque-dots" id="sqDots"></div>
+      <div class="sabiasque-nav">
+        <button class="sq-arrow" id="sqPrev" aria-label="Anterior">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="sq-arrow" id="sqNext" aria-label="Siguiente">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ===== SABÍAS QUE ===== */
+.sabiasque-section{background:var(--dark);padding-block:6rem;overflow:hidden}
+.sabiasque-title{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.02em;margin-bottom:3rem}
+.sabiasque-title em{font-style:normal;color:var(--accent)}
+.sabiasque-track-wrap{position:relative}
+.sabiasque-track{position:relative;min-height:220px}
+.sq-card{
+  position:absolute;inset:0;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r);
+  padding:2.5rem 3rem;
+  display:flex;flex-direction:column;gap:1.25rem;
+  opacity:0;
+  transform:translateX(60px);
+  transition:opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
+}
+.sq-card.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.sq-card.exit-left{opacity:0;transform:translateX(-60px)}
+.sq-cat{display:inline-flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.sq-cat-icon{font-size:1.1rem;line-height:1}
+.sq-text{font-size:clamp(1rem,2vw,1.25rem);font-weight:500;color:#fff;line-height:1.65;max-width:820px}
+.sq-text strong{color:var(--accent)}
+.sq-source{font-size:.8125rem;color:rgba(255,255,255,.3);font-weight:500}
+.sabiasque-dots{display:flex;gap:.5rem;margin-top:2rem;justify-content:center}
+.sq-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);border:none;cursor:pointer;transition:background .3s,transform .3s;padding:0}
+.sq-dot.active{background:var(--accent);transform:scale(1.3)}
+.sabiasque-nav{position:absolute;top:50%;right:0;transform:translateY(-50%);display:flex;gap:.5rem}
+.sq-arrow{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);cursor:pointer;transition:var(--transition)}
+.sq-arrow:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+@media(max-width:768px){
+  .sabiasque-nav{position:static;transform:none;justify-content:center;margin-top:1.5rem}
+  .sq-card{padding:1.75rem}
+  .sabiasque-dots{margin-top:1.25rem}
+}
+</style>
+
+<script>
+(()=>{
+  const datos = [
+    {
+      cat:"💰 Impacto en revenue",
+      text:"Las empresas que priorizan CX generan <strong>5,7 veces más revenue</strong> que sus competidores menos centrados en el cliente.",
+      source:"Forrester"
+    },
+    {
+      cat:"💰 Impacto en revenue",
+      text:"Según McKinsey, las empresas que ponen el CX en el centro logran el <strong>doble de crecimiento en ingresos</strong> que sus pares menos enfocados en el cliente.",
+      source:"McKinsey / CX Network"
+    },
+    {
+      cat:"💰 Impacto en revenue",
+      text:"Las empresas líderes en CX crecen sus ingresos a un <strong>17% anual</strong>, contra apenas un 3% las que van a la zaga.",
+      source:"Ringly"
+    },
+    {
+      cat:"💰 Impacto en revenue",
+      text:"Un CX excelente genera un aumento de <strong>4–8% en revenue</strong> por encima del promedio del mercado.",
+      source:"Bain & Company"
+    },
+    {
+      cat:"🔥 El costo de ignorarlo",
+      text:"La mala experiencia del cliente le cuesta al mundo <strong>$3,7 trillones de dólares por año</strong>.",
+      source:"Qualtrics XM Institute"
+    },
+    {
+      cat:"🔥 El costo de ignorarlo",
+      text:"El <strong>72% de los clientes cambia de marca</strong> después de una sola experiencia negativa.",
+      source:"Ringly"
+    },
+    {
+      cat:"🔥 El costo de ignorarlo",
+      text:"Solo el <strong>8% de los clientes</strong> cree que las empresas les dan una experiencia superior, aunque el <strong>80% de las propias empresas</strong> cree que sí lo hace.",
+      source:"Bain & Company"
+    },
+    {
+      cat:"📈 Retención y fidelización",
+      text:"Un aumento del <strong>5% en retención</strong> puede generar entre <strong>25% y 95% más de ganancia</strong>.",
+      source:"Bain & Company"
+    },
+    {
+      cat:"📈 Retención y fidelización",
+      text:"Los clientes que tuvieron experiencias excepcionales gastan un <strong>140% más</strong> que los que tuvieron experiencias mediocres.",
+      source:"Sprinklr"
+    },
+    {
+      cat:"📈 Retención y fidelización",
+      text:"Mejorar CX puede reducir el churn en casi un <strong>15%</strong> e incrementar la tasa de cierre de ventas en casi un <strong>40%</strong>.",
+      source:"McKinsey"
+    },
+    {
+      cat:"🎯 Personalización",
+      text:"Las estrategias de CX hiperpersonalizadas logran hasta <strong>25% de crecimiento en ingresos</strong> y un <strong>50% menos en costos de adquisición</strong> de clientes.",
+      source:"McKinsey / Onramp"
+    },
+    {
+      cat:"🛒 Lo que el cliente está dispuesto a pagar",
+      text:"El <strong>86% de los compradores</strong> está dispuesto a pagar más por una mejor experiencia del cliente.",
+      source:"PwC"
+    }
+  ];
+
+  const track = document.getElementById('sqTrack');
+  const dotsWrap = document.getElementById('sqDots');
+  let current = 0;
+  let timer;
+
+  // Build cards
+  datos.forEach((d, i) => {
+    const card = document.createElement('div');
+    card.className = 'sq-card' + (i === 0 ? ' active' : '');
+    card.innerHTML = `
+      <span class="sq-cat">${d.cat}</span>
+      <p class="sq-text">${d.text}</p>
+      <span class="sq-source">Fuente: ${d.source}</span>
+    `;
+    track.appendChild(card);
+
+    const dot = document.createElement('button');
+    dot.className = 'sq-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+
+  const cards = track.querySelectorAll('.sq-card');
+  const dots  = dotsWrap.querySelectorAll('.sq-dot');
+
+  function goTo(next, dir = 'next') {
+    if (next === current) return;
+    const prev = current;
+    cards[prev].classList.remove('active');
+    cards[prev].classList.add('exit-left');
+    dots[prev].classList.remove('active');
+    setTimeout(() => cards[prev].classList.remove('exit-left'), 560);
+    cards[next].style.transform = dir === 'next' ? 'translateX(60px)' : 'translateX(-60px)';
+    requestAnimationFrame(() => {
+      cards[next].classList.add('active');
+      cards[next].style.transform = '';
+    });
+    dots[next].classList.add('active');
+    current = next;
+    resetTimer();
+  }
+
+  function next() { goTo((current + 1) % datos.length, 'next'); }
+  function prev() { goTo((current - 1 + datos.length) % datos.length, 'prev'); }
+
+  document.getElementById('sqNext').addEventListener('click', next);
+  document.getElementById('sqPrev').addEventListener('click', prev);
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(next, 5000);
+  }
+  resetTimer();
+
+  // Pause on hover
+  track.addEventListener('mouseenter', () => clearInterval(timer));
+  track.addEventListener('mouseleave', resetTimer);
+})();
+</script>
+
+<!-- ===== RECURSOS ===== -->
+<section class="recursos-section" id="recursos">
+  <div class="container">
+    <div class="recursos-inner">
+
+      <div class="recursos-copy reveal">
+        <p class="eyebrow">Recursos gratuitos</p>
+        <h2>Template de Customer Journey Map</h2>
+        <p>Un mapa listo para completar con los pasos que recorre tu cliente — desde que te descubre hasta que vuelve. Diseñado para empresas y pymes argentinas que quieren entender su experiencia de cliente antes de mejorarla.</p>
+        <ul class="recursos-includes">
+          <li>5 etapas del journey en español</li>
+          <li>Acción del cliente, canales y emociones por etapa</li>
+          <li>Puntos de fricción y oportunidades de mejora</li>
+          <li>Editable en Canva, sin costo</li>
+        </ul>
+      </div>
+
+      <div class="recursos-card reveal d1">
+        <p class="recursos-card-title">Descargá el template gratis</p>
+        <p class="recursos-card-sub">Dejá tu email y te enviamos el acceso al instante.</p>
+
+        <div id="recursosFormWrap">
+          <form class="recursos-form" id="recursosForm" action="https://formspree.io/f/xqewdlzj" method="POST">
+            <input type="hidden" name="_subject" value="Descarga: Template CJM">
+            <input type="hidden" name="source" value="recurso-cjm-index">
+            <input
+              class="recursos-input"
+              type="email"
+              name="email"
+              placeholder="tu@email.com"
+              required
+              autocomplete="email"
+            >
+            <button class="recursos-btn" type="submit" id="recursosBtn">
+              Acceder al template &rarr;
+            </button>
+          </form>
+          <p class="recursos-note">Sin spam. Solo el template.</p>
+        </div>
+
+        <div class="recursos-success" id="recursosSuccess">
+          <div class="recursos-success-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>¡Listo! Ya podés abrir el template.</h3>
+          <p>También te enviamos el link por email para que lo tengas guardado.</p>
+          <a href="#" id="recursosCanvaLink" class="recursos-download-btn" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Abrir en Canva
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA BANNER ===== -->
+<section class="cta-band">
+  <div class="container cta-band-inner">
+    <h2 class="reveal">¿Tenés un proyecto<br>en mente?</h2>
+    <p class="reveal d1">Hablemos. Podemos trabajar juntos en investigación, análisis de datos o estrategia de CX.</p>
+    <a href="contacto.html" class="btn btn-primary reveal d2">Contactarme &rarr;</a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos y CX (experiencia del cliente).</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="articulos.html">Artículos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="sobre-mi.html">Sobre mí</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="/cdn-cgi/l/email-protection#58342d3b392b3c752c1830372c35393134763b3735"><span class="__cf_email__" data-cfemail="412d34222032256c3501292e352c20282d6f222e2c">[email&#160;protected]</span></a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;·&nbsp; <a href="politica-cookies.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Política de cookies</a> &nbsp;·&nbsp; <a href="mapa-del-sitio.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Mapa del sitio</a></p>
+      <div class="footer-social">
+        <a href="/cdn-cgi/l/email-protection#8ae6ffe9ebf9eea7fecae2e5fee7ebe3e6a4e9e5e7" class="social-icon" title="Email">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon" title="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
+
+// Mobile menu
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{
+  links.classList.toggle('open');
+  toggle.classList.toggle('open');
+});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  links.classList.remove('open');
+  toggle.classList.remove('open');
+}));
+
+// Scroll reveal
+(()=>{
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target)}})
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+
+// Projects carousel — continuous drift + drag + arrows
+(()=>{
+  const wrap    = document.getElementById('projCarouselWrap');
+  const track   = document.getElementById('projCarouselTrack');
+  const prevBtn = document.getElementById('projPrev');
+  const nextBtn = document.getElementById('projNext');
+  if (!track || !wrap) return;
+
+  // Clone cards for seamless infinite loop
+  const origCards = [...track.querySelectorAll('.pmc-card')];
+  const n = origCards.length;
+  origCards.forEach(c => {
+    const cl = c.cloneNode(true);
+    cl.setAttribute('aria-hidden','true');
+    cl.setAttribute('tabindex','-1');
+    track.appendChild(cl);
+  });
+
+  const SPEED = 0.55; // px/frame ≈ 33px/s — slow continuous drift
+
+  let pos = 0, snapping = false;
+
+  function gapPx()    { return parseFloat(getComputedStyle(track).gap) || 24; }
+  function cardStep() { return origCards[0].offsetWidth + gapPx(); }
+  function loopLen()  { return n * cardStep(); }
+  function norm(p)    { return ((p % loopLen()) + loopLen()) % loopLen(); }
+
+  function applyPos(p, anim) {
+    pos = norm(p);
+    track.style.transition = anim ? 'transform .6s cubic-bezier(.4,0,.2,1)' : 'none';
+    track.style.transform  = `translateX(${-pos}px)`;
+  }
+
+  function snapToCard(idx, anim = true) {
+    snapping = true;
+    applyPos(((idx % n) + n) % n * cardStep(), anim);
+    setTimeout(() => { snapping = false; }, anim ? 650 : 0);
+  }
+
+  function curIdx() { return Math.round(pos / cardStep()) % n; }
+
+  // RAF — continuous drift
+  (function tick() {
+    if (!snapping) {
+      pos += SPEED;
+      if (pos >= loopLen()) pos -= loopLen();
+      track.style.transition = 'none';
+      track.style.transform  = `translateX(${-pos}px)`;
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  // Arrows — snap to previous/next card
+  prevBtn?.addEventListener('click', () => snapToCard(curIdx() - 1));
+  nextBtn?.addEventListener('click', () => snapToCard(curIdx() + 1));
+
+  // Resize
+  window.addEventListener('resize', () => applyPos(curIdx() * cardStep(), false));
+})();
+
+// Stat counters — animate 0 → target on scroll into view
+(()=>{
+  const els = document.querySelectorAll('[data-counter]');
+  if (!els.length) return;
+
+  function fmt(n, target) {
+    if (target >= 1000) return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return String(Math.round(n));
+  }
+
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el     = e.target;
+      const target = parseInt(el.dataset.counter, 10);
+      const dur    = 1400;
+      const start  = performance.now();
+
+      (function tick(now) {
+        const p      = Math.min((now - start) / dur, 1);
+        const eased  = 1 - Math.pow(1 - p, 3); // ease-out cubic
+        el.textContent = fmt(eased * target, target);
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = fmt(target, target);
+      })(performance.now());
+
+      o.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+
+  els.forEach(el => obs.observe(el));
+})();
+
+// Recursos — form gate
+(()=>{
+  const CANVA_LINK = '#'; // ← reemplazá con el link público de Canva cuando esté listo
+
+  const form = document.getElementById('recursosForm');
+  const btn  = document.getElementById('recursosBtn');
+  const wrap = document.getElementById('recursosFormWrap');
+  const success = document.getElementById('recursosSuccess');
+  const canvaLink = document.getElementById('recursosCanvaLink');
+
+  if(!form) return;
+  canvaLink.href = CANVA_LINK;
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if(res.ok) {
+        wrap.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Acceder al template →';
+        alert('Hubo un error. Intentá de nuevo.');
+      }
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'Acceder al template →';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

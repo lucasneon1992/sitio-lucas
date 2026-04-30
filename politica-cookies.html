@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Política de cookies de lucasdellatorre.com — qué datos se recopilan, para qué y cómo gestionarlos.">
+<title>Política de cookies — Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+:root{
+  --dark:#0B1437;--bg:#fff;--bg-alt:#F5F7FA;--accent:#2563EB;--accent-h:#1D4ED8;
+  --accent-l:#EFF6FF;--text:#374151;--muted:#6B7280;--heading:#0B1437;
+  --border:#E5E7EB;--r:14px;--r-sm:8px;
+  --shadow:0 4px 30px rgba(11,20,55,.08);
+  --t:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.875rem 0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:var(--text);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--t)}
+.nav-links li a:hover{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:var(--t)}
+
+/* HERO */
+.page-hero{padding-block:9rem 4rem;background:var(--dark);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,.12) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.page-hero-inner{position:relative;z-index:1;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.page-hero h1{font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.03em;margin-bottom:.875rem}
+.page-hero-sub{font-size:1rem;color:rgba(255,255,255,.45);font-weight:400}
+
+/* CONTENT */
+.section{padding-block:5rem}
+.container-narrow{width:100%;max-width:760px;margin-inline:auto;padding-inline:1.5rem}
+
+.content-body{font-size:1rem;color:var(--text);line-height:1.75}
+.content-body h2{font-size:1.375rem;font-weight:700;color:var(--heading);margin-top:3rem;margin-bottom:.875rem;letter-spacing:-.02em}
+.content-body p{margin-bottom:1.125rem}
+.content-body strong{color:var(--heading);font-weight:600}
+.content-body a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(37,99,235,.3);text-underline-offset:3px;transition:text-decoration-color .2s}
+.content-body a:hover{text-decoration-color:var(--accent)}
+.content-body ul{margin-bottom:1.125rem;padding-left:1.25rem;display:flex;flex-direction:column;gap:.5rem}
+.content-body ul li{position:relative}
+.content-body ul li::before{content:'→';position:absolute;left:-1.25rem;color:var(--accent);font-weight:600}
+
+/* TABLE */
+.cookies-table{width:100%;border-collapse:collapse;margin-block:1.5rem;font-size:.9375rem}
+.cookies-table th{text-align:left;font-size:.6875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.875rem 1rem;border-bottom:2px solid var(--border);background:var(--bg-alt)}
+.cookies-table td{padding:.875rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+.cookies-table tr:last-child td{border-bottom:none}
+.cookies-table td:first-child{font-weight:600;color:var(--heading);white-space:nowrap}
+
+/* NO TRACKING BADGE */
+.no-tracking{background:var(--accent-l);border:1px solid rgba(37,99,235,.2);border-radius:var(--r);padding:1.25rem 1.5rem;margin-block:1.75rem;display:flex;gap:1rem;align-items:flex-start}
+.no-tracking-icon{font-size:1.25rem;flex-shrink:0}
+.no-tracking-text{font-size:.9375rem;color:var(--heading);line-height:1.65}
+.no-tracking-text strong{display:block;margin-bottom:.25rem}
+
+/* UPDATE NOTE */
+.update-note{font-size:.8125rem;color:var(--muted);margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+
+/* FOOTER */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-copy a{color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px}
+.footer-copy a:hover{color:rgba(255,255,255,.5)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--t)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+@media(max-width:768px){
+  .section{padding-block:4rem}
+  .nav-links{display:none;position:fixed;inset:0;background:var(--dark);flex-direction:column;justify-content:center;align-items:center;gap:.5rem}
+  .nav-links.open{display:flex}
+  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+  .cookies-table{font-size:.875rem}
+  .cookies-table td:first-child{white-space:normal}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="articulos.html">Artículos</a></li>
+      <li><a href="proyectos.html">Proyectos</a></li>
+      <li><a href="sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <p class="eyebrow">Legal</p>
+    <h1>Política de cookies</h1>
+    <p class="page-hero-sub">Qué datos recopila este sitio, cómo y por qué.</p>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="section">
+  <div class="container-narrow">
+    <div class="content-body">
+
+      <h2>Qué es una cookie</h2>
+      <p>Una cookie es un pequeño archivo de texto que un sitio web almacena en el navegador del usuario cuando lo visita. Se usa para recordar preferencias, mantener sesiones activas, y — en muchos sitios — rastrear el comportamiento del usuario con fines publicitarios o analíticos.</p>
+      <p>Esta política explica qué tecnologías utiliza <strong>lucasdellatorre.com</strong>, para qué sirven y qué implica su uso.</p>
+
+      <div class="no-tracking">
+        <span class="no-tracking-icon">✓</span>
+        <div class="no-tracking-text">
+          <strong>Este sitio no utiliza cookies de seguimiento, publicidad ni analítica.</strong>
+          No hay Google Analytics, Meta Pixel, ni ningún sistema de rastreo del comportamiento del usuario. Los únicos datos que se recopilan son los que el propio usuario envía voluntariamente a través de los formularios.
+        </div>
+      </div>
+
+      <h2>Tecnologías que este sitio utiliza</h2>
+
+      <table class="cookies-table">
+        <thead>
+          <tr>
+            <th>Tecnología</th>
+            <th>Proveedor</th>
+            <th>Para qué se usa</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cookies de seguridad</td>
+            <td>Cloudflare</td>
+            <td>Protección contra bots y ataques, optimización de carga del sitio. Son técnicas y necesarias para el funcionamiento del hosting.</td>
+            <td>Técnica · necesaria</td>
+          </tr>
+          <tr>
+            <td>Google Fonts</td>
+            <td>Google</td>
+            <td>Carga la tipografía Inter desde los servidores de Google. No setea cookies en el navegador, pero implica una request a servidores de Google al cargar la página.</td>
+            <td>Técnica · funcional</td>
+          </tr>
+          <tr>
+            <td>Formspree</td>
+            <td>Formspree Inc.</td>
+            <td>Procesa los formularios de contacto y newsletter. Solo recibe los datos que el usuario completa y envía voluntariamente.</td>
+            <td>Funcional</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Qué no utiliza este sitio</h2>
+      <ul>
+        <li>Herramientas de analítica web (Google Analytics, Hotjar, Mixpanel u otras)</li>
+        <li>Píxeles de publicidad (Meta Pixel, Google Ads, LinkedIn Insight Tag)</li>
+        <li>Cookies de sesión o login (no hay área de usuarios ni acceso privado)</li>
+        <li>Herramientas de remarketing o retargeting</li>
+        <li>Redes de publicidad de terceros</li>
+      </ul>
+
+      <h2>Formularios y datos que enviás voluntariamente</h2>
+      <p>Cuando completás un formulario en este sitio — ya sea el formulario de contacto, el de suscripción al newsletter o el de descarga de recursos — los datos que ingresás (nombre, email, mensaje) son recibidos por <strong>Formspree</strong> y reenviados al titular del sitio. Esos datos no se comparten con terceros ni se usan con fines comerciales ajenos a la consulta original.</p>
+      <p>Si en algún momento querés que eliminemos tu información, podés solicitarlo por email a <a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a>.</p>
+
+      <h2>Tus derechos</h2>
+      <p>De acuerdo con la <strong>Ley 25.326 de Protección de Datos Personales</strong> de la República Argentina, tenés derecho a:</p>
+      <ul>
+        <li>Acceder a los datos personales que hayamos recopilado sobre vos</li>
+        <li>Solicitar la rectificación de datos incorrectos</li>
+        <li>Solicitar la eliminación de tus datos</li>
+        <li>Revocar el consentimiento para el uso de tus datos en cualquier momento</li>
+      </ul>
+      <p>Para ejercer cualquiera de estos derechos, escribinos a <a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a>.</p>
+
+      <h2>Cómo gestionar las cookies en tu navegador</h2>
+      <p>Dado que este sitio solo utiliza cookies técnicas de seguridad (necesarias para su funcionamiento), no existe un panel de preferencias de cookies. Si igualmente querés gestionar o eliminar cookies almacenadas en tu navegador, podés hacerlo desde la configuración de privacidad de tu navegador:</p>
+      <ul>
+        <li><strong>Chrome:</strong> Configuración → Privacidad y seguridad → Cookies</li>
+        <li><strong>Firefox:</strong> Opciones → Privacidad y seguridad → Cookies</li>
+        <li><strong>Safari:</strong> Preferencias → Privacidad → Cookies</li>
+        <li><strong>Edge:</strong> Configuración → Privacidad, búsqueda y servicios → Cookies</li>
+      </ul>
+
+      <h2>Contacto</h2>
+      <p>Si tenés preguntas sobre esta política o sobre el tratamiento de tus datos, podés escribirnos a <a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a> o usar el <a href="contacto.html">formulario de contacto</a>.</p>
+
+      <p class="update-note">Última actualización: abril de 2026. Esta política puede actualizarse ocasionalmente para reflejar cambios en las tecnologías utilizadas por el sitio.</p>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container" style="max-width:1160px;margin-inline:auto;padding-inline:1.5rem">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos y CX (experiencia del cliente).</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="articulos.html">Artículos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="sobre-mi.html">Sobre mí</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;·&nbsp; <a href="politica-cookies.html">Política de cookies</a></p>
+      <div class="footer-social">
+        <a href="mailto:lucasd-t@hotmail.com" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.classList.toggle('open')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.classList.remove('open')}));
+</script>
+</body>
+</html>

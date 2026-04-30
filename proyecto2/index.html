@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="La voz del socio — Análisis de 4.200 reseñas públicas de 7 prepagas argentinas en Google Play. CX, aumentos y experiencia del socio. Por Lucas Della Torre.">
+<title>Proyecto 02 — La voz del socio · Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+:root{
+  --dark:#0B1437;--bg:#fff;--bg-alt:#F5F7FA;--accent:#2563EB;--accent-h:#1D4ED8;
+  --accent-l:#EFF6FF;--text:#374151;--muted:#6B7280;--heading:#0B1437;
+  --border:#E5E7EB;--r:14px;--r-sm:8px;
+  --shadow:0 4px 30px rgba(11,20,55,.08);--shadow-lg:0 20px 60px rgba(11,20,55,.14);
+  --t:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+/* Colores de marca por prepaga */
+:root{
+  --osde:#005BAC;
+  --swiss:#D71920;
+  --galeno:#F47920;
+  --medife:#009490;
+  --medicus:#004B8D;
+  --omint:#00A651;
+  --sancor:#1B4F8A;
+}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);will-change:opacity,transform}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+.container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.container-narrow{width:100%;max-width:800px;margin-inline:auto;padding-inline:1.5rem}
+.section{padding-block:5rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:20px;background:var(--accent-l);color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.875rem;border-radius:var(--r-sm);font-weight:600;font-size:.9375rem;transition:var(--t);border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.3)}
+.btn-outline{background:transparent;color:var(--heading);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.btn-ghost-dark{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.15)}
+.btn-ghost-dark:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.875rem 0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:var(--text);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--t)}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:var(--t)}
+
+/* PROJECT HERO */
+.proj-hero{padding-block:9rem 5rem;background:var(--dark);position:relative;overflow:hidden}
+.proj-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size:28px 28px;
+}
+.proj-hero::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 70% 50%, rgba(37,99,235,.12) 0%, transparent 60%);
+}
+.proj-hero-inner{position:relative;z-index:1}
+.proj-hero .back-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.5);margin-bottom:2rem;transition:color .2s}
+.proj-hero .back-link:hover{color:rgba(255,255,255,.8)}
+.proj-hero .back-link svg{transition:transform .2s}
+.proj-hero .back-link:hover svg{transform:translateX(-3px)}
+.proj-hero .eyebrow{color:rgba(255,255,255,.45)}
+.proj-hero .eyebrow::before{background:var(--accent)}
+.proj-hero h1{font-size:clamp(1.875rem,4vw,3.25rem);font-weight:800;color:#fff;line-height:1.12;letter-spacing:-.03em;margin-bottom:1.5rem;max-width:820px}
+.proj-hero-meta{display:flex;flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem}
+.meta-item{display:flex;flex-direction:column;gap:.25rem}
+.meta-label{font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.meta-value{font-size:.9375rem;font-weight:500;color:rgba(255,255,255,.75)}
+.proj-hero-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.proj-hero-tags .tag{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
+
+/* STATS STRIP */
+.stats-strip{background:var(--accent);padding-block:2.5rem}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.stat-item{text-align:center}
+.stat-num{display:block;font-size:2.25rem;font-weight:800;color:#fff;line-height:1;letter-spacing:-.03em;margin-bottom:.375rem}
+.stat-label{font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.7);letter-spacing:.02em}
+
+/* PREPAGA LEGEND */
+.prep-legend{display:flex;flex-wrap:wrap;gap:.625rem;margin-block:2rem}
+.prep-chip{display:inline-flex;align-items:center;gap:.5rem;padding:.375rem .875rem;border-radius:20px;font-size:.8125rem;font-weight:600;border:1.5px solid;background:transparent}
+.prep-chip .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* CONTENT */
+.content-body{font-size:1.0625rem;color:var(--text);line-height:1.85}
+.content-body h2{font-size:1.75rem;font-weight:700;color:var(--heading);margin-top:3.5rem;margin-bottom:1.25rem;letter-spacing:-.02em}
+.content-body h3{font-size:1.25rem;font-weight:700;color:var(--heading);margin-top:2rem;margin-bottom:.875rem}
+.content-body p{margin-bottom:1.25rem}
+.content-body ul{margin-bottom:1.25rem;padding-left:1.25rem}
+.content-body ul li{margin-bottom:.5rem;position:relative}
+.content-body ul li::before{content:'→';position:absolute;left:-1.25rem;color:var(--accent);font-weight:600}
+
+/* PULL QUOTE */
+.pull-quote{border-left:3px solid var(--accent);background:var(--accent-l);padding:1.125rem 1.375rem;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-block:2rem;font-size:1.0625rem;font-style:italic;color:var(--heading);line-height:1.75}
+
+/* TIMELINE */
+.timeline{display:flex;gap:0;margin-block:2.5rem;overflow-x:auto;padding-bottom:.5rem}
+.tl-item{flex:1;min-width:130px;padding:1.25rem 1rem;background:var(--bg-alt);border:1px solid var(--border);border-radius:0;position:relative}
+.tl-item:first-child{border-radius:var(--r-sm) 0 0 var(--r-sm)}
+.tl-item:last-child{border-radius:0 var(--r-sm) var(--r-sm) 0}
+.tl-item+.tl-item{border-left:none}
+.tl-item.highlight{background:var(--dark);border-color:var(--dark)}
+.tl-date{font-size:.6875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.375rem}
+.tl-item.highlight .tl-date{color:rgba(255,255,255,.5)}
+.tl-text{font-size:.875rem;font-weight:600;color:var(--heading);line-height:1.4}
+.tl-item.highlight .tl-text{color:#fff}
+.tl-sub{font-size:.75rem;color:var(--muted);margin-top:.25rem;line-height:1.4}
+.tl-item.highlight .tl-sub{color:rgba(255,255,255,.5)}
+
+/* METHODOLOGY STEPS */
+.method-steps{display:grid;gap:1.25rem;margin-block:2rem}
+.method-step{display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start;background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem}
+.step-num{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;font-size:.875rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-content h3{font-size:1rem;font-weight:700;color:var(--heading);margin-bottom:.5rem}
+.step-content p{font-size:.9375rem;color:var(--muted);line-height:1.7;margin:0}
+.step-content code{font-family:monospace;background:var(--border);padding:.1rem .35rem;border-radius:4px;font-size:.875em}
+
+/* CHART BLOCK */
+.chart-block{margin-block:2.5rem;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.chart-block img{width:100%;display:block}
+.chart-caption{padding:1.25rem 1.5rem;background:var(--bg-alt);border-top:1px solid var(--border)}
+.chart-title{font-size:.875rem;font-weight:700;color:var(--heading);margin-bottom:.375rem}
+.chart-text{font-size:.875rem;color:var(--muted);line-height:1.65;margin:0}
+
+/* STAT CALLOUT */
+.stat-callouts{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-block:2rem}
+.stat-callout{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;text-align:center}
+.callout-num{display:block;font-size:2rem;font-weight:800;color:var(--heading);letter-spacing:-.03em;margin-bottom:.25rem}
+.callout-label{font-size:.8125rem;color:var(--muted);line-height:1.5}
+
+/* FINDINGS */
+.findings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-block:2rem}
+.finding-card{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem;border-left:3px solid var(--accent)}
+.finding-num{font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:.625rem}
+.finding-text{font-size:.9375rem;color:var(--text);line-height:1.7}
+.finding-card.highlight{border-left-color:var(--dark);background:var(--dark)}
+.finding-card.highlight .finding-num{color:rgba(255,255,255,.4)}
+.finding-card.highlight .finding-text{color:rgba(255,255,255,.85)}
+
+/* TOOLS */
+.tools-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
+.tool-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border-radius:var(--r-sm);background:var(--bg-alt);border:1px solid var(--border);font-size:.875rem;font-weight:600;color:var(--heading)}
+.tool-badge svg{color:var(--accent)}
+
+/* PROJECT LINKS */
+.project-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.5rem}
+
+/* NEXT PROJECT */
+.next-proj{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:2.5rem;display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap}
+.next-proj-label{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.next-proj-title{font-size:1.25rem;font-weight:700;color:var(--heading)}
+
+/* FOOTER */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--t)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+/* INFO BOX */
+.info-box{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem 1.75rem;margin-block:2rem;display:flex;gap:1rem;align-items:flex-start}
+.info-box-icon{font-size:1.25rem;flex-shrink:0;margin-top:.1rem}
+.info-box-body{font-size:.9375rem;color:var(--text);line-height:1.7}
+.info-box-body strong{color:var(--heading)}
+
+/* POWER BI PLACEHOLDER */
+.powerbi-placeholder{background:var(--bg-alt);border:2px dashed var(--border);border-radius:var(--r);padding:3rem 2rem;text-align:center;margin-block:2rem}
+.powerbi-placeholder svg{color:var(--muted);margin-inline:auto;margin-bottom:1rem;opacity:.5}
+.powerbi-placeholder p{font-size:.9375rem;color:var(--muted);margin:0}
+
+/* PYRAMID */
+.pyramid-wrap{display:flex;flex-direction:column;gap:.5rem;align-items:center;margin-block:2rem}
+.pyr-row{transition:none}
+.pyr-bar{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.25rem;border-radius:var(--r-sm);transition:filter .2s,transform .2s;cursor:default;gap:1rem}
+.pyr-bar:hover{filter:brightness(1.1);transform:scaleY(1.035)}
+.pyr-left{display:flex;align-items:center;gap:.625rem;flex-shrink:0}
+.pyr-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(255,255,255,.15);border-radius:6px;flex-shrink:0}
+.pyr-label-wrap{display:flex;flex-direction:column}
+.pyr-label{font-size:.875rem;font-weight:600;color:#fff;white-space:nowrap}
+.pyr-keywords{font-size:.7rem;color:rgba(255,255,255,.45);max-height:0;overflow:hidden;transition:max-height .25s ease,opacity .25s ease;opacity:0;white-space:nowrap}
+.pyr-bar:hover .pyr-keywords{max-height:1.5rem;opacity:1}
+.pyr-right{text-align:right;flex-shrink:0}
+.pyr-pct{display:block;font-size:1rem;font-weight:800;color:#fff;line-height:1}
+.pyr-count{display:block;font-size:.7rem;color:rgba(255,255,255,.55);margin-top:.125rem}
+@media(max-width:768px){.pyr-row{width:100%!important}}
+
+@media(max-width:900px){
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .findings-grid{grid-template-columns:1fr}
+  .stat-callouts{grid-template-columns:1fr}
+  .method-step{grid-template-columns:1fr}
+  .next-proj{flex-direction:column}
+  .nav-links{display:none;position:fixed;inset:0;background:var(--dark);flex-direction:column;justify-content:center;align-items:center;gap:.5rem}
+  .nav-links.open{display:flex}
+  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+  .timeline{flex-direction:column}
+  .tl-item{border-radius:var(--r-sm)!important;border-left:1px solid var(--border)!important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="../articulos.html">Artículos</a></li>
+      <li><a href="../proyectos.html" class="active">Proyectos</a></li>
+      <li><a href="../sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="../contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="proj-hero">
+  <div class="container proj-hero-inner">
+    <a href="../proyectos.html" class="back-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Todos los proyectos
+    </a>
+    <p class="eyebrow">Proyecto № 02 &nbsp;·&nbsp; Customer Experience · NLP · Datos públicos</p>
+    <h1>La voz del socio: lo que revelan 4.200 reseñas sobre la experiencia en el sistema de prepagas argentino.</h1>
+    <div class="proj-hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Período</span>
+        <span class="meta-value">Abril 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Reseñas</span>
+        <span class="meta-value">4.200 registros</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Prepagas</span>
+        <span class="meta-value">7 empresas</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Fuente</span>
+        <span class="meta-value">Google Play Store</span>
+      </div>
+    </div>
+    <div class="proj-hero-tags">
+      <span class="tag">Python</span>
+      <span class="tag">Pandas</span>
+      <span class="tag">NLP</span>
+      <span class="tag">NLTK</span>
+      <span class="tag">WordCloud</span>
+      <span class="tag">Matplotlib</span>
+      <span class="tag">Seaborn</span>
+      <span class="tag">Power BI</span>
+      <span class="tag">Google Play Scraper</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-num">4.200</span>
+      <span class="stat-label">reseñas analizadas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">7</span>
+      <span class="stat-label">prepagas comparadas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">2024–26</span>
+      <span class="stat-label">período de análisis</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">5,4%</span>
+      <span class="stat-label">de reseñas menciona precios o aumentos</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<section class="section">
+  <div class="container-narrow">
+    <div class="content-body">
+
+      <h2 class="reveal">Contexto: el año de los aumentos</h2>
+      <p class="reveal">En diciembre de 2023, el gobierno de Javier Milei promulgó el DNU 70/2023, que desreguló el mercado de la medicina prepaga y eliminó el control estatal sobre los precios de las cuotas. Lo que siguió fue uno de los períodos de mayor convulsión en el sector: solo en enero de 2024 las cuotas subieron un 40%, en febrero un 36% adicional, y al llegar a abril el acumulado desde diciembre de 2023 ya superaba el 151%. A fin de año, el aumento total de 2024 rondó el 200%.</p>
+      <p class="reveal">El Estado debió intervenir. El Gobierno intimó a siete empresas —OSDE, Swiss Medical, Galeno, Omint, Medifé, Hospital Alemán y Hospital Británico— a recalcular sus cuotas y reducirlas en hasta un 33%. Pero el daño sobre la percepción de los socios ya estaba hecho. Según relevamientos de la época, el 5% de los afiliados proyectaba darse de baja, y el 70% pensaba en algún tipo de cambio en su cobertura. Una de las prepagas más grandes del país reportó la pérdida de aproximadamente 25.000 socios en el transcurso de un año — cerca de 20 bajas por día.</p>
+      <p class="reveal">En 2025 los aumentos continuaron, aunque a un ritmo mensual de entre 3% y 3,9%. El equilibrio precio-servicio quedó en el centro de la queja del socio: ¿vale lo que cuesta? Esa pregunta, formulada en reseñas públicas de Google Play, es el punto de partida de este análisis.</p>
+
+      <div class="timeline reveal">
+        <div class="tl-item">
+          <div class="tl-date">Dic 2023</div>
+          <div class="tl-text">DNU 70/2023</div>
+          <div class="tl-sub">Desregulación del sector prepaga</div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-date">Ene–Mar 2024</div>
+          <div class="tl-text">+100% acumulado</div>
+          <div class="tl-sub">+40% en enero, +36% en febrero</div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-date">Abr–May 2024</div>
+          <div class="tl-text">Intervención</div>
+          <div class="tl-sub">El gobierno exige reducir cuotas un 33%</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2025</div>
+          <div class="tl-text">+3–3,9% mensual</div>
+          <div class="tl-sub">Aumentos por encima de inflación en varios meses</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2026</div>
+          <div class="tl-text">Normalización</div>
+          <div class="tl-sub">Subas de 7,5–8,6% en el trimestre</div>
+        </div>
+      </div>
+
+      <p class="reveal">Este contexto importa porque las reseñas de Google Play no son solo una evaluación de una aplicación: son un termómetro de la experiencia completa de ser socio. Cuando alguien califica con 1 estrella la app de su prepaga, pocas veces lo hace por un bug técnico; más frecuentemente, lo hace porque acaba de recibir una factura que no puede pagar, o porque un trámite que tardó semanas en resolverse lo llevó a abrir el teléfono y descargar su frustración.</p>
+
+      <h2 class="reveal">Una variable diferencial: la infraestructura propia</h2>
+      <p class="reveal">No todas las prepagas analizadas operan bajo el mismo modelo. <strong>Swiss Medical</strong> dispone de una red de centros médicos propios distribuidos en CABA y el Gran Buenos Aires, lo que le permite mayor control sobre la experiencia de atención presencial. <strong>Galeno</strong> cuenta con un gran centro propio en Palermo, y <strong>Medicus</strong> también opera con infraestructura propia en algunos puntos de la ciudad. <strong>OSDE</strong>, en cambio, trabaja exclusivamente a través de una cartilla de profesionales y clínicas adherentes, sin centros propios.</p>
+      <p class="reveal">Esta variable es relevante desde una perspectiva de CX: tener infraestructura propia implica mayor capacidad de gestionar la experiencia del socio en todos los puntos del journey. Sin embargo, y como los datos mostrarán, esto no necesariamente se traduce en mejor experiencia percibida en el entorno digital.</p>
+
+      <!-- LEGEND -->
+      <div class="reveal" style="margin-block:2.5rem">
+        <p style="font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.875rem">Código de color — todos los gráficos</p>
+        <div class="prep-legend">
+          <span class="prep-chip" style="color:var(--osde);border-color:var(--osde)"><span class="dot" style="background:var(--osde)"></span>OSDE</span>
+          <span class="prep-chip" style="color:var(--swiss);border-color:var(--swiss)"><span class="dot" style="background:var(--swiss)"></span>Swiss Medical</span>
+          <span class="prep-chip" style="color:var(--galeno);border-color:var(--galeno)"><span class="dot" style="background:var(--galeno)"></span>Galeno</span>
+          <span class="prep-chip" style="color:var(--medife);border-color:var(--medife)"><span class="dot" style="background:var(--medife)"></span>Medifé</span>
+          <span class="prep-chip" style="color:var(--medicus);border-color:var(--medicus)"><span class="dot" style="background:var(--medicus)"></span>Medicus</span>
+          <span class="prep-chip" style="color:var(--omint);border-color:var(--omint)"><span class="dot" style="background:var(--omint)"></span>Omint</span>
+          <span class="prep-chip" style="color:var(--sancor);border-color:var(--sancor)"><span class="dot" style="background:var(--sancor)"></span>Sancor Salud</span>
+        </div>
+      </div>
+
+      <h2 class="reveal">Metodología</h2>
+      <p class="reveal">El análisis se estructuró en cuatro fases secuenciales:</p>
+
+      <div class="method-steps">
+        <div class="method-step reveal">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Recolección de datos</h3>
+            <p>Scraping de reseñas de Google Play Store usando la librería <code>google-play-scraper</code>. Se recolectaron 600 reseñas por prepaga (ordenadas por las más recientes) para las 7 empresas seleccionadas, totalizando 4.200 registros. Los package IDs fueron verificados uno a uno previo al scraping para asegurar que se tratara de las apps oficiales de cada empresa.</p>
+          </div>
+        </div>
+        <div class="method-step reveal d1">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Limpieza y preprocesamiento</h3>
+            <p>Con <strong>Pandas</strong> se normalizaron fechas, se eliminaron reseñas vacías y se estandarizaron los nombres de las empresas. Las reseñas se clasificaron en tres categorías de sentimiento según la calificación: positivo (4–5 estrellas), neutral (3 estrellas) y negativo (1–2 estrellas). También se identificó si cada reseña tenía respuesta oficial de la empresa.</p>
+          </div>
+        </div>
+        <div class="method-step reveal d2">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Análisis exploratorio y visualización</h3>
+            <p>Con <strong>Matplotlib</strong> y <strong>Seaborn</strong> se generaron seis gráficos comparativos: rating promedio, distribución de estrellas, sentimiento, tasa de respuesta, evolución mensual y menciones a precios. Para este último se construyó un diccionario de palabras clave vinculadas a la cuestión precio/aumento, normalizando acentos para mayor cobertura.</p>
+          </div>
+        </div>
+        <div class="method-step reveal d3">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Análisis de lenguaje natural (NLP)</h3>
+            <p>Usando <strong>NLTK</strong> se aplicó limpieza de stopwords en español más un diccionario propio de términos no informativos del dominio (nombres de las prepagas, términos genéricos). Con <strong>WordCloud</strong> se generó una nube de palabras por prepaga a partir de las reseñas negativas (1–2 estrellas), permitiendo identificar los temas dominantes de la insatisfacción en cada caso.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="reveal">Los datos hablan</h2>
+
+      <!-- CHART 01 -->
+      <div class="chart-block reveal">
+        <img src="assets/charts/01_rating_promedio.png" alt="Rating promedio por prepaga" loading="lazy">
+        <div class="chart-caption">
+          <p class="chart-title">Rating promedio en Google Play</p>
+          <p class="chart-text">El cuadro general ya revela una brecha significativa. Omint (3,48) y Medifé (3,35) se ubican en la parte alta, aunque lejos de un índice que podría considerarse satisfactorio. En el extremo opuesto, Swiss Medical (1,90) y Medicus (1,92) apenas superan 1 estrella promedio sobre 5. La línea punteada representa el promedio global entre las siete prepagas: 2,75 puntos.</p>
+        </div>
+      </div>
+
+      <!-- CHART 02 -->
+      <div class="chart-block reveal">
+        <img src="assets/charts/02_distribucion_estrellas.png" alt="Distribución de calificaciones por prepaga" loading="lazy">
+        <div class="chart-caption">
+          <p class="chart-title">Distribución de calificaciones (1 a 5 estrellas)</p>
+          <p class="chart-text">El gráfico de distribución revela la polarización del sistema. Swiss Medical, Medicus y Sancor Salud concentran más del 70% de sus reseñas en las categorías de 1 y 2 estrellas. Medifé y Omint, en cambio, muestran una distribución más equilibrada, con mayor presencia de calificaciones de 4 y 5 estrellas. La forma de estas barras dice tanto como el promedio: una distribución muy cargada hacia las extremidades bajas indica no solo insatisfacción, sino insatisfacción intensa.</p>
+        </div>
+      </div>
+
+      <!-- CHART 03 -->
+      <div class="chart-block reveal">
+        <img src="assets/charts/03_sentimiento.png" alt="Sentimiento de las reseñas por prepaga" loading="lazy">
+        <div class="chart-caption">
+          <p class="chart-title">Sentimiento de las reseñas</p>
+          <p class="chart-text">Agrupando las calificaciones en tres categorías de sentimiento, el panorama se confirma y se hace más legible. Tres prepagas —Swiss Medical (75,7%), Medicus (75,0%) y Sancor Salud (73,2%)— tienen casi tres cuartas partes de sus reseñas en territorio negativo. OSDE se ubica en una posición intermedia (49,3% negativo). En el extremo positivo, Omint (34,3%) y Medifé (36,0%) son las únicas que mantienen un porcentaje de reseñas negativas por debajo del 40%.</p>
+        </div>
+      </div>
+
+      <!-- CHART 05 -->
+      <div class="chart-block reveal">
+        <img src="assets/charts/05_evolucion_mensual.png" alt="Evolución mensual del rating 2024-2026" loading="lazy">
+        <div class="chart-caption">
+          <p class="chart-title">Evolución del rating mensual (Ene 2024 – Abr 2026)</p>
+          <p class="chart-text">La serie temporal muestra la volatilidad de la satisfacción a lo largo del período de análisis. Los meses posteriores a los aumentos más pronunciados de 2024 coinciden, en varios casos, con caídas en el rating promedio mensual. Es importante señalar que este gráfico refleja la percepción en la app, no necesariamente la experiencia médica en sí: los socios tienden a recurrir a las reseñas de Google Play como canal de queja cuando los canales formales de atención fallan o resultan inaccesibles.</p>
+        </div>
+      </div>
+
+      <!-- CHART 06 -->
+      <div class="chart-block reveal">
+        <img src="assets/charts/06_menciones_precio.png" alt="Reseñas que mencionan precios o aumentos" loading="lazy">
+        <div class="chart-caption">
+          <p class="chart-title">Reseñas que mencionan precios o aumentos</p>
+          <p class="chart-text">Este gráfico conecta directamente el contexto macroeconómico con la voz del socio. Sancor Salud (9,7%) y Swiss Medical (8,2%) son las empresas donde más frecuentemente los usuarios mencionan palabras vinculadas a precios, cuotas o aumentos. En Sancor Salud, el impacto es especialmente llamativo si se tiene en cuenta que es una de las prepagas más grandes del interior del país, con una base de socios que depende fuertemente de convenios colectivos y planes individuales. Galeno (2,3%) y Omint (3,0%) son las que menos mencionan la variable precio en sus reseñas, lo que podría indicar que sus socios no priorizan ese factor en su experiencia — o que la relación precio-servicio es percibida como más equilibrada.</p>
+        </div>
+      </div>
+
+      <div class="pull-quote reveal">
+        "5,4 de cada 100 reseñas menciona explícitamente el precio, la cuota o los aumentos. La queja por precio en una reseña de app es una expresión concentrada de una frustración que probablemente comparten muchos más socios que no escriben."
+      </div>
+
+      <!-- CHART 04 -->
+      <div class="chart-block reveal">
+        <img src="assets/charts/04_tasa_respuesta.png" alt="Tasa de respuesta de la empresa a las reseñas" loading="lazy">
+        <div class="chart-caption">
+          <p class="chart-title">Tasa de respuesta de la empresa a las reseñas</p>
+          <p class="chart-text">Este es, desde una perspectiva de CX, el hallazgo más relevante del análisis. <strong>OSDE responde el 90% de las reseñas que recibe en Google Play.</strong> Es un número extraordinario para el sector y para cualquier industria. En el otro extremo, Medifé no registra una sola respuesta en los 600 registros analizados. Galeno y Omint están cerca de cero. Esta variable no mide directamente la calidad de la atención médica, pero sí dice algo sobre la cultura organizacional: cuán dispuesta está la empresa a escuchar, a responder, y a hacer de esa respuesta un hecho visible para el resto de los socios que leen las reseñas.</p>
+        </div>
+      </div>
+
+      <div class="stat-callouts reveal">
+        <div class="stat-callout">
+          <span class="callout-num" style="color:var(--osde)">90%</span>
+          <span class="callout-label">de las reseñas reciben respuesta de <strong>OSDE</strong></span>
+        </div>
+        <div class="stat-callout">
+          <span class="callout-num" style="color:var(--medicus)">57,7%</span>
+          <span class="callout-label">tasa de respuesta de <strong>Medicus</strong>, segunda en el ranking</span>
+        </div>
+        <div class="stat-callout">
+          <span class="callout-num" style="color:var(--medife)">0%</span>
+          <span class="callout-label"><strong>Medifé</strong> no registra ninguna respuesta oficial</span>
+        </div>
+      </div>
+
+      <div class="info-box reveal">
+        <div class="info-box-icon">&#128161;</div>
+        <div class="info-box-body">
+          <strong>Una paradoja relevante:</strong> OSDE tiene la tasa de respuesta más alta del análisis (90%) y, sin embargo, su rating promedio (2,90) no se destaca frente al resto. Medifé no responde ninguna reseña y aun así tiene uno de los mejores promedios (3,35). Esto sugiere que la respuesta a reseñas, por sí sola, no mejora la satisfacción — pero sí comunica una postura organizacional hacia la escucha que tiene valor simbólico y reputacional.
+        </div>
+      </div>
+
+      <!-- CHART 07 -->
+      <div class="chart-block reveal">
+        <img src="assets/charts/07_wordclouds.png" alt="Palabras más frecuentes en reseñas negativas por prepaga" loading="lazy">
+        <div class="chart-caption">
+          <p class="chart-title">Palabras más frecuentes en reseñas negativas (1–2 estrellas)</p>
+          <p class="chart-text">Las nubes de palabras se construyeron exclusivamente sobre las reseñas de 1 y 2 estrellas, luego de aplicar limpieza de stopwords. Los términos dominantes revelan los ejes de la insatisfacción: palabras como <em>turno</em>, <em>atención</em>, <em>espera</em>, <em>llamar</em>, <em>responde</em> y <em>cartilla</em> aparecen recurrentemente. La queja del socio no es abstracta: es concreta, vinculada a experiencias de fricción en puntos específicos del journey — la gestión de turnos, la comunicación con el centro de atención y la accesibilidad a los prestadores.</p>
+        </div>
+      </div>
+
+      <!-- PIRÁMIDE DE TÓPICOS -->
+      <h2 class="reveal">¿Sobre qué hablan los socios?</h2>
+      <p class="reveal">Más allá de los gráficos comparativos, una pregunta central es qué temas concretos aparecen en las reseñas. A través de un análisis de palabras clave por categoría sobre las 4.200 reseñas, se identificaron ocho dimensiones temáticas recurrentes. La pirámide las ordena de mayor a menor frecuencia: cuanto más ancha la barra, más reseñas mencionan ese tópico. Pasando el cursor sobre cada capa se visualizan ejemplos de los términos que la componen.</p>
+      <p class="reveal" style="font-size:.875rem;color:var(--muted);margin-top:-.5rem"><em>Nota metodológica: dado que la fuente es Google Play, la dimensión "App y experiencia digital" está sobrerepresentada — muchas reseñas se escriben precisamente por un problema con la app. Las categorías restantes reflejan fricciones en la experiencia de servicio más amplia.</em></p>
+
+      <div class="pyramid-wrap reveal">
+
+        <div class="pyr-row" style="width:95%">
+          <div class="pyr-bar" style="background:#0B1437">
+            <span class="pyr-left">
+              <span class="pyr-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2.5"/></svg></span>
+              <span class="pyr-label-wrap">
+                <span class="pyr-label">App y experiencia digital</span>
+                <span class="pyr-keywords">app · error · falla · sesión · pantalla · actualizar · lento</span>
+              </span>
+            </span>
+            <span class="pyr-right">
+              <span class="pyr-pct">48,7%</span>
+              <span class="pyr-count">2.047 reseñas</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="pyr-row" style="width:44%">
+          <div class="pyr-bar" style="background:#1E3A8A">
+            <span class="pyr-left">
+              <span class="pyr-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+              <span class="pyr-label-wrap">
+                <span class="pyr-label">Turnos y consultas</span>
+                <span class="pyr-keywords">turno · consulta · guardia · especialista · sacar turno</span>
+              </span>
+            </span>
+            <span class="pyr-right">
+              <span class="pyr-pct">15,8%</span>
+              <span class="pyr-count">665 reseñas</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="pyr-row" style="width:43%">
+          <div class="pyr-bar" style="background:#1D4ED8">
+            <span class="pyr-left">
+              <span class="pyr-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <span class="pyr-label-wrap">
+                <span class="pyr-label">Cartilla y prestadores</span>
+                <span class="pyr-keywords">cartilla · prestador · clínica · adherido · profesional</span>
+              </span>
+            </span>
+            <span class="pyr-right">
+              <span class="pyr-pct">15,2%</span>
+              <span class="pyr-count">637 reseñas</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="pyr-row" style="width:40%">
+          <div class="pyr-bar" style="background:#2563EB">
+            <span class="pyr-left">
+              <span class="pyr-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+              <span class="pyr-label-wrap">
+                <span class="pyr-label">Atención al cliente</span>
+                <span class="pyr-keywords">atención · espera · demora · responde · llamar · soporte</span>
+              </span>
+            </span>
+            <span class="pyr-right">
+              <span class="pyr-pct">13,3%</span>
+              <span class="pyr-count">558 reseñas</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="pyr-row" style="width:29%">
+          <div class="pyr-bar" style="background:#3B82F6">
+            <span class="pyr-left">
+              <span class="pyr-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+              <span class="pyr-label-wrap">
+                <span class="pyr-label">Precios y cuotas</span>
+                <span class="pyr-keywords">cuota · precio · aumento · caro · cobran · factura</span>
+              </span>
+            </span>
+            <span class="pyr-right">
+              <span class="pyr-pct">6,1%</span>
+              <span class="pyr-count">255 reseñas</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="pyr-row" style="width:28%">
+          <div class="pyr-bar" style="background:#4F8EE8">
+            <span class="pyr-left">
+              <span class="pyr-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></span>
+              <span class="pyr-label-wrap">
+                <span class="pyr-label">Trámites y autorizaciones</span>
+                <span class="pyr-keywords">trámite · autorización · gestión · formulario · proceso</span>
+              </span>
+            </span>
+            <span class="pyr-right">
+              <span class="pyr-pct">5,0%</span>
+              <span class="pyr-count">208 reseñas</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="pyr-row" style="width:27%">
+          <div class="pyr-bar" style="background:#639EEE">
+            <span class="pyr-left">
+              <span class="pyr-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+              <span class="pyr-label-wrap">
+                <span class="pyr-label">Cobertura y plan</span>
+                <span class="pyr-keywords">cobertura · plan · medicamento · práctica · internación</span>
+              </span>
+            </span>
+            <span class="pyr-right">
+              <span class="pyr-pct">4,9%</span>
+              <span class="pyr-count">205 reseñas</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="pyr-row" style="width:25%">
+          <div class="pyr-bar" style="background:#7EAEF5">
+            <span class="pyr-left">
+              <span class="pyr-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+              <span class="pyr-label-wrap">
+                <span class="pyr-label">Reintegros y facturación</span>
+                <span class="pyr-keywords">reintegro · reembolso · devolución · nota de crédito</span>
+              </span>
+            </span>
+            <span class="pyr-right">
+              <span class="pyr-pct">3,1%</span>
+              <span class="pyr-count">129 reseñas</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <h2 class="reveal">Hallazgos principales</h2>
+
+      <div class="findings-grid">
+        <div class="finding-card reveal">
+          <p class="finding-num">Hallazgo 01</p>
+          <p class="finding-text"><strong>Swiss Medical, Medicus y Sancor Salud</strong> concentran los peores ratings del análisis, todos por debajo de 2/5, con más del 70% de sus reseñas en zona negativa. El hecho de que Swiss Medical y Medicus cuenten con infraestructura médica propia no se traduce en mejor percepción en el entorno digital.</p>
+        </div>
+        <div class="finding-card reveal d1">
+          <p class="finding-num">Hallazgo 02</p>
+          <p class="finding-text"><strong>OSDE lidera la escucha digital con un 90% de tasa de respuesta.</strong> Es el único actor del análisis con una estrategia visible y sostenida de gestión de reseñas en Google Play. Esta postura, más allá de su impacto directo en el rating, comunica una cultura organizacional orientada al socio.</p>
+        </div>
+        <div class="finding-card reveal d2">
+          <p class="finding-num">Hallazgo 03</p>
+          <p class="finding-text"><strong>Sancor Salud (9,7%) y Swiss Medical (8,2%)</strong> son las prepagas donde más frecuentemente los socios mencionan precios o aumentos. La queja económica está presente en la experiencia digital y no puede disociarse del contexto de aumentos acumulados de 2024.</p>
+        </div>
+        <div class="finding-card reveal d3">
+          <p class="finding-num">Hallazgo 04</p>
+          <p class="finding-text"><strong>Omint y Medifé tienen los mejores ratings del análisis</strong> (3,48 y 3,35 respectivamente), a pesar de tener tasas de respuesta cercanas a cero. La satisfacción del socio, en estos casos, parece vincularse más a la experiencia en la atención que a la gestión del canal digital.</p>
+        </div>
+        <div class="finding-card reveal">
+          <p class="finding-num">Hallazgo 05</p>
+          <p class="finding-text"><strong>Los temas dominantes de la insatisfacción son transversales</strong> al sector: turnos, tiempos de espera, atención telefónica y acceso a la cartilla de prestadores. La queja no es solo sobre el precio — es sobre la fricción en los momentos que más importan.</p>
+        </div>
+        <div class="finding-card reveal d1 highlight">
+          <p class="finding-num">Hallazgo 06</p>
+          <p class="finding-text">Responder reseñas no garantiza mejores ratings, pero no responderlas dice algo sobre la organización. <strong>La brecha entre escuchar y mejorar es el mayor desafío de CX del sector.</strong></p>
+        </div>
+      </div>
+
+      <h2 class="reveal">Conclusiones</h2>
+      <p class="reveal">El sistema de medicina prepaga en Argentina atravesó entre 2024 y 2026 un período de presión extraordinaria: aumentos acumulados que afectaron el poder adquisitivo de los socios, intervención estatal, y un debate público sobre el valor del servicio que no ha terminado. Las reseñas de Google Play son, en ese contexto, un registro espontáneo e involuntario de cómo esa presión se procesa a nivel individual.</p>
+      <p class="reveal">Lo que los datos muestran no es sorprendente en su dirección, pero sí en su intensidad. Que tres de las siete prepagas analizadas —empresas con cientos de miles de socios— tengan un promedio cercano a 2/5 en su canal digital más visible no es un dato menor. La app es, en muchos casos, el primer punto de contacto ante una necesidad urgente, y una experiencia deficiente allí tiene un costo que va más allá de las 1 o 2 estrellas: erosiona la confianza en la relación, especialmente en un contexto donde el costo de la cuota se percibe como alto.</p>
+      <p class="reveal">El caso de OSDE merece una reflexión particular. Su tasa de respuesta del 90% no la convierte en la mejor rankeada del análisis, pero sí la posiciona como la única que ha decidido, de manera sistemática, hacer de Google Play un canal de escucha activa. Eso es una decisión de CX, no de IT. Y es una decisión que, a largo plazo, genera información, señales y oportunidades de mejora que sus competidores —especialmente Galeno, Medifé y Omint, que prácticamente no responden— simplemente no están aprovechando.</p>
+      <p class="reveal">El sector necesita empezar a tratar la experiencia digital del socio como parte constitutiva de la atención médica, no como un apéndice. El turno que no se consigue, la respuesta que no llega, la app que falla justo cuando más se la necesita: son los momentos donde la relación entre la prepaga y su socio se define. No es una cuestión moral: es de negocio. Retener socios en un mercado desregulado es más caro y difícil que nunca.</p>
+
+      <h2 class="reveal">Dashboard interactivo</h2>
+      <div class="powerbi-placeholder reveal">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h2v5H7zM11 10h2v3h-2zM15 7h2v6h-2z"/></svg>
+        <p>El dashboard interactivo en Power BI estará disponible próximamente.</p>
+      </div>
+
+      <h2 class="reveal">Herramientas utilizadas</h2>
+      <div class="tools-grid reveal">
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Python
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Pandas
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 16 4-8 4 8"/></svg>
+          Matplotlib &amp; Seaborn
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          NLTK
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          WordCloud
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Power BI
+        </span>
+        <span class="tool-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          Google Play Scraper
+        </span>
+      </div>
+
+      <div class="project-links reveal">
+        <a href="#" class="btn btn-primary" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Ver en GitHub
+        </a>
+        <a href="#" class="btn btn-outline" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Dashboard Power BI
+        </a>
+      </div>
+
+    </div>
+
+    <!-- NEXT PROJECT -->
+    <div class="next-proj reveal" style="margin-top:4rem">
+      <div>
+        <p class="next-proj-label">Siguiente proyecto</p>
+        <p class="next-proj-title">Aerolíneas: low cost vs. tradicional — próximamente</p>
+      </div>
+      <a href="../proyectos.html" class="btn btn-outline">Ver todos los proyectos &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos, investigación social y experiencia del cliente.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../articulos.html">Artículos</a></li>
+          <li><a href="../proyectos.html">Proyectos</a></li>
+          <li><a href="../sobre-mi.html">Sobre mí</a></li>
+          <li><a href="../contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;·&nbsp; <a href="../politica-cookies.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Política de cookies</a> &nbsp;·&nbsp; <a href="../mapa-del-sitio.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Mapa del sitio</a></p>
+      <div class="footer-social">
+        <a href="mailto:lucasd-t@hotmail.com" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.classList.toggle('open')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.classList.remove('open')}));
+
+(()=>{
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target)}})
+  },{threshold:.06,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>

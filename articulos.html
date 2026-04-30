@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Artículos de Lucas Della Torre sobre análisis de datos, investigación social, Customer Experience y tendencias.">
+<title>Artículos — Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+:root{
+  --dark:#0B1437;--bg:#fff;--bg-alt:#F5F7FA;--accent:#2563EB;--accent-h:#1D4ED8;
+  --accent-l:#EFF6FF;--text:#374151;--muted:#6B7280;--heading:#0B1437;
+  --border:#E5E7EB;--r:14px;--r-sm:8px;
+  --shadow:0 4px 30px rgba(11,20,55,.08);--shadow-lg:0 20px 60px rgba(11,20,55,.14);
+  --t:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);will-change:opacity,transform}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+.container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.section{padding-block:6rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.875rem;border-radius:var(--r-sm);font-weight:600;font-size:.9375rem;transition:var(--t);border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.3)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.875rem 0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:var(--text);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--t)}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:var(--t)}
+
+/* PAGE HERO */
+.page-hero{padding-block:9rem 5rem;background:var(--dark);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.page-hero-inner{position:relative;z-index:1}
+.page-hero .eyebrow{color:rgba(255,255,255,.45)}
+.page-hero .eyebrow::before{background:var(--accent)}
+.page-hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.03em;margin-bottom:1.25rem}
+.page-hero h1 em{font-style:normal;color:var(--accent)}
+.page-hero p{font-size:1.125rem;color:rgba(255,255,255,.5);max-width:520px;line-height:1.75}
+
+/* FILTERS */
+.filters-bar{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:3.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.filter-chip{display:inline-flex;align-items:center;gap:.375rem;padding:.4375rem 1.125rem;border-radius:20px;font-size:.8125rem;font-weight:600;border:1.5px solid var(--border);color:var(--muted);transition:var(--t);cursor:pointer;background:none;font-family:inherit}
+.filter-chip:hover,.filter-chip.active{border-color:var(--accent);color:var(--accent);background:var(--accent-l)}
+.filter-chip .dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.6}
+
+/* SEARCH */
+.search-bar{position:relative;margin-bottom:2.5rem}
+.search-bar input{width:100%;padding:.875rem 1rem .875rem 3rem;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:.9375rem;font-family:inherit;color:var(--text);background:var(--bg);transition:var(--t);outline:none}
+.search-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-l)}
+.search-bar input::placeholder{color:var(--muted)}
+.search-bar svg{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+
+/* ARTICLES GRID */
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;margin-bottom:3.5rem}
+.article-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:2rem;display:flex;flex-direction:column;gap:1rem;transition:var(--t)}
+.article-card:hover{box-shadow:var(--shadow);transform:translateY(-3px);border-color:rgba(37,99,235,.2)}
+.article-card-cat{display:inline-flex;align-items:center;gap:.375rem;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.article-card-cat .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.article-card h3{font-size:1.125rem;font-weight:700;color:var(--heading);line-height:1.4;letter-spacing:-.01em}
+.article-card p{font-size:.9375rem;color:var(--muted);line-height:1.7;flex:1}
+.article-card-footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.875rem;border-top:1px solid var(--border)}
+.article-card-date{font-size:.8125rem;color:var(--muted);font-weight:500}
+.article-card-link{font-size:.875rem;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:.375rem;transition:gap .2s}
+.article-card-link:hover{gap:.625rem}
+
+/* NEWSLETTER */
+.newsletter-band{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:3rem;text-align:center;margin-top:4rem}
+.newsletter-band h3{font-size:1.375rem;font-weight:700;color:var(--heading);margin-bottom:.75rem}
+.newsletter-band p{font-size:.9375rem;color:var(--muted);max-width:420px;margin-inline:auto;line-height:1.7;margin-bottom:1.75rem}
+.newsletter-form{display:flex;gap:.75rem;max-width:420px;margin-inline:auto;flex-wrap:wrap}
+.newsletter-form input{flex:1;min-width:200px;padding:.8rem 1rem;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:.9375rem;font-family:inherit;color:var(--text);outline:none;transition:var(--t)}
+.newsletter-form input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-l)}
+.newsletter-form input::placeholder{color:var(--muted)}
+
+/* CATEGORIES PREVIEW */
+.categories-section{background:var(--dark);padding-block:5rem}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.07);border-radius:12px;overflow:hidden;margin-top:3rem}
+.cat-item{background:var(--dark);padding:2.25rem 2rem;transition:var(--t);cursor:pointer}
+.cat-item:hover{background:#12234a}
+.cat-icon{width:44px;height:44px;border-radius:10px;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;color:var(--accent)}
+.cat-name{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.375rem}
+.cat-desc{font-size:.8125rem;color:rgba(255,255,255,.4);line-height:1.6}
+.cat-count{display:inline-block;margin-top:.75rem;font-size:.75rem;font-weight:600;padding:.25rem .625rem;border-radius:20px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.35)}
+
+/* CTA BAND */
+.cta-band{background:var(--dark);padding-block:6rem;text-align:center;position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.cta-band-inner{position:relative;z-index:1}
+.cta-band h2{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1rem;letter-spacing:-.025em}
+.cta-band p{color:rgba(255,255,255,.5);font-size:1.0625rem;max-width:480px;margin-inline:auto;margin-bottom:2.5rem;line-height:1.75}
+
+/* FOOTER */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--t)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+@media(max-width:768px){
+  .section{padding-block:4rem}
+  .cat-grid{grid-template-columns:1fr}
+  .nav-links{display:none;position:fixed;inset:0;background:var(--dark);flex-direction:column;justify-content:center;align-items:center;gap:.5rem}
+  .nav-links.open{display:flex}
+  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+  .newsletter-form{flex-direction:column}
+}
+@media(max-width:640px){.cat-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="articulos.html" class="active">Artículos</a></li>
+      <li><a href="proyectos.html">Proyectos</a></li>
+      <li><a href="sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <p class="eyebrow">Blog</p>
+    <h1>Artículos<em>.</em></h1>
+    <p>Reflexiones, análisis y perspectivas sobre datos, comportamiento humano, experiencia del cliente y el mundo que nos rodea.</p>
+  </div>
+</section>
+
+<!-- ARTICLES SECTION -->
+<section class="section">
+  <div class="container">
+
+    <!-- Search -->
+    <div class="search-bar reveal">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" placeholder="Buscar artículos&hellip;" disabled>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-bar reveal">
+      <button class="filter-chip active">Todos</button>
+      <button class="filter-chip"><span class="dot"></span> Consultoría e Investigación</button>
+      <button class="filter-chip"><span class="dot"></span> Customer Experience</button>
+      <button class="filter-chip"><span class="dot"></span> Opinión</button>
+      <button class="filter-chip"><span class="dot"></span> Tendencias y Consumo</button>
+      <button class="filter-chip"><span class="dot"></span> Tecnología</button>
+      <button class="filter-chip"><span class="dot"></span> Actualidad</button>
+    </div>
+
+    <!-- Articles Grid -->
+    <div class="articles-grid">
+      <a href="articulos/customer-journey-map.html" class="article-card reveal" data-category="Customer Experience">
+        <p class="article-card-cat"><span class="dot"></span> Customer Experience</p>
+        <h3>Customer Journey Map: qué es, para qué sirve y cómo se aplica en Argentina</h3>
+        <p>Qué es un CJM, por qué la mayoría termina archivado y cómo convertirlo en un plan concreto de mejora de CX. Con ejemplos del mercado argentino.</p>
+        <div class="article-card-footer">
+          <span class="article-card-date">Abril 2026 · 10 min</span>
+          <span class="article-card-link">
+            Leer artículo
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+      <a href="articulos/ia-aplicada-cx.html" class="article-card reveal" data-category="Customer Experience">
+        <p class="article-card-cat"><span class="dot"></span> Customer Experience</p>
+        <h3>IA aplicada a CX: cómo las empresas que escuchan mejor están ganando más</h3>
+        <p>Casos, datos y herramientas para transformar la experiencia del cliente en una ventaja competitiva real a través del uso de la Inteligencia Artificial.</p>
+        <div class="article-card-footer">
+          <span class="article-card-date">Abril 2026 · 8 min</span>
+          <span class="article-card-link">
+            Leer artículo
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="newsletter-band reveal">
+      <h3>¿Querés saber cuando publique?</h3>
+      <p>Dejame tu email y te aviso cuando salga el próximo artículo. Sin spam, solo contenido relevante.</p>
+      <form class="newsletter-form" action="https://formspree.io/f/xlgaoogj" method="POST" id="newsletterForm">
+        <input type="email" name="email" placeholder="tu@email.com" required>
+        <button class="btn btn-primary" type="submit">Suscribirme</button>
+      </form>
+      <p id="newsletterMsg" style="display:none;margin-top:1rem;font-size:.9375rem;color:var(--accent);font-weight:500"></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CATEGORIES SECTION -->
+<section class="categories-section">
+  <div class="container">
+    <p class="eyebrow reveal" style="color:rgba(255,255,255,.45)">Temáticas</p>
+    <h2 class="reveal" style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:800;color:#fff;letter-spacing:-.02em">Sobre qué voy a escribir.</h2>
+    <div class="cat-grid">
+      <div class="cat-item reveal d1">
+        <div class="cat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <p class="cat-name">Consultoría e Investigación</p>
+        <p class="cat-desc">Metodología, procesos y aprendizajes del trabajo con datos para la toma de decisiones.</p>
+        <span class="cat-count">Próximamente</span>
+      </div>
+      <div class="cat-item reveal d2">
+        <div class="cat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <p class="cat-name">Customer Experience</p>
+        <p class="cat-desc">Cómo las empresas diseñan (o arruinan) la experiencia del usuario y qué se puede hacer mejor.</p>
+        <span class="cat-count">1 artículo</span>
+      </div>
+      <div class="cat-item reveal d3">
+        <div class="cat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <p class="cat-name">Opinión</p>
+        <p class="cat-desc">Perspectivas propias sobre fenómenos sociales, datos y el mundo que vivimos.</p>
+        <span class="cat-count">Próximamente</span>
+      </div>
+      <div class="cat-item reveal d1">
+        <div class="cat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <p class="cat-name">Tendencias y Consumo</p>
+        <p class="cat-desc">Patrones de comportamiento del consumidor y lo que los datos revelan sobre cómo vivimos.</p>
+        <span class="cat-count">Próximamente</span>
+      </div>
+      <div class="cat-item reveal d2">
+        <div class="cat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <p class="cat-name">Tecnología</p>
+        <p class="cat-desc">Impacto social de la tecnología, IA y plataformas digitales desde una mirada sociológica.</p>
+        <span class="cat-count">1 artículo</span>
+      </div>
+      <div class="cat-item reveal d3">
+        <div class="cat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <p class="cat-name">Actualidad</p>
+        <p class="cat-desc">Análisis de hechos recientes con lente de datos y pensamiento crítico.</p>
+        <span class="cat-count">Próximamente</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos y CX (experiencia del cliente).</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="articulos.html">Artículos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="sobre-mi.html">Sobre mí</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;·&nbsp; <a href="politica-cookies.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Política de cookies</a> &nbsp;·&nbsp; <a href="mapa-del-sitio.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Mapa del sitio</a></p>
+      <div class="footer-social">
+        <a href="mailto:lucasd-t@hotmail.com" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.classList.toggle('open')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.classList.remove('open')}));
+
+const nlForm=document.getElementById('newsletterForm');
+const nlMsg=document.getElementById('newsletterMsg');
+if(nlForm){
+  nlForm.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    const btn=nlForm.querySelector('button');
+    btn.disabled=true;btn.textContent='Enviando…';
+    try{
+      const res=await fetch(nlForm.action,{method:'POST',body:new FormData(nlForm),headers:{Accept:'application/json'}});
+      if(res.ok){nlForm.style.display='none';nlMsg.textContent='¡Listo! Te aviso cuando publique.';nlMsg.style.display='block'}
+      else{btn.disabled=false;btn.textContent='Suscribirme';nlMsg.textContent='Hubo un error, intentá de nuevo.';nlMsg.style.color='#e53e3e';nlMsg.style.display='block'}
+    }catch{btn.disabled=false;btn.textContent='Suscribirme'}
+  });
+}
+
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    const cat=chip.textContent.trim();
+    document.querySelectorAll('.article-card').forEach(card=>{
+      if(cat==='Todos'){card.style.display='';}
+      else{card.style.display=card.dataset.category===cat?''  :'none';}
+    });
+  });
+});
+
+(()=>{
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target)}})
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>

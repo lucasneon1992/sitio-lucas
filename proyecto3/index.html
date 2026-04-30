@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tradicional vs. Low Cost — Customer Journey Map comparativo de Aerolíneas Argentinas, Flybondi y JetSmart. Por Lucas Della Torre.">
+<title>Proyecto 03 — Tradicional vs. Low Cost · Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+:root{
+  --dark:#0B1437;--bg:#fff;--bg-alt:#F5F7FA;--accent:#2563EB;--accent-h:#1D4ED8;
+  --accent-l:#EFF6FF;--text:#374151;--muted:#6B7280;--heading:#0B1437;
+  --border:#E5E7EB;--r:14px;--r-sm:8px;
+  --shadow:0 4px 30px rgba(11,20,55,.08);--shadow-lg:0 20px 60px rgba(11,20,55,.14);
+  --t:all .3s cubic-bezier(.4,0,.2,1);
+  --aa:#006FB9;
+  --fb:#FFD200;
+  --js:#FF5B00;
+}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1)}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+.container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.container-narrow{width:100%;max-width:820px;margin-inline:auto;padding-inline:1.5rem}
+.section{padding-block:5rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:20px;background:var(--accent-l);color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.875rem;border-radius:var(--r-sm);font-weight:600;font-size:.9375rem;transition:var(--t);border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.3)}
+.btn-outline{background:transparent;color:var(--heading);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.875rem 0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:var(--text);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--t)}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:var(--t)}
+
+/* HERO */
+.proj-hero{padding-block:9rem 5rem;background:var(--dark);position:relative;overflow:hidden}
+.proj-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);background-size:28px 28px}
+.proj-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,111,185,.15) 0%,transparent 50%,rgba(255,91,0,.1) 100%)}
+.proj-hero-inner{position:relative;z-index:1}
+.proj-hero .back-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.5);margin-bottom:2rem;transition:color .2s}
+.proj-hero .back-link:hover{color:rgba(255,255,255,.8)}
+.proj-hero .back-link svg{transition:transform .2s}
+.proj-hero .back-link:hover svg{transform:translateX(-3px)}
+.proj-hero .eyebrow{color:rgba(255,255,255,.45)}
+.proj-hero .eyebrow::before{background:var(--accent)}
+.proj-hero h1{font-size:clamp(1.875rem,4vw,3.25rem);font-weight:800;color:#fff;line-height:1.12;letter-spacing:-.03em;margin-bottom:1.5rem;max-width:780px}
+.proj-hero-meta{display:flex;flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem}
+.meta-item{display:flex;flex-direction:column;gap:.25rem}
+.meta-label{font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.meta-value{font-size:.9375rem;font-weight:500;color:rgba(255,255,255,.75)}
+.proj-hero-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.proj-hero-tags .tag{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
+
+/* AIRLINE LEGEND STRIP */
+.airline-strip{background:#0B1437;padding:.875rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.airline-strip-inner{display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.al-chip{display:inline-flex;align-items:center;gap:.625rem;font-size:.875rem;font-weight:700;color:#fff}
+.al-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+
+/* STATS STRIP */
+.stats-strip{background:var(--accent);padding-block:2.5rem}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.stat-item{text-align:center}
+.stat-num{display:block;font-size:2.25rem;font-weight:800;color:#fff;line-height:1;letter-spacing:-.03em;margin-bottom:.375rem}
+.stat-label{font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.7);letter-spacing:.02em}
+
+/* CONTENT */
+.content-body{font-size:1.0625rem;color:var(--text);line-height:1.85}
+.content-body h2{font-size:1.75rem;font-weight:700;color:var(--heading);margin-top:3.5rem;margin-bottom:1.25rem;letter-spacing:-.02em}
+.content-body p{margin-bottom:1.25rem}
+.content-body ul{margin-bottom:1.25rem;padding-left:1.25rem}
+.content-body ul li{margin-bottom:.5rem;position:relative}
+.content-body ul li::before{content:'→';position:absolute;left:-1.25rem;color:var(--accent);font-weight:600}
+
+/* MODELO DE NEGOCIO */
+.model-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-block:2rem}
+.model-card{border-radius:var(--r);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow)}
+.model-header{padding:1.5rem;color:#fff;position:relative}
+.model-airline{font-size:1rem;font-weight:800;margin-bottom:.25rem}
+.model-type{font-size:.75rem;font-weight:500;opacity:.65;text-transform:uppercase;letter-spacing:.08em}
+.model-body{padding:1.5rem;display:flex;flex-direction:column;gap:1rem}
+.model-row{display:flex;flex-direction:column;gap:.25rem}
+.model-lbl{font-size:.6875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.model-val{font-size:.9rem;color:var(--text);line-height:1.6}
+.model-persona{background:var(--bg-alt);border-radius:var(--r-sm);padding:.875rem;font-size:.9rem;color:var(--text);line-height:1.6;border-left:3px solid}
+
+/* PUNTUALIDAD BARS */
+.punt-section{margin-block:2rem}
+.punt-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.punt-label{font-size:.875rem;font-weight:600;color:var(--heading);width:220px;flex-shrink:0}
+.punt-bar-wrap{flex:1;height:32px;background:var(--bg-alt);border-radius:6px;overflow:hidden;position:relative}
+.punt-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:.875rem;font-size:.8125rem;font-weight:700;color:#fff;white-space:nowrap;transition:width 1s ease}
+.punt-val{font-size:.875rem;font-weight:700;color:var(--heading);width:50px;flex-shrink:0;text-align:right}
+
+/* JOURNEY MAP */
+.journey-nav{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem;padding:.25rem;background:var(--bg-alt);border-radius:var(--r);border:1px solid var(--border)}
+.jnav-item{flex:1;min-width:120px;padding:.625rem .875rem;border-radius:var(--r-sm);font-size:.8rem;font-weight:600;color:var(--muted);text-align:center;cursor:pointer;transition:var(--t);border:none;background:transparent;font-family:inherit;line-height:1.3}
+.jnav-item:hover{color:var(--heading);background:#fff}
+.jnav-item.active{background:#fff;color:var(--accent);box-shadow:var(--shadow)}
+
+.journey-stage{margin-bottom:3rem;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.stage-header{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:center;gap:1.25rem}
+.stage-num{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:.875rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stage-title{font-size:1.125rem;font-weight:700;color:#fff;margin-bottom:.25rem}
+.stage-subtitle{font-size:.8125rem;color:rgba(255,255,255,.5)}
+.stage-icon{font-size:1.5rem;flex-shrink:0}
+
+.airline-panels{display:grid;grid-template-columns:repeat(3,1fr)}
+.airline-panel{padding:1.5rem;border-right:1px solid var(--border);position:relative}
+.airline-panel:last-child{border-right:none}
+.panel-airline{display:flex;align-items:center;gap:.5rem;margin-bottom:.875rem}
+.panel-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.panel-name{font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--heading)}
+.panel-rating{display:inline-flex;align-items:center;gap:.375rem;font-size:.75rem;font-weight:700;padding:.25rem .75rem;border-radius:20px;margin-bottom:.875rem}
+.rating-pos{background:#DCFCE7;color:#16A34A}
+.rating-mix{background:#FEF9C3;color:#854D0E}
+.rating-neg{background:#FEE2E2;color:#DC2626}
+.panel-text{font-size:.9rem;color:var(--text);line-height:1.7;margin-bottom:.75rem}
+.panel-quote{font-size:.8125rem;color:var(--muted);font-style:italic;border-left:2px solid var(--border);padding-left:.75rem;line-height:1.6}
+
+/* DATA CALLOUT */
+.data-callout{background:var(--dark);color:#fff;border-radius:var(--r);padding:2.5rem;margin-block:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+.dc-label{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.5rem}
+.dc-num{font-size:3rem;font-weight:800;line-height:1;letter-spacing:-.04em;margin-bottom:.5rem}
+.dc-text{font-size:.9375rem;color:rgba(255,255,255,.65);line-height:1.7}
+.dc-context{font-size:.9375rem;color:rgba(255,255,255,.7);line-height:1.75}
+
+/* PULL QUOTE */
+.pull-quote{border-left:3px solid var(--accent);background:var(--accent-l);padding:1.125rem 1.375rem;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-block:2rem;font-size:1.0625rem;font-style:italic;color:var(--heading);line-height:1.75}
+
+/* HALLAZGOS */
+.findings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-block:2rem}
+.finding-card{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem;border-left:3px solid var(--accent)}
+.finding-num{font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:.625rem}
+.finding-text{font-size:.9375rem;color:var(--text);line-height:1.7}
+
+/* CONCLUSIÓN 2 COLUMNAS */
+.conclusion-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-block:2rem}
+.conc-card{border-radius:var(--r);padding:2rem;border:1px solid var(--border)}
+.conc-card.trad{background:linear-gradient(135deg,rgba(0,111,185,.06) 0%,#fff 100%);border-color:rgba(0,111,185,.2)}
+.conc-card.loco{background:linear-gradient(135deg,rgba(255,91,0,.06) 0%,#fff 100%);border-color:rgba(255,91,0,.2)}
+.conc-eyebrow{font-size:.6875rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+.conc-title{font-size:1.125rem;font-weight:700;color:var(--heading);margin-bottom:1.25rem}
+.conc-list{display:flex;flex-direction:column;gap:.875rem}
+.conc-item{display:flex;align-items:flex-start;gap:.75rem;font-size:.9rem;color:var(--text);line-height:1.6}
+.conc-icon{font-size:1.125rem;flex-shrink:0;margin-top:.05rem}
+
+/* METODOLOGÍA */
+.method-steps{display:grid;gap:1rem;margin-block:1.5rem}
+.method-step{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-size:.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-content h3{font-size:.9375rem;font-weight:700;color:var(--heading);margin-bottom:.25rem}
+.step-content p{font-size:.875rem;color:var(--muted);line-height:1.65;margin:0}
+
+/* NEXT / LINKS */
+.project-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.5rem}
+.next-proj{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:2.5rem;display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;margin-top:4rem}
+.next-proj-label{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.next-proj-title{font-size:1.25rem;font-weight:700;color:var(--heading)}
+
+/* FOOTER */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--t)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+@media(max-width:960px){
+  .model-grid{grid-template-columns:1fr}
+  .airline-panels{grid-template-columns:1fr}
+  .airline-panel{border-right:none;border-bottom:1px solid var(--border)}
+  .airline-panel:last-child{border-bottom:none}
+  .conclusion-grid{grid-template-columns:1fr}
+  .data-callout{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .findings-grid{grid-template-columns:1fr}
+  .punt-label{width:140px;font-size:.8rem}
+  .next-proj{flex-direction:column}
+  .nav-links{display:none;position:fixed;inset:0;background:var(--dark);flex-direction:column;justify-content:center;align-items:center;gap:.5rem}
+  .nav-links.open{display:flex}
+  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+  .jnav-item{min-width:80px;font-size:.7rem}
+  .stage-header{flex-wrap:wrap}
+  .airline-strip-inner{gap:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="../articulos.html">Artículos</a></li>
+      <li><a href="../proyectos.html" class="active">Proyectos</a></li>
+      <li><a href="../sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="../contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="proj-hero">
+  <div class="container proj-hero-inner">
+    <a href="../proyectos.html" class="back-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Todos los proyectos
+    </a>
+    <p class="eyebrow">Proyecto № 03 &nbsp;·&nbsp; Customer Experience · Customer Journey Map</p>
+    <h1>Tradicional vs. Low Cost: un análisis de la experiencia del pasajero en la aviación argentina.</h1>
+    <div class="proj-hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Período</span>
+        <span class="meta-value">Abril 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Aerolíneas</span>
+        <span class="meta-value">Aerolíneas Arg · Flybondi · JetSmart</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Metodología</span>
+        <span class="meta-value">Investigación secundaria · CJM</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Fuentes</span>
+        <span class="meta-value">Trustpilot · TripAdvisor · Medios · Fuentes oficiales</span>
+      </div>
+    </div>
+    <div class="proj-hero-tags">
+      <span class="tag">Customer Journey Map</span>
+      <span class="tag">CX Research</span>
+      <span class="tag">Investigación secundaria</span>
+      <span class="tag">Análisis comparativo</span>
+    </div>
+  </div>
+</section>
+
+<!-- AIRLINE STRIP -->
+<div class="airline-strip">
+  <div class="airline-strip-inner">
+    <span class="al-chip"><span class="al-dot" style="background:var(--aa)"></span>Aerolíneas Argentinas</span>
+    <span style="color:rgba(255,255,255,.2);font-size:1.25rem">·</span>
+    <span class="al-chip"><span class="al-dot" style="background:var(--fb)"></span>Flybondi</span>
+    <span style="color:rgba(255,255,255,.2);font-size:1.25rem">·</span>
+    <span class="al-chip"><span class="al-dot" style="background:var(--js)"></span>JetSmart</span>
+  </div>
+</div>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-label">aerolíneas comparadas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">6</span>
+      <span class="stat-label">etapas del journey mapeadas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">54%</span>
+      <span class="stat-label">puntualidad de Flybondi en 2025</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">1,2/5</span>
+      <span class="stat-label">score Trustpilot de las dos low cost</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<section class="section">
+  <div class="container-narrow">
+    <div class="content-body">
+
+      <h2 class="reveal">El contexto</h2>
+      <p class="reveal">La política de Cielos Abiertos impulsada por el gobierno de Javier Milei en 2023 transformó radicalmente el mercado aerocomercial argentino. Nuevas rutas, mayor competencia y precios más accesibles democratizaron el acceso al avión para millones de argentinos que antes no volaban. JetSmart alcanzó los 50 millones de pasajeros históricos —15 millones de los cuales subieron a un avión por primera vez gracias al modelo low cost. Flybondi planea dominar el mercado doméstico hacia 2030.</p>
+      <p class="reveal">Pero el boom de las low cost no le llegó igual a todos los pasajeros. Este análisis mira la experiencia de vuelo desde adentro: qué espera cada pasajero según la aerolínea que eligió, y qué encuentra realmente en cada punto del journey. La fuente principal es la voz del propio pasajero, relevada en plataformas de reseñas públicas, foros de viaje y datos operativos disponibles.</p>
+
+      <h2 class="reveal">El modelo de negocio de cada aerolínea</h2>
+      <p class="reveal">Antes de analizar la experiencia, es necesario entender a qué apuesta cada empresa. El modelo de negocio determina cada decisión de CX: qué se incluye, qué se cobra aparte, cómo se atiende al pasajero cuando algo falla.</p>
+
+      <div class="model-grid">
+
+        <!-- AA -->
+        <div class="model-card reveal">
+          <div class="model-header" style="background:var(--aa)">
+            <div class="model-airline">Aerolíneas Argentinas</div>
+            <div class="model-type">Full Service · Aerolínea de bandera</div>
+          </div>
+          <div class="model-body">
+            <div class="model-row">
+              <span class="model-lbl">A qué apuesta</span>
+              <span class="model-val">Experiencia completa de principio a fin. Precio más alto pero con todo incluido. Identidad nacional y confianza de marca.</span>
+            </div>
+            <div class="model-persona" style="border-color:var(--aa)">
+              <strong>Pasajero ideal:</strong> Viajero frecuente de negocios o turismo de media-alta gama. Familias que priorizan la previsibilidad y el servicio. El pasajero que no quiere sorpresas.
+            </div>
+            <div class="model-row">
+              <span class="model-lbl">Invierte fuerte en</span>
+              <span class="model-val">Flota, tripulación capacitada, programa de fidelidad Aerolíneas Plus, financiación en cuotas sin interés, canales de atención multicanal.</span>
+            </div>
+            <div class="model-row">
+              <span class="model-lbl">Escatima en</span>
+              <span class="model-val">Competitividad de precio base. Su tarifa inicial es la más alta del mercado doméstico.</span>
+            </div>
+            <div class="model-row">
+              <span class="model-lbl">Atención al cliente</span>
+              <span class="model-val">0810, WhatsApp, web. Programa de compensación regulado. NPS como métrica interna. Trustpilot: 1,7/5.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FLYBONDI -->
+        <div class="model-card reveal d1">
+          <div class="model-header" style="background:#1a1a1a">
+            <div class="model-airline" style="color:var(--fb)">Flybondi</div>
+            <div class="model-type">Ultra Low Cost · Modelo "vos elegís"</div>
+          </div>
+          <div class="model-body">
+            <div class="model-row">
+              <span class="model-lbl">A qué apuesta</span>
+              <span class="model-val">El precio base más bajo posible. El pasajero elige y paga solo por lo que usa. Democratización del acceso al vuelo.</span>
+            </div>
+            <div class="model-persona" style="border-color:var(--fb)">
+              <strong>Pasajero ideal:</strong> Turista precio-sensible que prioriza el costo por encima de todo. Viajeros ocasionales a destinos nacionales. El pasajero que "sabe lo que quiere" y puede prescindir del servicio.
+            </div>
+            <div class="model-row">
+              <span class="model-lbl">Invierte fuerte en</span>
+              <span class="model-val">Expansión de rutas, flota homogénea (Boeing 737-800), marketing y precio bajo como propuesta de valor central.</span>
+            </div>
+            <div class="model-row">
+              <span class="model-lbl">Escatima en</span>
+              <span class="model-val">Atención al cliente, puntualidad operativa, personal en mostrador, infraestructura de soporte al pasajero.</span>
+            </div>
+            <div class="model-row">
+              <span class="model-lbl">Atención al cliente</span>
+              <span class="model-val">Principalmente digital (formulario web). 0810 con disponibilidad limitada. Redes sociales como canal de escalada. Trustpilot: 1,2/5.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- JETSMART -->
+        <div class="model-card reveal d2">
+          <div class="model-header" style="background:#0a0a1a">
+            <div class="model-airline" style="color:var(--js)">JetSmart</div>
+            <div class="model-type">Low Cost · Respaldo de Indigo Partners</div>
+          </div>
+          <div class="model-body">
+            <div class="model-row">
+              <span class="model-lbl">A qué apuesta</span>
+              <span class="model-val">Low cost "inteligente": precio bajo con opciones de personalización. "Solo pagás lo que usás." Eficiencia operativa sistémica.</span>
+            </div>
+            <div class="model-persona" style="border-color:var(--js)">
+              <strong>Pasajero ideal:</strong> Viajero urbano joven-adulto, familiarizado con el modelo low cost europeo. Quien viaja solo o en pareja y acepta los trade-offs de servicio a cambio del precio.
+            </div>
+            <div class="model-row">
+              <span class="model-lbl">Invierte fuerte en</span>
+              <span class="model-val">Flota nueva (Airbus A320), eficiencia operativa, expansión regional sudamericana (Argentina es hoy su mercado principal), tecnología.</span>
+            </div>
+            <div class="model-row">
+              <span class="model-lbl">Escatima en</span>
+              <span class="model-val">Servicio a bordo, atención presencial, personal en mostrador y canales de soporte post-vuelo.</span>
+            </div>
+            <div class="model-row">
+              <span class="model-lbl">Atención al cliente</span>
+              <span class="model-val">Centro de ayuda online, línea telefónica 11-2206-7799. Presencia presencial limitada. Trustpilot: 1,2/5.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PUNTUALIDAD -->
+      <h2 class="reveal">Puntualidad: el dato que más pesa</h2>
+      <p class="reveal">Antes de ingresar al journey del pasajero, un número lo dice casi todo. La puntualidad es el indicador operativo más directo de la experiencia de vuelo: llegar a tiempo es, para la mayoría de los pasajeros, el mínimo esperado.</p>
+
+      <div class="punt-section reveal">
+        <div class="punt-row">
+          <span class="punt-label">Aerolíneas Argentinas</span>
+          <div class="punt-bar-wrap">
+            <div class="punt-bar" style="width:82%;background:var(--aa)">82,35%</div>
+          </div>
+          <span class="punt-val">82%</span>
+        </div>
+        <div class="punt-row">
+          <span class="punt-label">JetSmart</span>
+          <div class="punt-bar-wrap">
+            <div class="punt-bar" style="width:81%;background:var(--js)">81,23%</div>
+          </div>
+          <span class="punt-val">81%</span>
+        </div>
+        <div class="punt-row">
+          <span class="punt-label">Flybondi</span>
+          <div class="punt-bar-wrap">
+            <div class="punt-bar" style="width:54%;background:#DC2626">54,29%</div>
+          </div>
+          <span class="punt-val" style="color:#DC2626">54%</span>
+        </div>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:.875rem">Fuente: consultora Adventus, datos 2025. Puntualidad = vuelos operados en horario sobre total programado.</p>
+      </div>
+
+      <div class="data-callout reveal">
+        <div>
+          <div class="dc-label">Febrero 2025 — el peor mes de Flybondi</div>
+          <div class="dc-num" style="color:var(--fb)">30,6%</div>
+          <div class="dc-text">de puntualidad en la primera quincena. Su piso histórico desde que comenzó a operar en Argentina en 2018.</div>
+        </div>
+        <div class="dc-context">
+          En esas dos semanas, Flybondi acumuló el <strong style="color:#fff">74% de todas las cancelaciones del país</strong>, a pesar de operar apenas el 18% de los vuelos nacionales. El Gobierno la intimó a presentar un plan de reducción de cancelaciones. Durante el verano 2025/2026 acumuló 924 vuelos demorados en solo dos semanas.
+        </div>
+      </div>
+
+      <!-- JOURNEY MAP -->
+      <h2 class="reveal">El Customer Journey Map</h2>
+      <p class="reveal">El journey del pasajero aéreo tiene seis etapas críticas: desde la búsqueda inicial hasta la experiencia post-vuelo. En cada una, el modelo de negocio de cada aerolínea produce experiencias radicalmente distintas. El mapa se construye a partir de reseñas públicas en Trustpilot, TripAdvisor, foros especializados (Los Viajeros), medios de comunicación y fuentes oficiales de cada empresa.</p>
+
+      <div class="journey-nav reveal">
+        <button class="jnav-item active" onclick="scrollToStage(1)">01<br>Búsqueda</button>
+        <button class="jnav-item" onclick="scrollToStage(2)">02<br>Compra</button>
+        <button class="jnav-item" onclick="scrollToStage(3)">03<br>Pre-viaje</button>
+        <button class="jnav-item" onclick="scrollToStage(4)">04<br>Aeropuerto</button>
+        <button class="jnav-item" onclick="scrollToStage(5)">05<br>A bordo</button>
+        <button class="jnav-item" onclick="scrollToStage(6)">06<br>Post-vuelo</button>
+      </div>
+
+      <!-- STAGE 01 -->
+      <div class="journey-stage reveal" id="stage-1">
+        <div class="stage-header">
+          <div class="stage-num">01</div>
+          <div class="stage-icon">🔍</div>
+          <div>
+            <div class="stage-title">Búsqueda y comparación de precios</div>
+            <div class="stage-subtitle">El primer contacto entre el pasajero y la aerolínea</div>
+          </div>
+        </div>
+        <div class="airline-panels">
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--aa)"></span><span class="panel-name">Aerolíneas Argentinas</span></div>
+            <div class="panel-rating rating-pos">✓ Positiva</div>
+            <p class="panel-text">El precio que el pasajero ve en Despegar, Google Flights o el sitio oficial es el precio final: incluye equipaje de bodega en tarifas medias y el servicio estándar. No hay sorpresas al sumar servicios básicos. Aparece en todas las plataformas de comparación con precio transparente y posibilidad de pagar en cuotas sin interés.</p>
+            <p class="panel-quote">"Al menos sabés de entrada cuánto vas a pagar. Con las otras no sabés nunca."</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--fb)"></span><span class="panel-name">Flybondi</span></div>
+            <div class="panel-rating rating-mix">~ Variable</div>
+            <p class="panel-text">El precio base es el anzuelo: puede arrancar muy por debajo de Aerolíneas. El pasajero que compara en Despegar ve la diferencia y se siente atraído. Lo que no ve todavía: equipaje de cabina, selección de asiento, check-in en mostrador son todos adicionales. Un pasajero que agrega los servicios habituales puede terminar pagando igual o más que la tarifa full service.</p>
+            <p class="panel-quote">"Vi el precio y dije qué ganga. Cuando terminé de pagar todo fue más caro que Aerolíneas."</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--js)"></span><span class="panel-name">JetSmart</span></div>
+            <div class="panel-rating rating-mix">~ Variable</div>
+            <p class="panel-text">Estrategia idéntica a Flybondi. Las tarifas base compiten en precio con Flybondi y son significativamente más bajas que Aerolíneas. El pasajero informado que viaja liviano y hace el check-in online consigue una experiencia de precio real. El pasajero promedio que agrega servicios típicos ve el precio escalar rápidamente.</p>
+            <p class="panel-quote">"Lo barato sale caro." — Título de reseña en TripAdvisor.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 02 -->
+      <div class="journey-stage reveal" id="stage-2">
+        <div class="stage-header">
+          <div class="stage-num">02</div>
+          <div class="stage-icon">💳</div>
+          <div>
+            <div class="stage-title">Compra: web y app</div>
+            <div class="stage-subtitle">El proceso de adquirir el pasaje y lo que se incluye en él</div>
+          </div>
+        </div>
+        <div class="airline-panels">
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--aa)"></span><span class="panel-name">Aerolíneas Argentinas</span></div>
+            <div class="panel-rating rating-pos">✓ Positiva</div>
+            <p class="panel-text">Proceso de compra claro en web y app. Las tarifas (Económica, Económica Plus, Business) describen explícitamente qué incluye cada una. Acepta cuotas sin interés, miles de Aerolíneas Plus para descuentos o canje, y múltiples medios de pago. El pasajero sabe qué está comprando antes de confirmar.</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--fb)"></span><span class="panel-name">Flybondi</span></div>
+            <div class="panel-rating rating-neg">✗ Crítica</div>
+            <p class="panel-text">El flujo de compra presenta múltiples pantallas de add-ons. El pasajero que no presta atención puede comprar servicios que no necesita (o no agregar los que sí necesita, como el equipaje de bodega). Pasajeros reportan sorpresa ante el total final, significativamente mayor al precio que originalmente motivó la compra. La experiencia de compra es percibida como confusa e intencionalmente opaca.</p>
+            <p class="panel-quote">"Compré el pasaje más barato y cuando llegué al aeropuerto tuve que pagar el equipaje de vuelta. Al final fue más caro."</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--js)"></span><span class="panel-name">JetSmart</span></div>
+            <div class="panel-rating rating-neg">✗ Crítica</div>
+            <p class="panel-text">Similar a Flybondi, con un agravante adicional: la web de JetSmart es frecuentemente criticada por problemas técnicos durante el proceso de pago —errores, pantallas que no cargan, dobles cobros reportados. Las políticas de tarifas son percibidas como poco claras. La información sobre qué incluye cada tarifa no siempre es fácil de encontrar antes de confirmar la compra.</p>
+            <p class="panel-quote">"La página falla constantemente. Me cobró dos veces y tardé semanas en que me devolvieran el dinero."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 03 -->
+      <div class="journey-stage reveal" id="stage-3">
+        <div class="stage-header">
+          <div class="stage-num">03</div>
+          <div class="stage-icon">📱</div>
+          <div>
+            <div class="stage-title">Pre-viaje: check-in y comunicación</div>
+            <div class="stage-subtitle">Las 48 horas previas al vuelo — información, check-in y expectativas</div>
+          </div>
+        </div>
+        <div class="airline-panels">
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--aa)"></span><span class="panel-name">Aerolíneas Argentinas</span></div>
+            <div class="panel-rating rating-mix">~ Variable</div>
+            <p class="panel-text">Check-in disponible desde 48 horas antes por web, app o en mostrador sin costo adicional. La app envía notificaciones de puerta, cambios y actualizaciones. El punto débil: cuando hay cancelaciones o demoras significativas, la comunicación es percibida como tardía e insuficiente. Muchos pasajeros se enteran del problema por redes sociales antes que por la aerolínea.</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--fb)"></span><span class="panel-name">Flybondi</span></div>
+            <div class="panel-rating rating-neg">✗ Crítica</div>
+            <p class="panel-text">El check-in online es <strong>obligatorio</strong>. Si el pasajero llega al aeropuerto sin haberlo completado, paga una penalización en el mostrador que en algunos casos supera el valor de la tarifa base del vuelo. La ventana de check-in es de 48 a 6 horas antes de la salida. La comunicación ante cambios y cancelaciones es ampliamente criticada: pasajeros reportan enterarse horas o minutos antes sin alternativas claras.</p>
+            <p class="panel-quote">"Me cancelaron el vuelo por WhatsApp a las 2 de la mañana, sin hotel, sin alternativas, sin nada."</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--js)"></span><span class="panel-name">JetSmart</span></div>
+            <div class="panel-rating rating-mix">~ Variable</div>
+            <p class="panel-text">Check-in online disponible y recomendado. Pasajeros reportan con frecuencia problemas técnicos con la app y la web para completar el proceso, lo que genera ansiedad pre-vuelo. La comunicación ante cambios operativos es valorada como mejor que Flybondi pero insuficiente frente al estándar de Aerolíneas Argentinas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 04 -->
+      <div class="journey-stage reveal" id="stage-4">
+        <div class="stage-header">
+          <div class="stage-num">04</div>
+          <div class="stage-icon">🏢</div>
+          <div>
+            <div class="stage-title">En el aeropuerto: mostrador y embarque</div>
+            <div class="stage-subtitle">El momento presencial más crítico — donde lo prometido se cumple o no</div>
+          </div>
+        </div>
+        <div class="airline-panels">
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--aa)"></span><span class="panel-name">Aerolíneas Argentinas</span></div>
+            <div class="panel-rating rating-pos">✓ Positiva</div>
+            <p class="panel-text">Infraestructura completa en Aeroparque y Ezeiza. Mostradores disponibles sin penalización por hacer el check-in presencial. Sala de espera Aerolíneas Lounge para pasajeros Plus Gold/Black y Business. La tripulación en tierra es mencionada positivamente en la mayoría de las reseñas en términos de profesionalismo. El punto débil: en vuelos retrasados, la información en sala de espera puede ser escasa.</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--fb)"></span><span class="panel-name">Flybondi</span></div>
+            <div class="panel-rating rating-neg">✗ Crítica</div>
+            <p class="panel-text">Los mostradores cierran en horario estricto previo al vuelo. Pasajeros que llegan fuera del horario de check-in no pueden abordar. El embarque sin asiento asignado (si no se pagó el adicional de selección) puede generar confusión e incomodidad, especialmente para familias. Personal muy limitado para atender consultas. En vuelos retrasados o cancelados, la asistencia en el aeropuerto es prácticamente inexistente.</p>
+            <p class="panel-quote">"Llegué 40 minutos antes y el mostrador estaba cerrado. Perdí el vuelo. Nadie me ayudó."</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--js)"></span><span class="panel-name">JetSmart</span></div>
+            <div class="panel-rating rating-mix">~ Variable</div>
+            <p class="panel-text">Se recomienda llegar al menos una hora antes porque los mostradores tienen horario de cierre estricto y no hay personal disponible una vez cerrados. Pasajeros reportan problemas de limpieza en áreas de embarque. La experiencia mejora cuando el vuelo opera sin inconvenientes; se deteriora rápidamente ante cualquier cambio operativo donde el personal no está disponible para asistir.</p>
+            <p class="panel-quote">"Cerrado. Sin personal. Sin información. Tuve que descubrirlo solo por el tablero."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 05 -->
+      <div class="journey-stage reveal" id="stage-5">
+        <div class="stage-header">
+          <div class="stage-num">05</div>
+          <div class="stage-icon">💺</div>
+          <div>
+            <div class="stage-title">A bordo: confort, servicio y puntualidad</div>
+            <div class="stage-subtitle">El corazón del producto aéreo — el vuelo en sí mismo</div>
+          </div>
+        </div>
+        <div class="airline-panels">
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--aa)"></span><span class="panel-name">Aerolíneas Argentinas</span></div>
+            <div class="panel-rating rating-pos">✓ Positiva</div>
+            <p class="panel-text">Comida y bebida incluidas en vuelos de cierta duración. Espacio en asientos razonable comparado con las low cost. La tripulación es consistentemente destacada por su profesionalismo y amabilidad en las reseñas. Entretenimiento disponible en vuelos internacionales. La puntualidad (82%) garantiza que la mayoría de los pasajeros llega cuando lo planeó.</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--fb)"></span><span class="panel-name">Flybondi</span></div>
+            <div class="panel-rating rating-mix">~ Variable</div>
+            <p class="panel-text">Sin comida ni bebida incluida: todo se vende a bordo a precios elevados. Asientos de alta densidad con espacio reducido. Flota homogénea de B737-800 en configuración de una sola clase. Cuando el vuelo sale a tiempo, la experiencia a bordo es funcional. El problema central es que casi la mitad de los vuelos de Flybondi en 2025 no salió a tiempo — haciendo que la experiencia en sala de espera sea una extensión negativa del viaje.</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--js)"></span><span class="panel-name">JetSmart</span></div>
+            <div class="panel-rating rating-mix">~ Variable</div>
+            <p class="panel-text">Sin comida ni bebida incluida. Flota de Airbus A320, considerada más moderna y cómoda que el B737 de Flybondi por algunos pasajeros. El personal recibe comentarios mixtos: hay reseñas positivas de trato amable y otras que reportan actitudes negativas. Problemas de higiene mencionados en varios testimonios (baños, pasillos). La puntualidad del 81% es significativamente mejor que Flybondi.</p>
+            <p class="panel-quote">"El avión llegó a tiempo, pero los baños estaban en un estado lamentable."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 06 -->
+      <div class="journey-stage reveal" id="stage-6">
+        <div class="stage-header">
+          <div class="stage-num">06</div>
+          <div class="stage-icon">📦</div>
+          <div>
+            <div class="stage-title">Post-vuelo: equipaje, reclamos y fidelización</div>
+            <div class="stage-subtitle">La última impresión que se lleva el pasajero — y la más recordada</div>
+          </div>
+        </div>
+        <div class="airline-panels">
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--aa)"></span><span class="panel-name">Aerolíneas Argentinas</span></div>
+            <div class="panel-rating rating-mix">~ Variable</div>
+            <p class="panel-text">Programa Aerolíneas Plus para fidelización (millas, upgrades, beneficios). Múltiples canales de reclamo: 0810, WhatsApp, web. Existe una estructura de compensación regulada ante cancelaciones. Las quejas existen —principalmente por demoras en reembolsos y gestión de equipaje dañado— pero hay más canales formales de resolución que en las low cost. Trustpilot 1,7/5: mejor que las low cost, pero lejos de ser satisfactorio.</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--fb)"></span><span class="panel-name">Flybondi</span></div>
+            <div class="panel-rating rating-neg">✗ Crítica</div>
+            <p class="panel-text">El momento más crítico del journey y el más frecuentemente mencionado en reseñas negativas. Reembolsos no realizados luego de cancelaciones, atención telefónica con demoras extremas o directamente inaccesible, formularios web sin respuesta. Sin programa de fidelización. Las redes sociales funcionan como el único canal de escalada que parece tener algún efecto. Trustpilot 1,2/5 — el piso del sector.</p>
+            <p class="panel-quote">"Llevo 4 meses esperando el reembolso de un vuelo cancelado por ellos. Nadie responde."</p>
+          </div>
+          <div class="airline-panel">
+            <div class="panel-airline"><span class="panel-dot" style="background:var(--js)"></span><span class="panel-name">JetSmart</span></div>
+            <div class="panel-rating rating-neg">✗ Crítica</div>
+            <p class="panel-text">Misma problemática que Flybondi. Reclamos sin respuesta, demoras en reintegros, información contradictoria entre canales. Sin programa de fidelización significativo. La paradoja de JetSmart: tiene mejor puntualidad que Flybondi (con lo cual hay menos situaciones de crisis), pero cuando el pasajero necesita resolver algo post-vuelo, la experiencia de atención es igualmente deficiente. Trustpilot 1,2/5.</p>
+            <p class="panel-quote">"El vuelo estuvo bien, pero cuando quise cambiar la fecha fue una pesadilla. Nunca me respondieron."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pull-quote reveal">
+        "En las low cost, la experiencia real se define cuando algo falla. Y cuando falla, el pasajero descubre que el 0800 no atiende, que el formulario web no tiene respuesta, y que la aerolínea simplemente desapareció."
+      </div>
+
+      <!-- HALLAZGOS -->
+      <h2 class="reveal">Hallazgos que no cierran</h2>
+
+      <div class="findings-grid">
+        <div class="finding-card reveal">
+          <p class="finding-num">Hallazgo 01</p>
+          <p class="finding-text"><strong>La trampa del precio.</strong> El pasajero que compara Flybondi o JetSmart con Aerolíneas en Despegar ve una diferencia importante en el precio base. Pero al agregar equipaje de bodega, selección de asiento y check-in en mostrador, el precio final puede igualarse o superarse — con un nivel de servicio mucho menor.</p>
+        </div>
+        <div class="finding-card reveal d1">
+          <p class="finding-num">Hallazgo 02</p>
+          <p class="finding-text"><strong>Flybondi y JetSmart tienen el mismo Trustpilot (1,2/5).</strong> Pese a que JetSmart tiene mejor puntualidad operativa (81% vs 54%), ambas comparten el piso del sector en satisfacción del pasajero. La experiencia de post-vuelo y atención al cliente es el denominador común negativo.</p>
+        </div>
+        <div class="finding-card reveal d2">
+          <p class="finding-num">Hallazgo 03</p>
+          <p class="finding-text"><strong>Flybondi, el 18% que genera el 74%.</strong> En la primera quincena de febrero 2025, Flybondi operaba el 18% de los vuelos nacionales pero concentraba el 74% de las cancelaciones del país. Este dato revela una brecha operativa estructural que ningún precio bajo puede compensar desde una perspectiva de CX.</p>
+        </div>
+        <div class="finding-card reveal d3">
+          <p class="finding-num">Hallazgo 04</p>
+          <p class="finding-text"><strong>Aerolíneas no está exenta.</strong> Con un Trustpilot de 1,7/5 y una certificación de 3 estrellas en Skytrax, Aerolíneas Argentinas supera a sus competidores locales pero está lejos del estándar internacional. Las quejas por cancelaciones, gestión de reclamos y comunicación son recurrentes también en su caso.</p>
+        </div>
+        <div class="finding-card reveal">
+          <p class="finding-num">Hallazgo 05</p>
+          <p class="finding-text"><strong>El modelo low cost tiene una promesa válida.</strong> JetSmart transportó 50 millones de pasajeros, 15 millones de los cuales volaron por primera vez. La democratización del acceso al vuelo es real y tiene valor social. El problema es que la promesa de precio bajo no siempre viene acompañada de la promesa de experiencia mínima aceptable.</p>
+        </div>
+        <div class="finding-card reveal d1">
+          <p class="finding-num">Hallazgo 06</p>
+          <p class="finding-text"><strong>El check-in como punto de quiebre.</strong> Para las low cost, el check-in online es un mecanismo de monetización de la desinformación: quien no lo hace en tiempo paga una penalización que puede superar la tarifa base del vuelo. Desde una mirada de CX, es la ruptura más clara entre lo que el pasajero esperaba y lo que encontró.</p>
+        </div>
+      </div>
+
+      <!-- CONCLUSIÓN 2 COLUMNAS -->
+      <h2 class="reveal">Lo que sienten los pasajeros</h2>
+      <p class="reveal">Los datos operativos cuentan parte de la historia. Pero hay algo que los números no terminan de capturar: cómo procesa el pasajero la experiencia de cada modelo — antes, durante y después del vuelo.</p>
+
+      <div class="conclusion-grid reveal">
+        <div class="conc-card trad">
+          <div class="conc-eyebrow" style="color:var(--aa)">Aerolínea Tradicional</div>
+          <div class="conc-title">Aerolíneas Argentinas</div>
+          <div class="conc-list">
+            <div class="conc-item">
+              <span class="conc-icon">✈️</span>
+              <span><strong>Saben lo que van a pagar.</strong> El precio inicial es el precio final. No hay sorpresas en el checkout ni en el aeropuerto.</span>
+            </div>
+            <div class="conc-item">
+              <span class="conc-icon">🧳</span>
+              <span><strong>Viajan con previsibilidad.</strong> La puntualidad del 82% y la infraestructura de servicio generan una experiencia más predecible, que el pasajero de negocios y las familias valoran especialmente.</span>
+            </div>
+            <div class="conc-item">
+              <span class="conc-icon">💬</span>
+              <span><strong>Tienen a quién reclamar.</strong> Cuando algo falla, existe una estructura formal de respuesta. No siempre funciona bien, pero existe.</span>
+            </div>
+            <div class="conc-item">
+              <span class="conc-icon">⚠️</span>
+              <span><strong>Pagan más por esa certeza.</strong> El pasajero precio-sensible que puede viajar con hand-bag y sin necesidades extras, podría estar sobredimensionando lo que realmente necesita.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="conc-card loco">
+          <div class="conc-eyebrow" style="color:var(--js)">Aerolíneas Low Cost</div>
+          <div class="conc-title">Flybondi · JetSmart</div>
+          <div class="conc-list">
+            <div class="conc-item">
+              <span class="conc-icon">💰</span>
+              <span><strong>Acceden a volar.</strong> Para millones de argentinos, las low cost hicieron posible un viaje que antes no podían pagar. Ese valor es real e innegable.</span>
+            </div>
+            <div class="conc-item">
+              <span class="conc-icon">🎲</span>
+              <span><strong>Viajan con incertidumbre.</strong> La puntualidad variable —especialmente de Flybondi— convierte el vuelo en un factor de riesgo. El pasajero no sabe si va a llegar cuando planeó.</span>
+            </div>
+            <div class="conc-item">
+              <span class="conc-icon">😤</span>
+              <span><strong>Se sienten solos cuando algo falla.</strong> La falta de estructura de atención es la queja más recurrente y la que genera mayor frustración. El pasajero descubre que el "soporte" prometido no existe en la práctica.</span>
+            </div>
+            <div class="conc-item">
+              <span class="conc-icon">📊</span>
+              <span><strong>El precio bajo puede ser una ilusión.</strong> El pasajero que no conoce el modelo termina pagando más de lo que calculó y recibiendo menos de lo que esperaba. La brecha entre expectativa y realidad es el mayor problema de CX del sector.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="reveal">Metodología</h2>
+      <p class="reveal">Este proyecto no utiliza scraping automatizado ni análisis estadístico de datasets. Es un ejercicio de <strong>investigación secundaria cualitativa</strong> aplicada al análisis de Customer Experience: relevamiento, lectura, clasificación y síntesis de información pública disponible en múltiples fuentes.</p>
+
+      <div class="method-steps">
+        <div class="method-step reveal">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Relevamiento de reseñas públicas</h3>
+            <p>Lectura y análisis de reseñas en Trustpilot, TripAdvisor, foros de viaje (Los Viajeros) y Esky. Selección de testimonios representativos de patrones recurrentes en cada aerolínea.</p>
+          </div>
+        </div>
+        <div class="method-step reveal d1">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Análisis de datos operativos</h3>
+            <p>Relevamiento de estadísticas de puntualidad y cancelaciones de la consultora Adventus (2025) y datos publicados por medios especializados (Infobae, Ámbito, iProfesional, Aviones.com).</p>
+          </div>
+        </div>
+        <div class="method-step reveal d2">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Análisis de fuentes oficiales</h3>
+            <p>Revisión de las páginas oficiales de cada aerolínea: políticas de equipaje, tarifas, canales de atención, programas de fidelidad y términos y condiciones.</p>
+          </div>
+        </div>
+        <div class="method-step reveal d3">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Construcción del Customer Journey Map</h3>
+            <p>Síntesis de la investigación en un mapa de 6 etapas. Para cada etapa × aerolínea se determina un nivel de experiencia (positiva / variable / crítica) basado en la evidencia recolectada, con citas textuales de pasajeros como soporte cualitativo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="next-proj reveal">
+        <div>
+          <p class="next-proj-label">Siguiente proyecto</p>
+          <p class="next-proj-title">El duelo del delivery — Rappi vs. PedidosYa · próximamente</p>
+        </div>
+        <a href="../proyectos.html" class="btn btn-outline">Ver todos los proyectos &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos, investigación social y experiencia del cliente.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../articulos.html">Artículos</a></li>
+          <li><a href="../proyectos.html">Proyectos</a></li>
+          <li><a href="../sobre-mi.html">Sobre mí</a></li>
+          <li><a href="../contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;·&nbsp; <a href="../politica-cookies.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Política de cookies</a> &nbsp;·&nbsp; <a href="../mapa-del-sitio.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Mapa del sitio</a></p>
+      <div class="footer-social">
+        <a href="mailto:lucasd-t@hotmail.com" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.classList.toggle('open')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.classList.remove('open')}));
+
+function scrollToStage(n){
+  const el=document.getElementById('stage-'+n);
+  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});
+    document.querySelectorAll('.jnav-item').forEach((btn,i)=>{btn.classList.toggle('active',i===n-1)});
+  }
+}
+
+(()=>{
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target)}})
+  },{threshold:.06,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>

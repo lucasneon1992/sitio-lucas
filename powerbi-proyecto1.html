@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Fintech vs. Banca Tradicional · Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:#0B1437;color:#fff;-webkit-font-smoothing:antialiased}
+body{display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+
+.topbar{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.875rem 1.5rem;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  gap:1rem;
+}
+.topbar-left{display:flex;align-items:center;gap:1.25rem}
+.back-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.8125rem;font-weight:500;
+  color:rgba(255,255,255,.5);
+  transition:color .2s;
+}
+.back-link:hover{color:#fff}
+.back-link svg{transition:transform .2s}
+.back-link:hover svg{transform:translateX(-3px)}
+.divider{width:1px;height:18px;background:rgba(255,255,255,.15)}
+.topbar-title{font-size:.875rem;font-weight:600;color:rgba(255,255,255,.8)}
+.topbar-badge{
+  font-size:.6875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:.25rem .625rem;border-radius:20px;
+  background:rgba(37,99,235,.3);color:#93C5FD;
+  border:1px solid rgba(37,99,235,.4);
+}
+.topbar-right{display:flex;align-items:center;gap:.75rem}
+.btn-sm{
+  display:inline-flex;align-items:center;gap:.375rem;
+  padding:.4375rem 1rem;border-radius:6px;
+  font-size:.8125rem;font-weight:600;
+  transition:all .2s;
+}
+.btn-sm-outline{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.7);
+}
+.btn-sm-outline:hover{background:rgba(255,255,255,.12);color:#fff}
+.btn-sm-primary{background:#2563EB;color:#fff;border:1px solid #2563EB}
+.btn-sm-primary:hover{background:#1D4ED8}
+
+.embed-wrapper{flex:1;position:relative;display:flex;flex-direction:column}
+.embed-wrapper iframe{
+  flex:1;width:100%;border:none;
+  display:block;
+}
+
+/* Fallback shown when iframe is empty */
+.embed-fallback{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1.25rem;text-align:center;padding:2rem;
+}
+.embed-fallback svg{opacity:.25;color:#93C5FD}
+.embed-fallback h2{font-size:1.25rem;font-weight:700;color:rgba(255,255,255,.8)}
+.embed-fallback p{font-size:.9375rem;color:rgba(255,255,255,.45);max-width:440px;line-height:1.7}
+.embed-fallback .btn-fallback{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.75rem 1.5rem;border-radius:8px;
+  background:#2563EB;color:#fff;font-weight:600;font-size:.9375rem;
+  transition:background .2s;
+}
+.embed-fallback .btn-fallback:hover{background:#1D4ED8}
+
+@media(max-width:600px){
+  .topbar-title,.topbar-badge,.topbar-right{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="proyecto1.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Volver al proyecto
+    </a>
+    <div class="divider"></div>
+    <span class="topbar-title">Fintech vs. Banca Tradicional</span>
+    <span class="topbar-badge">Power BI</span>
+  </div>
+  <div class="topbar-right">
+    <a href="https://github.com/lucasneon92/proyecto1_apps" class="btn-sm btn-sm-outline" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      GitHub
+    </a>
+    <a href="https://gamma.app/docs/Fintech-vs-Banca-Tradicional--a47pgafs3g35f1k" class="btn-sm btn-sm-outline" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Presentación
+    </a>
+  </div>
+</div>
+
+<div class="embed-wrapper">
+  <iframe
+    src="https://app.powerbi.com/view?r=eyJrIjoiMmEwOWExNDctNzgzMi00YzBkLTk3OWItNjM3YTg4MTJmYjAzIiwidCI6IjQ1NmQ1MjA2LWQ5YWItNDZhZC05ZTA1LThhNGE5MWI4OTI1NyJ9"
+    title="Dashboard Fintech vs. Banca Tradicional — Lucas Della Torre"
+    frameborder="0"
+    allowFullScreen="true"
+    style="flex:1;width:100%;border:none;display:block">
+  </iframe>
+</div>
+
+</body>
+</html>

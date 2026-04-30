@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Proyectos de Lucas Della Torre — análisis de datos, investigación social y Customer Experience.">
+<title>Proyectos — Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+:root{
+  --dark:#0B1437;--bg:#fff;--bg-alt:#F5F7FA;--accent:#2563EB;--accent-h:#1D4ED8;
+  --accent-l:#EFF6FF;--text:#374151;--muted:#6B7280;--heading:#0B1437;
+  --border:#E5E7EB;--r:14px;--r-sm:8px;
+  --shadow:0 4px 30px rgba(11,20,55,.08);--shadow-lg:0 20px 60px rgba(11,20,55,.14);
+  --t:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);will-change:opacity,transform}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+
+.container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.section{padding-block:6rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.section-title{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;color:var(--heading);line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:20px;background:var(--accent-l);color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.875rem;border-radius:var(--r-sm);font-weight:600;font-size:.9375rem;transition:var(--t);border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.3)}
+.btn-outline{background:transparent;color:var(--heading);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* NAV — solid (página interna) */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.875rem 0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:var(--text);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--t)}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important;transform:translateY(-1px)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:var(--t)}
+
+/* PAGE HERO */
+.page-hero{padding-block:9rem 5rem;background:var(--dark);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.page-hero-inner{position:relative;z-index:1}
+.page-hero .eyebrow{color:rgba(255,255,255,.5)}
+.page-hero .eyebrow::before{background:var(--accent)}
+.page-hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.03em;margin-bottom:1.25rem}
+.page-hero h1 em{font-style:normal;color:var(--accent)}
+.page-hero p{font-size:1.125rem;color:rgba(255,255,255,.55);max-width:520px;line-height:1.75}
+
+/* FILTER CHIPS */
+.filters{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:3rem}
+.filter-chip{display:inline-flex;align-items:center;gap:.375rem;padding:.4375rem 1rem;border-radius:20px;font-size:.8125rem;font-weight:600;border:1.5px solid var(--border);color:var(--muted);transition:var(--t);cursor:pointer;background:none;font-family:inherit}
+.filter-chip:hover,.filter-chip.active{border-color:var(--accent);color:var(--accent);background:var(--accent-l)}
+
+/* PROJECT CARDS GRID */
+.projects-grid{display:grid;gap:2rem}
+
+/* Large card — featured */
+.project-card-lg{display:grid;grid-template-columns:1fr 1fr;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);background:var(--bg);transition:var(--t);color:inherit}
+.project-card-lg:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.pc-img{overflow:hidden}
+.pc-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.project-card-lg:hover .pc-img img{transform:scale(1.05)}
+.pc-body{padding:3rem;display:flex;flex-direction:column;justify-content:center}
+.pc-num{font-size:.75rem;font-weight:700;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:.875rem}
+.pc-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
+.pc-title{font-size:1.625rem;font-weight:700;color:var(--heading);line-height:1.3;margin-bottom:.875rem;letter-spacing:-.01em}
+.pc-desc{font-size:.9375rem;color:var(--muted);line-height:1.75;margin-bottom:1.875rem;flex-grow:1}
+.pc-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:600;color:var(--accent);transition:gap .2s}
+.pc-link:hover{gap:.875rem}
+
+/* Coming soon */
+.coming-soon{background:var(--bg-alt);border:1.5px dashed var(--border);border-radius:var(--r);padding:3.5rem;text-align:center}
+.coming-soon svg{color:var(--muted);opacity:.4;margin:0 auto 1.25rem}
+.coming-soon h3{font-size:1.125rem;font-weight:700;color:var(--heading);margin-bottom:.625rem}
+.coming-soon p{font-size:.9375rem;color:var(--muted);line-height:1.7;max-width:420px;margin-inline:auto}
+
+/* CTA BAND */
+.cta-band{background:var(--dark);padding-block:6rem;text-align:center;position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.cta-band-inner{position:relative;z-index:1}
+.cta-band h2{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1rem;letter-spacing:-.025em}
+.cta-band p{color:rgba(255,255,255,.5);font-size:1.0625rem;max-width:480px;margin-inline:auto;margin-bottom:2.5rem;line-height:1.75}
+
+/* FOOTER */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--t)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+@media(max-width:1024px){
+  .project-card-lg{grid-template-columns:1fr}
+  .pc-img{aspect-ratio:16/9}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .section{padding-block:4rem}
+  .nav-links{display:none;position:fixed;inset:0;background:var(--dark);flex-direction:column;justify-content:center;align-items:center;gap:.5rem}
+  .nav-links.open{display:flex}
+  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
+  .nav-links li a:hover{color:#fff!important;background:rgba(255,255,255,.08)!important}
+  .nav-cta a{background:var(--accent)!important}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+  .pc-body{padding:2rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="articulos.html">Artículos</a></li>
+      <li><a href="proyectos.html" class="active">Proyectos</a></li>
+      <li><a href="sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <p class="eyebrow">Portafolio</p>
+    <h1>Proyectos<em>.</em></h1>
+    <p>Investigaciones, análisis y proyectos de datos donde aplico metodología, rigor y curiosidad para entender el comportamiento humano.</p>
+  </div>
+</section>
+
+<!-- PROJECTS LIST -->
+<section class="section">
+  <div class="container">
+
+    <div class="filters reveal">
+      <button class="filter-chip active">Todos</button>
+      <button class="filter-chip">Customer Experience</button>
+      <button class="filter-chip">NLP</button>
+      <button class="filter-chip">Power BI</button>
+      <button class="filter-chip">Investigación Social</button>
+    </div>
+
+    <div class="projects-grid">
+      <!-- Proyecto 01 -->
+      <a href="proyecto1.html" class="project-card-lg reveal" data-categories="Customer Experience,NLP,Power BI">
+        <div class="pc-img">
+          <img src="https://d1yei2z3i6k35z.cloudfront.net/1271858/68596052c74e4_Fintech-4.jpg"
+            alt="Fintech vs Banca Tradicional" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <p class="pc-num">Proyecto № 01</p>
+          <div class="pc-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">NLP</span>
+            <span class="tag">NLTK</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">Customer Experience</span>
+          </div>
+          <h3 class="pc-title">Fintech vs. Banca Tradicional: la experiencia del usuario bajo la lupa.</h3>
+          <p class="pc-desc">Análisis de 1.000 reseñas reales de Mercado Pago y Santander para entender qué funciona y qué no en la experiencia digital de una fintech y un banco tradicional.</p>
+          <span class="pc-link">
+            Ver proyecto completo
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Proyecto 02 -->
+      <a href="proyecto2/index.html" class="project-card-lg reveal d1" data-categories="Customer Experience,NLP,Power BI">
+        <div class="pc-img">
+          <img src="https://www.miobrasocial.com.ar/wp-content/uploads/2025/10/medicina-prepaga-argentina.png"
+            alt="La voz del socio — Prepagas argentinas" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <p class="pc-num">Proyecto № 02</p>
+          <div class="pc-tags">
+            <span class="tag">Python</span>
+            <span class="tag">NLP</span>
+            <span class="tag">NLTK</span>
+            <span class="tag">WordCloud</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">Customer Experience</span>
+          </div>
+          <h3 class="pc-title">La voz del socio: lo que revelan 4.200 reseñas sobre la experiencia en el sistema de prepagas argentino.</h3>
+          <p class="pc-desc">Análisis de reseñas públicas de Google Play de 7 prepagas (OSDE, Swiss Medical, Galeno, Medifé, Medicus, Omint y Sancor Salud) en el contexto de los aumentos de 2024–2026. Rating, sentimiento, tasa de respuesta y menciones a precios.</p>
+          <span class="pc-link">
+            Ver proyecto completo
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Proyecto 03 -->
+      <a href="proyecto3/index.html" class="project-card-lg reveal d2" data-categories="Customer Experience">
+        <div class="pc-img" style="background:linear-gradient(135deg,#0B1437 0%,#0F2054 100%);display:flex;align-items:center;justify-content:center;min-height:280px;gap:0;flex-direction:column">
+          <div style="display:flex;gap:1.5rem;align-items:center;margin-bottom:1rem">
+            <span style="width:48px;height:48px;border-radius:50%;background:#006FB9;display:flex;align-items:center;justify-content:center;font-size:1.25rem">✈️</span>
+            <span style="width:48px;height:48px;border-radius:50%;background:#FFD200;display:flex;align-items:center;justify-content:center;font-size:1.25rem">✈️</span>
+            <span style="width:48px;height:48px;border-radius:50%;background:#FF5B00;display:flex;align-items:center;justify-content:center;font-size:1.25rem">✈️</span>
+          </div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;padding:0 1.5rem">
+            <span style="background:#006FB9;color:#fff;font-size:.7rem;font-weight:700;padding:.3rem .75rem;border-radius:20px">Aerolíneas Arg.</span>
+            <span style="background:#FFD200;color:#1a1a1a;font-size:.7rem;font-weight:700;padding:.3rem .75rem;border-radius:20px">Flybondi</span>
+            <span style="background:#FF5B00;color:#fff;font-size:.7rem;font-weight:700;padding:.3rem .75rem;border-radius:20px">JetSmart</span>
+          </div>
+        </div>
+        <div class="pc-body">
+          <p class="pc-num">Proyecto № 03</p>
+          <div class="pc-tags">
+            <span class="tag">Customer Journey Map</span>
+            <span class="tag">CX Research</span>
+            <span class="tag">Investigación secundaria</span>
+            <span class="tag">Customer Experience</span>
+          </div>
+          <h3 class="pc-title">Tradicional vs. Low Cost: un análisis de la experiencia del pasajero en la aviación argentina.</h3>
+          <p class="pc-desc">Customer Journey Map comparativo de Aerolíneas Argentinas, Flybondi y JetSmart. 6 etapas del viaje mapeadas con datos reales de puntualidad, reseñas públicas y análisis de modelo de negocio.</p>
+          <span class="pc-link">
+            Ver proyecto completo
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Próximamente -->
+      <div class="coming-soon reveal d3">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        <h3>Más proyectos en camino</h3>
+        <p>Estoy trabajando en nuevos análisis e investigaciones. Volvé pronto o seguime en LinkedIn para enterarte cuando publique.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container cta-band-inner">
+    <h2 class="reveal">¿Tenés un proyecto<br>en mente?</h2>
+    <p class="reveal d1">Hablemos. Podemos trabajar juntos en investigación, análisis de datos o estrategia de CX.</p>
+    <a href="contacto.html" class="btn btn-primary reveal d2">Contactarme &rarr;</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos y CX (experiencia del cliente).</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="articulos.html">Artículos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="sobre-mi.html">Sobre mí</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;·&nbsp; <a href="politica-cookies.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Política de cookies</a> &nbsp;·&nbsp; <a href="mapa-del-sitio.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Mapa del sitio</a></p>
+      <div class="footer-social">
+        <a href="mailto:lucasd-t@hotmail.com" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.classList.toggle('open')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.classList.remove('open')}));
+
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    const cat=chip.textContent.trim();
+    const comingSoon=document.querySelector('.coming-soon');
+    document.querySelectorAll('.project-card-lg').forEach(card=>{
+      if(cat==='Todos'){card.style.display='';}
+      else{const cats=(card.dataset.categories||'').split(',');card.style.display=cats.includes(cat)?''  :'none';}
+    });
+    if(comingSoon){comingSoon.style.display=cat==='Todos'?'':'none';}
+  });
+});
+
+(()=>{
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target)}})
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>

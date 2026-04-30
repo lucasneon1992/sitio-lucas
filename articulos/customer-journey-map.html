@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Qué es un Customer Journey Map, por qué la mayoría termina archivado y cómo convertirlo en un plan concreto de mejora de CX. Con ejemplos del mercado argentino.">
+<title>Customer Journey Map: qué es, para qué sirve y cómo se aplica en Argentina — Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+:root{
+  --dark:#0B1437;--bg:#fff;--bg-alt:#F5F7FA;--accent:#2563EB;--accent-h:#1D4ED8;
+  --accent-l:#EFF6FF;--text:#374151;--muted:#6B7280;--heading:#0B1437;
+  --border:#E5E7EB;--r:14px;--r-sm:8px;
+  --shadow:0 4px 30px rgba(11,20,55,.08);--shadow-lg:0 20px 60px rgba(11,20,55,.14);
+  --t:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);will-change:opacity,transform}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+.container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.container-narrow{width:100%;max-width:760px;margin-inline:auto;padding-inline:1.5rem}
+.section{padding-block:5rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:20px;background:var(--accent-l);color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.875rem;border-radius:var(--r-sm);font-weight:600;font-size:.9375rem;transition:var(--t);border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.3)}
+.btn-outline{background:transparent;color:var(--heading);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.875rem 0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:var(--text);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--t)}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:var(--t)}
+
+/* ARTICLE HERO */
+.art-hero{padding-block:9rem 5rem;background:var(--dark);position:relative;overflow:hidden}
+.art-hero::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);top:-150px;right:-150px;pointer-events:none}
+.art-hero-inner{position:relative;z-index:1}
+.art-hero .back-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.5);margin-bottom:2rem;transition:color .2s}
+.art-hero .back-link:hover{color:rgba(255,255,255,.8)}
+.art-hero .back-link svg{transition:transform .2s}
+.art-hero .back-link:hover svg{transform:translateX(-3px)}
+.art-hero .eyebrow{color:rgba(255,255,255,.45)}
+.art-hero .eyebrow::before{background:var(--accent)}
+.art-hero h1{font-size:clamp(1.875rem,4vw,3.25rem);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.03em;margin-bottom:1.75rem;max-width:760px}
+.art-hero-meta{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center}
+.art-hero-meta .tag{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
+.art-meta-sep{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.25)}
+.art-date{font-size:.875rem;color:rgba(255,255,255,.4);font-weight:500}
+.art-read{font-size:.875rem;color:rgba(255,255,255,.4);font-weight:500}
+
+/* CONTENT */
+.content-body{font-size:1rem;color:var(--text);line-height:1.75}
+.content-body h2{font-size:1.5rem;font-weight:700;color:var(--heading);margin-top:3rem;margin-bottom:1rem;letter-spacing:-.02em}
+.content-body h3{font-size:1.0625rem;font-weight:700;color:var(--heading);margin-top:2rem;margin-bottom:.625rem}
+.content-body p{margin-bottom:1.25rem}
+.content-body strong{color:var(--heading);font-weight:600}
+.content-body ul{margin-bottom:1.25rem;padding-left:1.25rem}
+.content-body ul li{margin-bottom:.625rem;position:relative}
+.content-body ul li::before{content:'→';position:absolute;left:-1.25rem;color:var(--accent);font-weight:600}
+.content-body a{color:var(--accent);font-weight:500;text-decoration:underline;text-decoration-color:rgba(37,99,235,.3);text-underline-offset:3px;transition:text-decoration-color .2s}
+.content-body a:hover{text-decoration-color:var(--accent)}
+
+/* PULL QUOTE */
+.pull-quote{border-left:3px solid var(--accent);padding:1.375rem 1.75rem;margin-block:2rem;background:var(--accent-l);border-radius:0 var(--r-sm) var(--r-sm) 0}
+.pull-quote p{font-size:1.0625rem;font-style:italic;line-height:1.65;color:var(--heading);margin:0;font-weight:500}
+
+/* JOURNEY STAGES */
+.jstage-list{display:flex;flex-direction:column;gap:.625rem;margin-block:1.75rem}
+.jstage-item{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;padding:1rem 1.25rem;background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r-sm)}
+.jstage-num{font-size:.75rem;font-weight:800;color:var(--accent);background:var(--accent-l);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.05rem}
+.jstage-text{font-size:.9375rem;color:var(--text);line-height:1.6}
+.jstage-text strong{color:var(--heading)}
+.jstage-item.friction{border-left:3px solid #EF4444;background:#FFF5F5}
+.jstage-item.friction .jstage-num{color:#EF4444;background:#FEE2E2}
+
+/* SECTOR LABEL */
+.sector-label{display:inline-flex;align-items:center;gap:.5rem;font-size:.6875rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;margin-top:2rem}
+.sector-label::before{content:'';display:inline-block;width:16px;height:1.5px;background:var(--muted)}
+
+/* ROADMAP */
+.roadmap{margin-block:2rem;display:flex;flex-direction:column;gap:1.5rem}
+.roadmap-step{display:flex;gap:1.25rem;align-items:flex-start}
+.roadmap-num{width:36px;height:36px;border-radius:50%;background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.9375rem;font-weight:700;flex-shrink:0;margin-top:.125rem}
+.roadmap-content h3{font-size:1rem;font-weight:700;color:var(--heading);margin:0 0 .375rem;text-transform:none;letter-spacing:0}
+.roadmap-content p{font-size:.9375rem;color:var(--muted);line-height:1.7;margin:0}
+
+/* INFO NOTE */
+.info-note{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;margin-block:2rem;font-size:.9375rem;color:var(--text);line-height:1.7}
+.info-note strong{color:var(--heading)}
+
+/* DIVIDER */
+.content-divider{width:48px;height:2px;background:var(--accent);margin-block:3rem;opacity:.35}
+
+/* BACK BOTTOM */
+.back-bottom{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:2rem 2.5rem;margin-top:4rem}
+.back-bottom-label{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.375rem}
+.back-bottom-text{font-size:1.0625rem;font-weight:700;color:var(--heading)}
+
+/* FOOTER */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--t)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+@media(max-width:768px){
+  .section{padding-block:4rem}
+  .back-bottom{flex-direction:column;gap:1.25rem}
+  .jstage-item{grid-template-columns:1fr;gap:.5rem}
+  .nav-links{display:none;position:fixed;inset:0;background:var(--dark);flex-direction:column;justify-content:center;align-items:center;gap:.5rem}
+  .nav-links.open{display:flex}
+  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="../articulos.html" class="active">Artículos</a></li>
+      <li><a href="../proyectos.html">Proyectos</a></li>
+      <li><a href="../sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="../contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ARTICLE HERO -->
+<section class="art-hero">
+  <div class="container art-hero-inner">
+    <a href="../articulos.html" class="back-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Todos los artículos
+    </a>
+    <p class="eyebrow">Customer Experience</p>
+    <h1>Customer Journey Map: qué es, para qué sirve y cómo se aplica en Argentina</h1>
+    <div class="art-hero-meta">
+      <span class="tag">Customer Experience</span>
+      <span class="art-meta-sep"></span>
+      <span class="art-date">Abril 2026</span>
+      <span class="art-meta-sep"></span>
+      <span class="art-read">10 min de lectura</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="section">
+  <div class="container-narrow">
+    <div class="content-body">
+
+      <p class="reveal">La mayoría de las empresas sabe que tiene problemas en la atención al cliente. Lo saben porque hay quejas, porque algunos clientes no vuelven, porque el equipo de ventas nota que algo se rompe en algún punto del proceso. Lo que generalmente no saben — y ahí está el problema real — es exactamente dónde se rompe, por qué, y qué hace falta para que no vuelva a pasar.</p>
+
+      <p class="reveal">El Customer Journey Map (CJM) es la herramienta que responde esas preguntas. No es un concepto de agencia ni un ejercicio de taller creativo: es un mapa operativo de la experiencia del cliente.</p>
+
+      <h2 class="reveal">Qué es un Customer Journey Map</h2>
+
+      <p class="reveal">Un CJM documenta cada punto de contacto entre un cliente y tu empresa — desde que te descubre por primera vez hasta que, si las cosas salen bien, vuelve y te recomienda. Etapa por etapa, canal por canal.</p>
+
+      <p class="reveal">La mayoría de los negocios tiene esos puntos de contacto más o menos claros en la cabeza de quien lo fundó o lo lleva adelante. El problema es que nunca están escritos, nunca están ordenados, y nunca están analizados en conjunto. El CJM los hace visibles y permite identificar patrones que de otra forma pasan desapercibidos: dónde se acumulan las quejas, dónde el cliente abandona, dónde hay una promesa que el servicio no está cumpliendo.</p>
+
+      <h2 class="reveal">El mapa que termina en el cajón</h2>
+
+      <p class="reveal">Hay una manera muy extendida de hacer mal un CJM: hacerlo una vez — generalmente en un taller de estrategia o una jornada de design thinking —, presentarlo con mucho color y entusiasmo, y archivarlo. El mapa queda precioso, con post-its virtuales y etiquetas de emoción, y no cambia absolutamente nada en la operación.</p>
+
+      <p class="reveal">Un CJM sin plan de acción es un diagnóstico sin tratamiento. El valor real no está en el mapa en sí, sino en lo que se hace con él: qué puntos de fricción se identificaron, en qué orden se abordan, con qué recursos, y con qué métricas para saber si las mejoras están funcionando.</p>
+
+      <div class="pull-quote reveal">
+        <p>"Trazar el mapa es el 20% del trabajo. El 80% restante está en convertir cada punto de fricción en una tarea concreta para el equipo."</p>
+      </div>
+
+      <h2 class="reveal">El contexto argentino cambia el mapa</h2>
+
+      <p class="reveal">Mapear el journey de un cliente en Argentina tiene particularidades que no aparecen en los libros de texto de CX, casi todos escritos pensando en mercados de Europa o Norteamérica.</p>
+
+      <p class="reveal"><strong>El cliente argentino se queja en público, y rápido.</strong> Google Maps, Instagram y Twitter/X funcionan como canales de atención que las empresas no eligieron, pero que sus clientes usan activamente cuando algo falla. Una reseña negativa sin respuesta le habla a todos los clientes futuros. En el <a href="../proyecto2/index.html">análisis de prepagas argentinas</a> que publicamos como proyecto, la tasa de respuesta a reseñas de Google Play resultó ser uno de los indicadores más reveladores sobre la cultura de CX de cada empresa: OSDE respondía el 90% de las reseñas que recibía; Medifé, ninguna.</p>
+
+      <p class="reveal"><strong>La variable económica calibra la expectativa.</strong> El cliente que pagó caro tiene un umbral de tolerancia estrecho frente a cualquier fricción. Cuando la relación precio-servicio no cierra, el malestar se amplifica aunque el problema sea puntual. En sectores que atravesaron aumentos sostenidos — salud, telecomunicaciones, servicios financieros — esto impacta directamente en cómo el cliente percibe cada interacción.</p>
+
+      <p class="reveal"><strong>La desconfianza de base es alta en ciertos sectores.</strong> Salud, finanzas y servicios públicos vienen con una historia de experiencias frustrantes acumuladas — no necesariamente tuyas, sino del sector en general. El cliente llega con la guardia alta. Eso significa que el margen de error en los primeros puntos del journey es muy estrecho: si la primera impresión confirma sus peores expectativas, recuperar esa relación cuesta mucho más que haberla construido bien desde el principio.</p>
+
+      <p class="reveal"><strong>Pero el cliente argentino vuelve cuando la experiencia es buena.</strong> No es un cliente desleal por naturaleza: es un cliente exigente. Si resolviste su problema, si lo atendiste bien, si la experiencia fue coherente con lo que prometiste, vuelve — y recomienda. Esa es exactamente la oportunidad que el CJM ayuda a construir.</p>
+
+      <h2 class="reveal">Dos journeys concretos</h2>
+
+      <p class="reveal">Para que el concepto no quede abstracto, acá van dos ejemplos de cómo se vería un CJM básico en empresas de sectores distintos.</p>
+
+      <p class="sector-label reveal">Salud privada</p>
+      <h3 class="reveal">CEMIC</h3>
+
+      <p class="reveal">CEMIC es una institución privada con atención ambulatoria, guardias y estudios diagnósticos. El journey de un paciente tiene, en términos generales, cinco etapas:</p>
+
+      <div class="jstage-list reveal">
+        <div class="jstage-item">
+          <span class="jstage-num">1</span>
+          <span class="jstage-text"><strong>Descubrimiento</strong> — búsqueda en Google, derivación de un médico, boca a boca de alguien que ya es paciente.</span>
+        </div>
+        <div class="jstage-item friction">
+          <span class="jstage-num">2</span>
+          <span class="jstage-text"><strong>Primer contacto</strong> — sacar turno por web, app o llamada al 0800. En el sector salud, este suele ser el primer punto de fricción: sistemas que no cargan, líneas con espera larga, turnos disponibles muy distantes en el tiempo.</span>
+        </div>
+        <div class="jstage-item">
+          <span class="jstage-num">3</span>
+          <span class="jstage-text"><strong>La consulta</strong> — tiempo de espera en recepción, trato del personal administrativo, la atención médica en sí. Generalmente el punto mejor evaluado del journey.</span>
+        </div>
+        <div class="jstage-item friction">
+          <span class="jstage-num">4</span>
+          <span class="jstage-text"><strong>Post-consulta</strong> — entrega de resultados, comunicación de seguimiento, gestión con la obra social. Segundo gran punto de fricción: demoras, falta de comunicación proactiva, procesos de autorización que el paciente tiene que seguir solo.</span>
+        </div>
+        <div class="jstage-item">
+          <span class="jstage-num">5</span>
+          <span class="jstage-text"><strong>Retención</strong> — ¿recibe el paciente alguna comunicación posterior? ¿Hay un canal claro para volver a contactarse? ¿Cómo se gestionan los reclamos?</span>
+        </div>
+      </div>
+
+      <p class="reveal">En el sector salud, los puntos de mayor fricción se concentran en los extremos: conseguir turno y la comunicación post-consulta. Son los momentos donde más quejas se acumulan y donde más se erosiona la confianza — no porque la atención médica sea mala, sino porque el sistema alrededor de esa atención no acompaña.</p>
+
+      <p class="sector-label reveal">Fintech · Banca digital</p>
+      <h3 class="reveal">Brubank</h3>
+
+      <p class="reveal">Brubank opera en el extremo opuesto del espectro: no tiene sucursales. Todo el journey ocurre en una app.</p>
+
+      <div class="jstage-list reveal">
+        <div class="jstage-item">
+          <span class="jstage-num">1</span>
+          <span class="jstage-text"><strong>Descubrimiento</strong> — redes sociales, referidos, comparadores de productos financieros, publicidad digital.</span>
+        </div>
+        <div class="jstage-item">
+          <span class="jstage-num">2</span>
+          <span class="jstage-text"><strong>Onboarding</strong> — apertura de cuenta desde el celular, verificación de identidad. Un proceso 100% digital que, cuando funciona bien, es el punto más diferencial frente a la banca tradicional.</span>
+        </div>
+        <div class="jstage-item">
+          <span class="jstage-num">3</span>
+          <span class="jstage-text"><strong>Uso cotidiano</strong> — transferencias, pagos de servicios, tarjeta de crédito. El núcleo del producto.</span>
+        </div>
+        <div class="jstage-item friction">
+          <span class="jstage-num">4</span>
+          <span class="jstage-text"><strong>Momento de fricción</strong> — un bloqueo de cuenta, una transferencia que no llegó, un cobro que el usuario no reconoce. En un banco digital donde no hay mostrador ni sucursal, este es el punto más sensible del journey.</span>
+        </div>
+        <div class="jstage-item friction">
+          <span class="jstage-num">5</span>
+          <span class="jstage-text"><strong>Resolución</strong> — soporte por chat, redes sociales, reseñas en tiendas de apps. Cuando la resolución es lenta o confusa, el daño se amplifica: el cliente no tiene otra puerta a la que tocar.</span>
+        </div>
+      </div>
+
+      <p class="reveal">El journey de Brubank es corto en canales, pero muy sensible en las etapas 4 y 5. En un banco sin presencia física, la experiencia de resolución es casi todo: si el soporte responde rápido y resuelve, la confianza se sostiene; si no, el cliente se va — y lo cuenta en las reseñas de Google Play, que en la práctica funcionan como el único termómetro público del servicio.</p>
+
+      <div class="info-note reveal">
+        <strong>Una observación transversal a ambos ejemplos:</strong> los puntos de fricción más críticos no están en el "momento estrella" del servicio — la consulta médica, el vuelo, la transferencia exitosa. Están en los bordes: antes de llegar ahí y después de haber pasado por ahí. Son los momentos de gestión, espera y resolución los que determinan si el cliente vuelve o no.
+      </div>
+
+      <h2 class="reveal">Del mapa a la acción</h2>
+
+      <p class="reveal">Identificar los puntos de fricción es el diagnóstico. Lo que viene después es el tratamiento: un plan de acción concreto que traduce cada punto del CJM en una tarea para el equipo.</p>
+
+      <p class="reveal">Eso implica trabajar sobre cuatro ejes en paralelo:</p>
+
+      <ul class="reveal">
+        <li><strong>Canales:</strong> definir cuáles tienen que funcionar en cada etapa del journey y cuáles están fallando o directamente no existen.</li>
+        <li><strong>Coherencia:</strong> auditar que lo que dice la web coincida con lo que dice el vendedor, con lo que dice el soporte y con lo que dice el contrato. El cliente que recibe mensajes contradictorios según el canal que usa pierde confianza rápidamente.</li>
+        <li><strong>Personalización:</strong> identificar en qué momentos la atención es genérica y puede ser más específica. No hace falta personalizar todo — alcanza con personalizar los momentos que más importan.</li>
+        <li><strong>Prioridades:</strong> no todos los puntos de fricción tienen el mismo peso. Los primeros en abordar son los que concentran mayor volumen de quejas o mayor impacto en la decisión de volver a comprar.</li>
+      </ul>
+
+      <p class="reveal">Para empresas con alto volumen de interacciones, herramientas de análisis de texto e inteligencia artificial pueden ayudar a procesar ese feedback a escala — algo que desarrollamos en el <a href="ia-aplicada-cx.html">artículo sobre IA aplicada a CX</a>. Pero esas herramientas son útiles solo cuando ya hay un mapa que indica dónde mirar. Sin el CJM, la IA produce insights que nadie sabe cómo priorizar.</p>
+
+      <div class="pull-quote reveal">
+        <p>"Un buen CX plan no es una lista de deseos. Es una secuencia de mejoras concretas, con responsables y métricas, ordenadas por impacto."</p>
+      </div>
+
+      <h2 class="reveal">Cómo estructurarlo en una semana</h2>
+
+      <p class="reveal">Una semana de trabajo enfocado alcanza para tener un CJM útil y un primer borrador del plan de acción. No para resolver todo, sino para tener el diagnóstico claro y las prioridades definidas — que es exactamente lo que permite empezar a moverse.</p>
+
+      <div class="roadmap reveal">
+        <div class="roadmap-step">
+          <div class="roadmap-num">1</div>
+          <div class="roadmap-content">
+            <h3>Mapear las etapas del journey (días 1–2)</h3>
+            <p>Documentar todas las etapas desde el descubrimiento hasta la postventa. Para cada una: qué hace el cliente, qué canal usa, qué espera encontrar. Este trabajo requiere hablar con el equipo que tiene contacto diario con los clientes — ahí está gran parte del conocimiento que todavía no está escrito en ningún lado.</p>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="roadmap-num">2</div>
+          <div class="roadmap-content">
+            <h3>Relevar la voz del cliente (días 2–3)</h3>
+            <p>Reseñas, reclamos, encuestas, conversaciones con el equipo de atención. Esta etapa es la más subestimada y la más importante: no se construye un CJM útil sin datos reales de clientes reales. Las reseñas públicas — Google Maps, redes, tiendas de apps — son una fuente de primer orden que muchas empresas todavía no están leyendo de manera sistemática.</p>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="roadmap-num">3</div>
+          <div class="roadmap-content">
+            <h3>Identificar los puntos de fricción (días 3–4)</h3>
+            <p>Cruzar lo que dice el mapa con lo que dice la voz del cliente: ¿dónde se pierde el cliente? ¿Dónde se queja con más frecuencia? ¿Dónde hay una brecha entre lo que la empresa cree que está pasando y lo que el cliente realmente está viviendo?</p>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="roadmap-num">4</div>
+          <div class="roadmap-content">
+            <h3>Auditar la omnicanalidad (día 4)</h3>
+            <p>Recorrer el journey como si fueras un cliente nuevo: llamar, navegar la web, escribir por redes sociales, visitar el local si hay presencia física. Verificar que los mensajes sean coherentes entre canales y que la experiencia no cambie drásticamente según cómo se entre en contacto. Las inconsistencias que se descubren acá suelen ser las más fáciles de resolver y las que más impacto tienen.</p>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="roadmap-num">5</div>
+          <div class="roadmap-content">
+            <h3>Construir el CX plan (día 5)</h3>
+            <p>Tomar los puntos de fricción identificados y convertirlos en tareas concretas: qué se mejora, quién lo hace, en qué plazo, con qué métrica para saber si funcionó. Priorizar por impacto. El resultado no es un documento académico — es una hoja de ruta que el equipo pueda empezar a ejecutar la semana siguiente.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-divider reveal"></div>
+
+      <h2 class="reveal">Un proceso que vale la pena hacer bien</h2>
+
+      <p class="reveal">El obstáculo más frecuente no es la falta de información ni la falta de voluntad: es el tiempo y el orden para procesar todo eso. La operación del día a día consume toda la atención disponible, y el CJM queda para cuando haya un momento tranquilo que, en la práctica, nunca llega.</p>
+
+      <p class="reveal">Eso es exactamente el trabajo de un consultor de CX: tomar ese proceso, estructurarlo desde afuera, y convertirlo en un plan que el equipo pueda ejecutar. Si querés ver cómo se ve un CJM llevado a fondo para un sector completo, el <a href="../proyecto3/index.html">análisis de aerolíneas argentinas</a> que publicamos como proyecto sigue exactamente esta lógica para tres modelos de negocio distintos — con datos operativos reales y la voz del pasajero como eje central.</p>
+
+    </div>
+
+    <!-- BACK BOTTOM -->
+    <div class="back-bottom reveal">
+      <div>
+        <p class="back-bottom-label">Seguí leyendo</p>
+        <p class="back-bottom-text">IA aplicada a CX: cómo las empresas que escuchan mejor están ganando más</p>
+      </div>
+      <a href="ia-aplicada-cx.html" class="btn btn-outline">Leer artículo &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos y CX (experiencia del cliente).</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../articulos.html">Artículos</a></li>
+          <li><a href="../proyectos.html">Proyectos</a></li>
+          <li><a href="../sobre-mi.html">Sobre mí</a></li>
+          <li><a href="../contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;·&nbsp; <a href="../politica-cookies.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Política de cookies</a> &nbsp;·&nbsp; <a href="../mapa-del-sitio.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Mapa del sitio</a></p>
+      <div class="footer-social">
+        <a href="mailto:lucasd-t@hotmail.com" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.classList.toggle('open')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.classList.remove('open')}));
+
+(()=>{
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target)}})
+  },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>

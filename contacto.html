@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Contactá a Lucas Della Torre — sociólogo y analista de datos disponible para proyectos de investigación, análisis y Customer Experience.">
+<title>Contacto — Lucas Della Torre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#374151;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+:root{
+  --dark:#0B1437;--bg:#fff;--bg-alt:#F5F7FA;--accent:#2563EB;--accent-h:#1D4ED8;
+  --accent-l:#EFF6FF;--text:#374151;--muted:#6B7280;--heading:#0B1437;
+  --border:#E5E7EB;--r:14px;--r-sm:8px;
+  --shadow:0 4px 30px rgba(11,20,55,.08);--shadow-lg:0 20px 60px rgba(11,20,55,.14);
+  --t:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);will-change:opacity,transform}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+.container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.section{padding-block:6rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.625rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.875rem}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;background:var(--accent)}
+.section-title{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;color:var(--heading);line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.875rem;border-radius:var(--r-sm);font-weight:600;font-size:.9375rem;transition:var(--t);border:none;font-family:inherit;cursor:pointer}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.3)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.875rem 0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(0,0,0,.06),0 4px 20px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin-inline:auto;padding-inline:1.5rem}
+.nav-logo{font-size:1.0625rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:.125rem}
+.nav-links li a{font-size:.875rem;font-weight:500;color:var(--text);padding:.5rem .9rem;border-radius:var(--r-sm);transition:var(--t)}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:var(--accent-l)}
+.nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
+.nav-cta a:hover{background:var(--accent-h)!important}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:var(--t)}
+
+/* PAGE HERO */
+.page-hero{padding-block:9rem 5rem;background:var(--dark);position:relative;overflow:hidden;text-align:center}
+.page-hero::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.page-hero-inner{position:relative;z-index:1}
+.page-hero .eyebrow{color:rgba(255,255,255,.45);justify-content:center}
+.page-hero .eyebrow::before{background:var(--accent)}
+.page-hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.03em;margin-bottom:1.25rem}
+.page-hero h1 em{font-style:normal;color:var(--accent)}
+.page-hero p{font-size:1.125rem;color:rgba(255,255,255,.5);max-width:500px;margin-inline:auto;line-height:1.75}
+
+/* CONTACT GRID */
+.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:5rem;align-items:start}
+
+/* FORM */
+.contact-form{display:flex;flex-direction:column;gap:1.25rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.form-group{display:flex;flex-direction:column;gap:.5rem}
+.form-label{font-size:.875rem;font-weight:600;color:var(--heading)}
+.form-label span{color:var(--accent)}
+.form-input,.form-textarea,.form-select{width:100%;padding:.875rem 1rem;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:.9375rem;font-family:inherit;color:var(--text);background:var(--bg);transition:var(--t);outline:none;-webkit-appearance:none}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-l)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--muted)}
+.form-textarea{resize:vertical;min-height:160px;line-height:1.65}
+.form-note{font-size:.8125rem;color:var(--muted);line-height:1.6;padding:.875rem 1rem;background:var(--bg-alt);border-radius:var(--r-sm);border:1px solid var(--border)}
+.form-submit{align-self:flex-start}
+.btn-submit{width:100%;justify-content:center;padding:1rem}
+
+/* Success message */
+.form-success{display:none;text-align:center;padding:2.5rem;background:var(--accent-l);border:1px solid rgba(37,99,235,.2);border-radius:var(--r)}
+.form-success svg{color:var(--accent);margin:0 auto .875rem}
+.form-success h3{font-size:1.125rem;font-weight:700;color:var(--heading);margin-bottom:.5rem}
+.form-success p{font-size:.9375rem;color:var(--muted)}
+
+/* CONTACT SIDEBAR */
+.contact-sidebar{display:flex;flex-direction:column;gap:1.5rem}
+.contact-card{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.875rem;transition:var(--t)}
+.contact-card:hover{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-l)}
+.contact-card-icon{width:48px;height:48px;border-radius:12px;background:var(--accent-l);border:1px solid rgba(37,99,235,.15);display:flex;align-items:center;justify-content:center;color:var(--accent);margin-bottom:1.25rem}
+.contact-card h3{font-size:1rem;font-weight:700;color:var(--heading);margin-bottom:.375rem}
+.contact-card p{font-size:.875rem;color:var(--muted);line-height:1.65;margin-bottom:.875rem}
+.contact-card a{font-size:.9rem;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:.375rem;transition:gap .2s}
+.contact-card a:hover{gap:.625rem}
+
+.availability{background:var(--dark);border-radius:var(--r);padding:1.875rem}
+.avail-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22C55E;margin-right:.5rem;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(1.15)}}
+.availability h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.375rem}
+.availability p{font-size:.875rem;color:rgba(255,255,255,.45);line-height:1.65;margin-bottom:1.25rem}
+.avail-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.avail-tag{display:inline-block;font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6)}
+
+/* FAQ */
+.faq-section{background:var(--bg-alt);padding-block:6rem}
+.faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem}
+.faq-item{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:1.875rem}
+.faq-q{font-size:1rem;font-weight:700;color:var(--heading);margin-bottom:.625rem}
+.faq-a{font-size:.9375rem;color:var(--muted);line-height:1.7}
+
+/* FOOTER */
+.footer{background:#080E27;padding-block:4rem 2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+.footer-logo{font-size:1.125rem;font-weight:800;color:#fff;margin-bottom:.875rem}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.75;max-width:260px}
+.footer-col h4{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1.25rem}
+.footer-col li{margin-bottom:.625rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8125rem;color:rgba(255,255,255,.25)}
+.footer-social{display:flex;gap:.75rem}
+.social-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);transition:var(--t)}
+.social-icon:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+
+@media(max-width:1024px){
+  .contact-grid{grid-template-columns:1fr;gap:3rem}
+  .faq-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .section{padding-block:4rem}
+  .form-row{grid-template-columns:1fr}
+  .nav-links{display:none;position:fixed;inset:0;background:var(--dark);flex-direction:column;justify-content:center;align-items:center;gap:.5rem}
+  .nav-links.open{display:flex}
+  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
+  .nav-toggle{display:flex}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">lucas della torre<em>.</em></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="articulos.html">Artículos</a></li>
+      <li><a href="proyectos.html">Proyectos</a></li>
+      <li><a href="sobre-mi.html">Sobre mí</a></li>
+      <li class="nav-cta"><a href="contacto.html" class="active">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <p class="eyebrow">Contacto</p>
+    <h1>¡Hablemos<em>!</em></h1>
+    <p>Tengo disponibilidad para proyectos de investigación, análisis de datos y estrategia de Customer Experience. Contame tu idea.</p>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- FORM -->
+      <div>
+        <p class="eyebrow reveal">Mensaje directo</p>
+        <h2 class="section-title reveal">Escribime.</h2>
+
+        <!-- Success message (hidden by default) -->
+        <div class="form-success" id="formSuccess">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h3>¡Mensaje enviado!</h3>
+          <p>Gracias por escribirme. Te respondo a la brevedad.</p>
+        </div>
+
+        <!-- Form -->
+        <!-- Reemplazá "TU_FORM_ID" con tu ID de Formspree: formspree.io -->
+        <form class="contact-form reveal" id="contactForm"
+          action="https://formspree.io/f/xqewdlzj"
+          method="POST">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="nombre">Nombre <span>*</span></label>
+              <input class="form-input" type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email <span>*</span></label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="tu@email.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="motivo">¿Sobre qué querés hablar?</label>
+            <select class="form-select" id="motivo" name="motivo">
+              <option value="" disabled selected>Seleccioná una opción</option>
+              <option>Propuesta laboral</option>
+              <option>Customer Experience (CX)</option>
+              <option>Investigación de mercado</option>
+              <option>Consultoría</option>
+              <option>Otros</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="mensaje">Mensaje <span>*</span></label>
+            <textarea class="form-textarea" id="mensaje" name="mensaje"
+              placeholder="Contame tu proyecto, idea o pregunta&hellip;" required></textarea>
+          </div>
+
+          <p class="form-note">
+            Respondo todos los mensajes. El tiempo de respuesta habitual es de <strong>24–48 horas</strong> en días hábiles.
+          </p>
+
+          <button type="submit" class="btn btn-primary btn-submit form-submit">
+            Enviar mensaje
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="contact-sidebar">
+
+        <div class="contact-card reveal">
+          <div class="contact-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </div>
+          <h3>Email</h3>
+          <p>Si preferís el contacto directo por email, escribime a:</p>
+          <a href="mailto:lucasd-t@hotmail.com">
+            lucasd-t@hotmail.com
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="contact-card reveal d1">
+          <div class="contact-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <h3>LinkedIn</h3>
+          <p>Seguime en LinkedIn para estar en contacto y ver novedades de trabajo.</p>
+          <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">
+            linkedin.com/in/lucasadt
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="availability reveal d2">
+          <h3><span class="avail-dot"></span>Disponible para proyectos</h3>
+          <p>Actualmente tengo disponibilidad para colaborar en nuevos proyectos:</p>
+          <div class="avail-tags">
+            <span class="avail-tag">Análisis de datos</span>
+            <span class="avail-tag">Investigación</span>
+            <span class="avail-tag">CX</span>
+            <span class="avail-tag">Consultoría</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <p class="eyebrow reveal">FAQ</p>
+    <h2 class="section-title reveal">Preguntas frecuentes.</h2>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <p class="faq-q">¿Qué tipo de proyectos tomás?</p>
+        <p class="faq-a">Trabajo en proyectos de análisis de datos, investigación social, análisis de experiencia del cliente (CX) y consultoría. Si tu proyecto involucra personas, comportamiento y datos, probablemente puedo ayudarte.</p>
+      </div>
+      <div class="faq-item reveal d1">
+        <p class="faq-q">¿En cuánto tiempo respondés?</p>
+        <p class="faq-a">Respondo todos los mensajes en un plazo de 24 a 48 horas en días hábiles. Si es urgente, aclaralo en el mensaje.</p>
+      </div>
+      <div class="faq-item reveal d2">
+        <p class="faq-q">¿Trabajás de forma remota?</p>
+        <p class="faq-a">Sí, trabajo en forma remota con posibilidad de reuniones presenciales en Buenos Aires. Puedo colaborar con equipos y clientes de cualquier parte del mundo.</p>
+      </div>
+      <div class="faq-item reveal d3">
+        <p class="faq-q">¿Qué información necesitás para arrancar?</p>
+        <p class="faq-a">Con una descripción básica del proyecto y el objetivo que querés alcanzar es suficiente para comenzar. En la primera conversación definimos el alcance, las herramientas y los plazos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">lucas della torre<em>.</em></div>
+        <p class="footer-tagline">Sociólogo especializado en análisis de datos y CX (experiencia del cliente).</p>
+      </div>
+      <div class="footer-col">
+        <h4>Páginas</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="articulos.html">Artículos</a></li>
+          <li><a href="proyectos.html">Proyectos</a></li>
+          <li><a href="sobre-mi.html">Sobre mí</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:lucasd-t@hotmail.com">lucasd-t@hotmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Lucas Della Torre. Todos los derechos reservados. &nbsp;·&nbsp; <a href="politica-cookies.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Política de cookies</a> &nbsp;·&nbsp; <a href="mapa-del-sitio.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.15);text-underline-offset:2px">Mapa del sitio</a></p>
+      <div class="footer-social">
+        <a href="mailto:lucasd-t@hotmail.com" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucasadt/" target="_blank" rel="noopener" class="social-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.classList.toggle('open')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.classList.remove('open')}));
+
+// Form submit with Formspree
+const form=document.getElementById('contactForm');
+const success=document.getElementById('formSuccess');
+form.addEventListener('submit',async(e)=>{
+  e.preventDefault();
+  const btn=form.querySelector('button[type="submit"]');
+  btn.textContent='Enviando…';
+  btn.disabled=true;
+  try{
+    const res=await fetch(form.action,{
+      method:'POST',
+      body:new FormData(form),
+      headers:{Accept:'application/json'}
+    });
+    if(res.ok){
+      form.style.display='none';
+      success.style.display='block';
+    } else {
+      btn.innerHTML='Error — reintentá';
+      btn.disabled=false;
+    }
+  } catch{
+    btn.innerHTML='Error — reintentá';
+    btn.disabled=false;
+  }
+});
+
+(()=>{
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target)}})
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>
