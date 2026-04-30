@@ -99,6 +99,9 @@ button{font-family:inherit;cursor:pointer}
   .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .nav-toggle.open span:nth-child(2){opacity:0}
   .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .nav{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .nav-backdrop{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.35)}
+  .nav-backdrop.visible{display:block}
   .footer-top{grid-template-columns:1fr;gap:2rem}
 }
 </style>
@@ -338,8 +341,12 @@ button{font-family:inherit;cursor:pointer}
 <script>
 const toggle=document.getElementById('navToggle');
 const links=document.getElementById('navLinks');
-toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.classList.toggle('open')});
-links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');toggle.classList.remove('open')}));
+const bd=document.createElement('div');bd.className='nav-backdrop';document.body.appendChild(bd);
+function openNav(){links.classList.add('open');toggle.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+function closeNav(){links.classList.remove('open');toggle.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+toggle.addEventListener('click',()=>links.classList.contains('open')?closeNav():openNav());
+bd.addEventListener('click',closeNav);
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeNav));
 </script>
 </body>
 </html>
