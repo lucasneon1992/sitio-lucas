@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -54,8 +54,11 @@ button{font-family:inherit;cursor:pointer}
 .nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:var(--accent-l)}
 .nav-cta a{background:var(--accent)!important;color:#fff!important;padding:.5rem 1.25rem!important;border-radius:var(--r-sm)!important}
 .nav-cta a:hover{background:var(--accent-h)!important}
-.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001}
-.nav-toggle span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:var(--t)}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;padding:8px;width:40px;height:40px;border-radius:var(--r-sm);cursor:pointer;z-index:1002;transition:background .2s}
+.nav-toggle:hover{background:rgba(0,0,0,.06)}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--heading);border-radius:2px;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .25s;transform-origin:center}
+.nav-overlay{position:fixed;inset:0;z-index:999;background:rgba(11,20,55,.55);opacity:0;pointer-events:none;transition:opacity .35s}
+.nav-overlay.visible{opacity:1;pointer-events:auto}
 
 /* HERO */
 .proj-hero{padding-block:9rem 5rem;background:var(--dark);position:relative;overflow:hidden}
@@ -212,16 +215,17 @@ button{font-family:inherit;cursor:pointer}
   .findings-grid{grid-template-columns:1fr}
   .punt-label{width:140px;font-size:.8rem}
   .next-proj{flex-direction:column}
-  .nav-links{display:none;position:fixed;inset:0;background:var(--dark);flex-direction:column;justify-content:center;align-items:center;gap:.5rem}
-  .nav-links.open{display:flex}
-  .nav-links li a{font-size:1.25rem!important;color:rgba(255,255,255,.85)!important;padding:.875rem 2.5rem!important;width:100%;text-align:center}
   .nav-toggle{display:flex}
   .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0)}
   .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .nav{backdrop-filter:none;-webkit-backdrop-filter:none}
-  .nav-backdrop{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.35)}
-  .nav-backdrop.visible{display:block}
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(300px,82vw);background:var(--dark);flex-direction:column;justify-content:flex-start;align-items:stretch;gap:0;padding:4.5rem 1.5rem 2rem;z-index:1001;transform:translateX(110%);visibility:hidden;box-shadow:-8px 0 40px rgba(0,0,0,.35);transition:transform .4s cubic-bezier(.4,0,.2,1),visibility 0s .4s}
+  .nav-links.open{transform:translateX(0);visibility:visible;transition:transform .4s cubic-bezier(.4,0,.2,1),visibility 0s}
+  .nav-links li a{font-size:.9375rem!important;color:rgba(255,255,255,.72)!important;padding:.875rem 1rem!important;display:block;border-bottom:1px solid rgba(255,255,255,.07);border-radius:0}
+  .nav-links li:last-child a{border-bottom:none}
+  .nav-links li a:hover{color:#fff!important;background:rgba(255,255,255,.08)!important}
+  .nav-cta{margin-top:.5rem}
+  .nav-cta a{background:var(--accent)!important;color:#fff!important;border-bottom:none!important;border-radius:var(--r-sm)!important;text-align:center;justify-content:center;display:flex!important}
   .footer-top{grid-template-columns:1fr;gap:2rem}
   .jnav-item{min-width:80px;font-size:.7rem}
   .stage-header{flex-wrap:wrap}
@@ -246,6 +250,7 @@ button{font-family:inherit;cursor:pointer}
     </ul>
   </div>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- HERO -->
 <section class="proj-hero">
@@ -832,12 +837,13 @@ button{font-family:inherit;cursor:pointer}
 <script>
 const toggle=document.getElementById('navToggle');
 const links=document.getElementById('navLinks');
-const bd=document.createElement('div');bd.className='nav-backdrop';document.body.appendChild(bd);
-function openNav(){links.classList.add('open');toggle.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
-function closeNav(){links.classList.remove('open');toggle.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+const overlay=document.getElementById('navOverlay');
+function openNav(){toggle.classList.add('open');toggle.setAttribute('aria-expanded','true');links.classList.add('open');overlay.classList.add('visible');document.body.style.overflow='hidden'}
+function closeNav(){toggle.classList.remove('open');toggle.setAttribute('aria-expanded','false');links.classList.remove('open');overlay.classList.remove('visible');document.body.style.overflow=''}
 toggle.addEventListener('click',()=>links.classList.contains('open')?closeNav():openNav());
-bd.addEventListener('click',closeNav);
+overlay.addEventListener('click',closeNav);
 links.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeNav));
+
 
 function scrollToStage(n){
   const el=document.getElementById('stage-'+n);
